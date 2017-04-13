@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview Shared Memory IPC  Visual Metaphor   Features/Functionalities Working together in toy shop IPC     Sharing space Workers share work area Process share memory   Communication Workers call each">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Inner Process Communication">
+<meta property="og:url" content="http://yoursite.com/2017/03/22/omscs-os-9-inner-process-communication/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview Shared Memory IPC  Visual Metaphor   Features/Functionalities Working together in toy shop IPC     Sharing space Workers share work area Process share memory   Communication Workers call each">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_9/OS_9_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_9/OS_9_Screenshot2.png">
+<meta property="og:updated_time" content="2017-04-07T02:36:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Inner Process Communication">
+<meta name="twitter:description" content="Preview Shared Memory IPC  Visual Metaphor   Features/Functionalities Working together in toy shop IPC     Sharing space Workers share work area Process share memory   Communication Workers call each">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_9/OS_9_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/22/omscs-os-9-inner-process-communication/"/>
+
+
+
+
+
+  <title> Operating System - Inner Process Communication | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/omscs-os-9-inner-process-communication/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Inner Process Communication
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T00:27:27-07:00">
+                2017-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>Shared Memory IPC</li>
+</ul>
+<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Working together in toy shop</th>
+<th style="text-align:center">IPC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Sharing space</td>
+<td style="text-align:center">Workers share work area</td>
+<td style="text-align:center">Process share memory</td>
+</tr>
+<tr>
+<td style="text-align:center">Communication</td>
+<td style="text-align:center">Workers call each other</td>
+<td style="text-align:center">Process exchanges Memory</td>
+</tr>
+<tr>
+<td style="text-align:center">Requires Synchronization</td>
+<td style="text-align:center">I’ll start when you finish</td>
+<td style="text-align:center">Mutexes, waiting</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Inter-Process-Communication-IPC"><a href="#Inter-Process-Communication-IPC" class="headerlink" title="Inter Process Communication (IPC)"></a>Inter Process Communication (IPC)</h1><ul>
+<li>OS Supported mechanisms for interactions among processes (corrdination and communication)</li>
+<li>Key Concepts:<ol>
+<li>Message-based: socket, pipes, message queues</li>
+<li>Memory-based: shared memory</li>
+<li>Higher Level Semantic: files, Remote Process Call (RPC)</li>
+<li>Synchronization Primitives</li>
+</ol>
+</li>
+</ul>
+<h2 id="Message-Based-IPC"><a href="#Message-Based-IPC" class="headerlink" title="Message Based IPC"></a>Message Based IPC</h2><h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><ul>
+<li>OS maintains a channel (i.e. shared buffer), and processes basically read/recv and write/send from/to that channel</li>
+<li>OS provides interfaces to processes - <strong>a port</strong>, processes access channel via the port</li>
+<li><strong>Kernal</strong> is required to:<ol>
+<li>Establisht communication</li>
+<li>Perform IPC actions:<br> a. send: system call + copy <strong>from address space to channel</strong><br> b. recv: system call + copy <strong>from channel to address space</strong></li>
+</ol>
+</li>
+<li>Cons: Each request-response will result in <strong>4 user-kernal crossing</strong> and <strong>4 data copies</strong></li>
+<li>Pros: Simple, and kernal handles most of the content</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_9/OS_9_Screenshot1.png" class="[screenshot]">
+<h3 id="Forms-of-Message-Based-IPC"><a href="#Forms-of-Message-Based-IPC" class="headerlink" title="Forms of Message Based IPC"></a>Forms of Message Based IPC</h3><h4 id="Pipe"><a href="#Pipe" class="headerlink" title="Pipe"></a>Pipe</h4><ul>
+<li>Carry byte stream between <strong>2 processes</strong> (e.g. connect one process’s output to the other’s input)</li>
+</ul>
+<h4 id="Message-Queue"><a href="#Message-Queue" class="headerlink" title="Message Queue"></a>Message Queue</h4><ul>
+<li>Carry “messages” among processes</li>
+<li>OS should manage priority, scheduling, etc.</li>
+<li>API: <strong>SysV</strong> and <strong>POSIX</strong></li>
+</ul>
+<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><ul>
+<li><strong>send() and recv()</strong> calls allow processes place messages in and out the kernal level buffer</li>
+<li><strong>socket()</strong> creates kernal level buffer, and associate necessary kernal level processing (TCP/IP, etc.)</li>
+<li>Could also communicate between different machines via network</li>
+<li>If same machine, will just bypass protocal stack.</li>
+</ul>
+<h2 id="Shared-Memory-IPC"><a href="#Shared-Memory-IPC" class="headerlink" title="Shared Memory IPC"></a>Shared Memory IPC</h2><ul>
+<li>Proccess <strong>read</strong> and <strong>write</strong> to some shared memory region</li>
+<li>OS will establish that region<ol>
+<li>Creates VA - PA Map</li>
+<li>VA(P1) and VA(P2) point to the same PA</li>
+<li>VA(P1) != VA(P2)</li>
+<li>PA could be incontinuous</li>
+</ol>
+</li>
+<li>Pros: system calls are only used to <strong>setup</strong>, data copies are avoided</li>
+<li>Cons:<ol>
+<li>Need explict synchronization</li>
+<li>Programmer’s responsibility for shared buffer management and communication protocal - complex</li>
+</ol>
+</li>
+<li>APIs<ol>
+<li>SysV API</li>
+<li>POSIX API</li>
+<li>Memory Wrapped Files</li>
+<li>Android ashmem</li>
+</ol>
+</li>
+</ul>
+<h1 id="Copy-Message-v-s-Map-Shared-Memory"><a href="#Copy-Message-v-s-Map-Shared-Memory" class="headerlink" title="Copy (Message) v.s. Map (Shared Memory)"></a>Copy (Message) v.s. Map (Shared Memory)</h1><p>Goal: Transfer data from one address space to target address space</p>
+<h2 id="Copy"><a href="#Copy" class="headerlink" title="Copy"></a>Copy</h2><ul>
+<li>Cost CPU cycles to copy data to/from port</li>
+<li>Context switch</li>
+</ul>
+<h2 id="Shared-Memory"><a href="#Shared-Memory" class="headerlink" title="Shared Memory"></a>Shared Memory</h2><ul>
+<li>CPU to map physical memory to address space</li>
+<li>CPU to copy data (no context switch)</li>
+<li>Setup time will be longer, but good tradeoff for many times or 1-time usage</li>
+<li>For large data <strong>t(copy) &gt;&gt; t(map)</strong></li>
+</ul>
+<h1 id="SysV-Shared-Memory"><a href="#SysV-Shared-Memory" class="headerlink" title="SysV Shared Memory"></a>SysV Shared Memory</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><ul>
+<li>Segmented shared memory - not necessarily continuous</li>
+<li>System wide - system limits number of segments and sizes</li>
+</ul>
+<h2 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h2><ol>
+<li><strong>Create</strong>: OS assigns key to segment of shared memory</li>
+<li><strong>Attach</strong>: Map <strong>VA</strong> to <strong>PA</strong> (PA of the segment)</li>
+<li><strong>Dettach</strong>: Invalidate the mapping (not destroyed)</li>
+<li><strong>Destroy</strong>: Only when explicitly call or reboot</li>
+</ol>
+<img src="/imgs/OMSCS/OS/OS_9/OS_9_Screenshot2.png" class="[screenshot]">
+<h2 id="APIs-SysV"><a href="#APIs-SysV" class="headerlink" title="APIs - SysV"></a>APIs - SysV</h2><ol>
+<li><strong>Create</strong>: shmget(shmid, sizes, flags)<ul>
+<li>flag - options</li>
+<li>shmid - generated by ftok(pathname, proj_id)</li>
+</ul>
+</li>
+<li><strong>Attach</strong>: shmat(shmid, address, flags)<ul>
+<li>if addr == NULL, will assign arbitrarily</li>
+<li>programmer need to cast the returned address properly</li>
+</ul>
+</li>
+<li><strong>Dettach</strong>: shmdt(shmid)</li>
+<li><strong>Destroy</strong>: shmctl(shmid, cmd, buf) - use IPC_RHID</li>
+</ol>
+<h2 id="APIs-POSIX"><a href="#APIs-POSIX" class="headerlink" title="APIs - POSIX"></a>APIs - POSIX</h2><ul>
+<li>Use files instead of segments (but not real files), essentially still memory manipulations</li>
+<li>key = file descriptor</li>
+</ul>
+<ol>
+<li><strong>Create</strong>: shm_open() - return file descriptor</li>
+<li><strong>Attach</strong> and <strong>Dettach</strong>: mmap() and unmmap() - map VA to PA</li>
+<li><strong>Destroy</strong>:<ul>
+<li>shm_close(): remove the file descriptor from address space</li>
+<li>shm_unlink(): delete all related data structures and free the segment</li>
+</ul>
+</li>
+</ol>
+<h1 id="Shared-Memory-and-Synchronization"><a href="#Shared-Memory-and-Synchronization" class="headerlink" title="Shared Memory and Synchronization"></a>Shared Memory and Synchronization</h1><ul>
+<li>Much like threads accessing shared resources in the same address space</li>
+</ul>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods:"></a>Methods:</h2><ol>
+<li>Mechanisms supported by process threading library (PThread)</li>
+<li>OS supported IPC for synchronization</li>
+</ol>
+<ul>
+<li>Either method should coordinate:<ol>
+<li>Number of concurrent accesses (mutex)</li>
+<li>When is data available (signal, conditional var)</li>
+</ol>
+</li>
+<li>Synchronization data structures must be shared!</li>
+</ul>
+<h2 id="OS-Supported-IPC-for-synchronization"><a href="#OS-Supported-IPC-for-synchronization" class="headerlink" title="OS Supported IPC for synchronization:"></a>OS Supported IPC for synchronization:</h2><ul>
+<li>Message queue: implement mutual exclusion via send/recv</li>
+<li>Semaphores: Binary semaphore = mutex</li>
+</ul>
+<h1 id="Design-Consideration"><a href="#Design-Consideration" class="headerlink" title="Design Consideration"></a>Design Consideration</h1><p>Shared memory is out there, but need to consider and design protocal/sync properly</p>
+<h2 id="How-many-segments"><a href="#How-many-segments" class="headerlink" title="How many segments?"></a>How many segments?</h2><ul>
+<li>1 large segment: might then need a manager to free/allocate memory for the shared segment</li>
+<li>many segments: might then need a segment queue, and certain mechanisms to allow communications between processes</li>
+</ul>
+<h2 id="How-large-should-the-segment-be"><a href="#How-large-should-the-segment-be" class="headerlink" title="How large should the segment be?"></a>How large should the segment be?</h2><ul>
+<li>segment data == data size - works well for static sizes, but limits data size</li>
+<li>segment data &lt; message size - transfer data in round, and need protocal to track the progress</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/omscs-os-10-sync-construct/" rel="next" title="Operating System - Synchronization Construct">
+                <i class="fa fa-chevron-left"></i> Operating System - Synchronization Construct
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/19/nanodegree-ai-2/" rel="prev" title="NanoDegree AI - Intro to Game Playing">
+                NanoDegree AI - Intro to Game Playing <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">2.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inter-Process-Communication-IPC"><span class="nav-number">3.</span> <span class="nav-text">Inter Process Communication (IPC)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Message-Based-IPC"><span class="nav-number">3.1.</span> <span class="nav-text">Message Based IPC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basics"><span class="nav-number">3.1.1.</span> <span class="nav-text">Basics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forms-of-Message-Based-IPC"><span class="nav-number">3.1.2.</span> <span class="nav-text">Forms of Message Based IPC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pipe"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">Pipe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Message-Queue"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">Message Queue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Socket"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">Socket</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shared-Memory-IPC"><span class="nav-number">3.2.</span> <span class="nav-text">Shared Memory IPC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Copy-Message-v-s-Map-Shared-Memory"><span class="nav-number">4.</span> <span class="nav-text">Copy (Message) v.s. Map (Shared Memory)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy"><span class="nav-number">4.1.</span> <span class="nav-text">Copy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shared-Memory"><span class="nav-number">4.2.</span> <span class="nav-text">Shared Memory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SysV-Shared-Memory"><span class="nav-number">5.</span> <span class="nav-text">SysV Shared Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">5.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flow"><span class="nav-number">5.2.</span> <span class="nav-text">Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIs-SysV"><span class="nav-number">5.3.</span> <span class="nav-text">APIs - SysV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIs-POSIX"><span class="nav-number">5.4.</span> <span class="nav-text">APIs - POSIX</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shared-Memory-and-Synchronization"><span class="nav-number">6.</span> <span class="nav-text">Shared Memory and Synchronization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Methods"><span class="nav-number">6.1.</span> <span class="nav-text">Methods:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OS-Supported-IPC-for-synchronization"><span class="nav-number">6.2.</span> <span class="nav-text">OS Supported IPC for synchronization:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Design-Consideration"><span class="nav-number">7.</span> <span class="nav-text">Design Consideration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-many-segments"><span class="nav-number">7.1.</span> <span class="nav-text">How many segments?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-large-should-the-segment-be"><span class="nav-number">7.2.</span> <span class="nav-text">How large should the segment be?</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

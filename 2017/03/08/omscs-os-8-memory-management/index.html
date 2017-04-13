@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview Physical &amp;amp; Virtual Memory management Review of memory management mechanisms Illustration of advanced services  Visual Metaphor   Features/Functionalities OS Memory Toy shop Part     Uses i">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Memory Management">
+<meta property="og:url" content="http://yoursite.com/2017/03/08/omscs-os-8-memory-management/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview Physical &amp;amp; Virtual Memory management Review of memory management mechanisms Illustration of advanced services  Visual Metaphor   Features/Functionalities OS Memory Toy shop Part     Uses i">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot3.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot4.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot5.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot6.png">
+<meta property="og:updated_time" content="2017-04-07T02:36:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Memory Management">
+<meta name="twitter:description" content="Preview Physical &amp;amp; Virtual Memory management Review of memory management mechanisms Illustration of advanced services  Visual Metaphor   Features/Functionalities OS Memory Toy shop Part     Uses i">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_8/OS_8_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/08/omscs-os-8-memory-management/"/>
+
+
+
+
+
+  <title> Operating System - Memory Management | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/omscs-os-8-memory-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Memory Management
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-08T21:45:18-08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li><strong>Physical</strong> &amp; <strong>Virtual Memory</strong> management</li>
+<li>Review of memory management mechanisms</li>
+<li>Illustration of advanced services</li>
+</ul>
+<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">OS Memory</th>
+<th style="text-align:center">Toy shop Part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Uses intelligently sized container</td>
+<td style="text-align:center">Memory pages or segments</td>
+<td style="text-align:center">Crates of toy parts</td>
+</tr>
+<tr>
+<td style="text-align:center">Not all parts are needed @ once</td>
+<td style="text-align:center">Tasks operate on subset of memory</td>
+<td style="text-align:center">toy orders completed in shapes</td>
+</tr>
+<tr>
+<td style="text-align:center">Optimized for performances</td>
+<td style="text-align:center">Reduce time to access state in memory -&gt; better performance</td>
+<td style="text-align:center">reduce wait time for parts -&gt; make more toy</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Memory-Management-Goal"><a href="#Memory-Management-Goal" class="headerlink" title="Memory Management Goal"></a>Memory Management Goal</h1><h2 id="Virtual-Memory-v-s-Physical-Memory"><a href="#Virtual-Memory-v-s-Physical-Memory" class="headerlink" title="Virtual Memory v.s. Physical Memory"></a>Virtual Memory v.s. Physical Memory</h2><pre><code>* Introducing virtual memory better supports address space for each process.
+* Virtual Memory could be way larger than physical memory.
+* Often cooperate with swapping mechanisms
+</code></pre><h2 id="Operating-System-Should"><a href="#Operating-System-Should" class="headerlink" title="Operating System Should"></a>Operating System Should</h2><h3 id="1-Allocate"><a href="#1-Allocate" class="headerlink" title="1. Allocate"></a>1. Allocate</h3><pre><code>* **allocation**: Mechanisms &amp; algorithms &amp; data structure to track usage and status of Physical memory
+* **replacement**: Because VM could be way larger than PM, and part of them will be in disk (swap)
+</code></pre><h3 id="2-Arbitrate"><a href="#2-Arbitrate" class="headerlink" title="2. Arbitrate"></a>2. Arbitrate</h3><pre><code>* **Address Translation**
+* **Address Validation**
+</code></pre><h2 id="Page-based-Management"><a href="#Page-based-Management" class="headerlink" title="Page-based Management:"></a>Page-based Management:</h2><pre><code>* **Allocate**: Pages (VM) =&gt; Page Frames (PM)
+* **Arbitrate**: Page tablespoon
+</code></pre><h2 id="Segment-based-Management"><a href="#Segment-based-Management" class="headerlink" title="Segment-based Management:"></a>Segment-based Management:</h2><pre><code>* **Allocate**: Segments
+* **Arbitrate**: Segment registers: base + bound pair, one pair for each segment
+</code></pre><h1 id="Hardware-support"><a href="#Hardware-support" class="headerlink" title="Hardware support"></a>Hardware support</h1><h2 id="Memory-Management-Unit-MMU"><a href="#Memory-Management-Unit-MMU" class="headerlink" title="Memory Management Unit (MMU)"></a>Memory Management Unit (MMU)</h2><pre><code>1. Translate VM to PM **(TLB - Translation Lookaside Buffer)**
+2. Reports **Faults**
+    * Illegal access
+    * Permission
+    * Not presented in Main Memory
+3. register
+    * Pointer to **page tables** (Page table - based)
+    * Base and bound registers, num of segments (Segment-based)
+4. Cache - Translation Lookaside Buffer
+5. Translation: Actual Physical Address Generation done in hardware
+</code></pre><h1 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><ol>
+<li>Address space could be divided into segments</li>
+<li>Flexible - arbitrary sizes instead of fixed size</li>
+</ol>
+<h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h2><ul>
+<li>Virtual Addresses are divided into <strong>segment number</strong> and offset</li>
+<li>Keeps a pair of base and bound registers to track validity inside a segment</li>
+<li>Each segment is mapped (by CPU) to a physical address, and use <strong>segment selector + offset</strong> to get the physical address</li>
+</ul>
+<h2 id="Pros-and-cons"><a href="#Pros-and-cons" class="headerlink" title="Pros and cons"></a>Pros and cons</h2><ul>
+<li>Pros:<ol>
+<li>Flexible</li>
+<li>OS keeps track of a list of free memory segments to decide which one will be allocated next</li>
+<li>Relatively easy implementation</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>Could lead to <strong>external fragmentation</strong></li>
+<li>OS needs well designed mechanisms/algorisms to keep track and manipulate the <strong>free memory list</strong></li>
+</ol>
+</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot1.png" class="[screenshot]">
+<h1 id="Page-Table"><a href="#Page-Table" class="headerlink" title="Page Table"></a>Page Table</h1><h2 id="Motivation-1"><a href="#Motivation-1" class="headerlink" title="Motivation"></a>Motivation</h2><ol>
+<li>Varying sized memory blocks (i.e. segments) will lead to external fragmentation, and will result in memory waste.</li>
+<li>Could use multi-level page tables to manage page table sizes, and utilize memory efficiently.</li>
+</ol>
+<h2 id="How-it-works-1"><a href="#How-it-works-1" class="headerlink" title="How it works"></a>How it works</h2><ul>
+<li>Resides in <strong>Main Memory</strong></li>
+<li>Map Virtual Addresses to Physical Addresses via <strong>Page Table</strong></li>
+<li>For single level paging:<ol>
+<li>Number of entries in page table equals to number of virtual pages</li>
+<li>Each <strong>Page Table Entry (PTE)</strong> holds the <strong>Physical Page Number</strong> pointing to a page frame with same size in <strong>physical memory</strong>, as well as useful bits.</li>
+<li>Virtial Address is divided into <strong>Virtual Page Number (VPN)</strong> and Offset. Using <strong>VPN</strong> to index the <strong>Physical Page Frame</strong>, and adding offset to locate the actual <strong>Physical Address</strong></li>
+<li>One Page Table per process, managed by Operating System.</li>
+<li>Hardware will maintain register pointing to the active page table, and it needs to be updated during context switch</li>
+</ol>
+</li>
+</ul>
+<h2 id="Pros-and-Cons"><a href="#Pros-and-Cons" class="headerlink" title="Pros and Cons"></a>Pros and Cons</h2><pre><code>* Pros:
+    1. Fixed size pages would eliminate External Fragmentation
+    2. 
+* Cons:
+    1. Because each translation will go through two menmory index, performance will be impacted. (**TBL** is introduced to address this)
+    2. Waste memory if page is not used at all (will still allocate page entry for unused page) - Multi-layer page table is introduced to address this
+</code></pre><img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot2.png" class="[screenshot]">
+<h2 id="Multi-Level-page"><a href="#Multi-Level-page" class="headerlink" title="Multi Level page"></a>Multi Level page</h2><h3 id="How-it-works-2"><a href="#How-it-works-2" class="headerlink" title="How it works"></a>How it works</h3><ul>
+<li>Outter Page Table - Page Directory: a table that holds entry which points to the actual page table</li>
+<li>Internal Page Table - only for valid virtual memory regions</li>
+<li>Virtual Address is split further</li>
+</ul>
+<h2 id="Could-keep-adding-additional-layers-especially-useful-for-64-bits"><a href="#Could-keep-adding-additional-layers-especially-useful-for-64-bits" class="headerlink" title="Could keep adding additional layers (especially useful for 64 bits)"></a>Could keep adding additional layers (especially useful for 64 bits)</h2><ul>
+<li><strong>Plus</strong>: Reduce page size - smaller internal page tables/directories</li>
+<li><strong>Downside</strong>: More memory accesses are required</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot3.png" class="[screenshot]">
+<h1 id="TLB-Translation-Lookaside-Buffer"><a href="#TLB-Translation-Lookaside-Buffer" class="headerlink" title="TLB - Translation Lookaside Buffer"></a>TLB - Translation Lookaside Buffer</h1><ul>
+<li><strong>Memory Management Units (Hardware)</strong> managing the cache for address translation</li>
+<li>Stores translations, and will be first queried whenever a memory request happens.</li>
+<li>If <strong>HIT</strong>, will return immediately. If <strong>Miss</strong>, will raise a fault: then OS will look for the targeting memory by going through page table, and place the resulting translation into this cache. Finally, will redo the memory fetch operation (PC will return to the place before the last operation)</li>
+</ul>
+<h1 id="Inverted-Page-Table"><a href="#Inverted-Page-Table" class="headerlink" title="Inverted Page Table"></a>Inverted Page Table</h1><ul>
+<li>Use <strong>pid</strong> and <strong>p</strong> to index (index will match to Physical Frame)</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot4.png" class="[screenshot]">
+<ul>
+<li>Linear search is required - use hash function to narrow down search space</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot5.png" class="[screenshot]">
+<h1 id="Page-Size"><a href="#Page-Size" class="headerlink" title="Page Size"></a>Page Size</h1><ul>
+<li>Large Page Size could result in fewer page entires and smaller page table <strong>+</strong></li>
+<li>Large Page Size could lead to <strong>Internal Fragmentation</strong> <strong>-</strong></li>
+</ul>
+<h1 id="Memory-Allocation"><a href="#Memory-Allocation" class="headerlink" title="Memory Allocation"></a>Memory Allocation</h1><h2 id="Memory-Allocator"><a href="#Memory-Allocator" class="headerlink" title="Memory Allocator"></a>Memory Allocator</h2><ul>
+<li>Determines from VA to PA</li>
+<li>Address translation, page table, etc… </li>
+<li>Check validity/permissions</li>
+</ul>
+<h2 id="Kernal-Level-Allocator"><a href="#Kernal-Level-Allocator" class="headerlink" title="Kernal Level Allocator"></a>Kernal Level Allocator</h2><ul>
+<li>Allocate kernal state and <strong>static</strong> process states</li>
+</ul>
+<h2 id="User-Level-Allocator"><a href="#User-Level-Allocator" class="headerlink" title="User Level Allocator"></a>User Level Allocator</h2><ul>
+<li>Allocate <strong>dynamic</strong> process state (heap)</li>
+</ul>
+<h2 id="Mechanisms"><a href="#Mechanisms" class="headerlink" title="Mechanisms"></a>Mechanisms</h2><ul>
+<li>Buddy Allocator<ol>
+<li>Always subdividing available memory space halfly till the smallest fit one is found, and use that one. Then whenever that piece is freed, check recursively check its buddy; if both are freed, we could merge (aggregate) them.</li>
+<li>Aggregates well</li>
+<li>Internal Fragmentation</li>
+</ol>
+</li>
+<li>Slab Allocator<ol>
+<li>Caches common object type/sizes, on top of continuous memory</li>
+<li>Avoid Internal Fragmentation</li>
+</ol>
+</li>
+</ul>
+<h1 id="Demanding-Pages"><a href="#Demanding-Pages" class="headerlink" title="Demanding Pages"></a>Demanding Pages</h1><img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot6.png" class="[screenshot]">
+<ul>
+<li>We could also pin the page if we want the page to be always presented in memory - this will disable swap for that page</li>
+</ul>
+<h1 id="Freeing-up-Memory-Pages"><a href="#Freeing-up-Memory-Pages" class="headerlink" title="Freeing up Memory Pages"></a>Freeing up Memory Pages</h1><h2 id="When-should-we-swap"><a href="#When-should-we-swap" class="headerlink" title="When should we swap?"></a>When should we swap?</h2><ul>
+<li>When memory usage is above threshold</li>
+<li>When CPU usage is below some threshold</li>
+</ul>
+<h2 id="Which-Page-should-we-swap"><a href="#Which-Page-should-we-swap" class="headerlink" title="Which Page should we swap?"></a>Which Page should we swap?</h2><ul>
+<li><strong>Least Recently Used</strong> - need <strong>Access Bit</strong> to track if a page is used recently</li>
+<li>Pages that dont need to be written out. (For those needed, it will cost more cycle to access secondary storage)</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/15/nanodegree-ai-1/" rel="next" title="NanoDegree AI - Intro">
+                <i class="fa fa-chevron-left"></i> NanoDegree AI - Intro
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/vue-doc-notes/" rel="prev" title="Notes for Vue Documentation">
+                Notes for Vue Documentation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">2.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Management-Goal"><span class="nav-number">3.</span> <span class="nav-text">Memory Management Goal</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Memory-v-s-Physical-Memory"><span class="nav-number">3.1.</span> <span class="nav-text">Virtual Memory v.s. Physical Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operating-System-Should"><span class="nav-number">3.2.</span> <span class="nav-text">Operating System Should</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Allocate"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. Allocate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Arbitrate"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. Arbitrate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Page-based-Management"><span class="nav-number">3.3.</span> <span class="nav-text">Page-based Management:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Segment-based-Management"><span class="nav-number">3.4.</span> <span class="nav-text">Segment-based Management:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hardware-support"><span class="nav-number">4.</span> <span class="nav-text">Hardware support</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-Management-Unit-MMU"><span class="nav-number">4.1.</span> <span class="nav-text">Memory Management Unit (MMU)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Segmentation"><span class="nav-number">5.</span> <span class="nav-text">Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation"><span class="nav-number">5.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-it-works"><span class="nav-number">5.2.</span> <span class="nav-text">How it works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pros-and-cons"><span class="nav-number">5.3.</span> <span class="nav-text">Pros and cons</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Page-Table"><span class="nav-number">6.</span> <span class="nav-text">Page Table</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation-1"><span class="nav-number">6.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-it-works-1"><span class="nav-number">6.2.</span> <span class="nav-text">How it works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pros-and-Cons"><span class="nav-number">6.3.</span> <span class="nav-text">Pros and Cons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Level-page"><span class="nav-number">6.4.</span> <span class="nav-text">Multi Level page</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-it-works-2"><span class="nav-number">6.4.1.</span> <span class="nav-text">How it works</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Could-keep-adding-additional-layers-especially-useful-for-64-bits"><span class="nav-number">6.5.</span> <span class="nav-text">Could keep adding additional layers (especially useful for 64 bits)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TLB-Translation-Lookaside-Buffer"><span class="nav-number">7.</span> <span class="nav-text">TLB - Translation Lookaside Buffer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inverted-Page-Table"><span class="nav-number">8.</span> <span class="nav-text">Inverted Page Table</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Page-Size"><span class="nav-number">9.</span> <span class="nav-text">Page Size</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Allocation"><span class="nav-number">10.</span> <span class="nav-text">Memory Allocation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-Allocator"><span class="nav-number">10.1.</span> <span class="nav-text">Memory Allocator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernal-Level-Allocator"><span class="nav-number">10.2.</span> <span class="nav-text">Kernal Level Allocator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Level-Allocator"><span class="nav-number">10.3.</span> <span class="nav-text">User Level Allocator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mechanisms"><span class="nav-number">10.4.</span> <span class="nav-text">Mechanisms</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demanding-Pages"><span class="nav-number">11.</span> <span class="nav-text">Demanding Pages</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Freeing-up-Memory-Pages"><span class="nav-number">12.</span> <span class="nav-text">Freeing up Memory Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#When-should-we-swap"><span class="nav-number">12.1.</span> <span class="nav-text">When should we swap?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Which-Page-should-we-swap"><span class="nav-number">12.2.</span> <span class="nav-text">Which Page should we swap?</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

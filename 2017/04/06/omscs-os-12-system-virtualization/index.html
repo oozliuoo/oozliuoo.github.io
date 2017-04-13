@@ -1,0 +1,843 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview Overview of virtualization Main technical approaches in popular virtualization solutions Virtualization-related hardware advances  ReferenceVirtual Machine Monitors: Current Technologies and F">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - System Virtualization">
+<meta property="og:url" content="http://yoursite.com/2017/04/06/omscs-os-12-system-virtualization/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview Overview of virtualization Main technical approaches in popular virtualization solutions Virtualization-related hardware advances  ReferenceVirtual Machine Monitors: Current Technologies and F">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot3.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot4.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot5.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot6.png">
+<meta property="og:updated_time" content="2017-04-08T02:36:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - System Virtualization">
+<meta name="twitter:description" content="Preview Overview of virtualization Main technical approaches in popular virtualization solutions Virtualization-related hardware advances  ReferenceVirtual Machine Monitors: Current Technologies and F">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_12/OS_12_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/06/omscs-os-12-system-virtualization/"/>
+
+
+
+
+
+  <title> Operating System - System Virtualization | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/06/omscs-os-12-system-virtualization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - System Virtualization
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-06T20:38:09-07:00">
+                2017-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>Overview of <strong>virtualization</strong></li>
+<li>Main technical approaches in popular <strong>virtualization solutions</strong></li>
+<li><strong>Virtualization-related hardware</strong> advances</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-rosenblum-garfinkel-paper.pdf" target="_blank" rel="external">Virtual Machine Monitors: Current Technologies and Future Trends</a></p>
+<h1 id="What-is-virtualization"><a href="#What-is-virtualization" class="headerlink" title="What is virtualization"></a>What is virtualization</h1><p><strong>Virtualization</strong> allows concurrent execution of multiple OSs (and their applications) on the same physical machine</p>
+<ul>
+<li><strong>Virtual resources</strong> == each OS thinks that it “owns” hardware resources</li>
+<li><strong>Virtual Machine (VM)</strong> ==  OS + applications + virtual resources <strong>(guest domain)</strong></li>
+<li><strong>Virtualization layer</strong> == management of physical hardware <strong>(Vitual machine monitor, hypervisor)</strong></li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_12/OS_12_Screenshot1.png" class="[screenshot]">
+<h2 id="Defining-Virtualization"><a href="#Defining-Virtualization" class="headerlink" title="Defining Virtualization"></a>Defining Virtualization</h2><p>A <strong>Virtual machine</strong> is an efficient, isolated duplicate of the real machine</p>
+<ul>
+<li>Supported by a <strong>Virtual Machine Monitor (VMM)</strong><ol>
+<li>Provides environment <strong>essentially identical with the original machine</strong> - <strong>fidelity</strong></li>
+<li>Programs show <strong>at worst only minor decrease in speed</strong> - <strong>performance</strong></li>
+<li>VMM is in <strong>complete control of system resources</strong> － <strong>safety &amp; isolation</strong></li>
+</ol>
+</li>
+</ul>
+<h2 id="Benefits"><a href="#Benefits" class="headerlink" title="Benefits"></a>Benefits</h2><h3 id="Consolidation"><a href="#Consolidation" class="headerlink" title="Consolidation"></a>Consolidation</h3><pre><code>* Run multiple OS on a single machine
+* Decrease cost, improve manageability
+</code></pre><h3 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h3><pre><code>* Availability, reliability
+</code></pre><h3 id="Security-debugging-support-for-legacy-OSs"><a href="#Security-debugging-support-for-legacy-OSs" class="headerlink" title="Security, debugging, support for legacy OSs"></a>Security, debugging, support for legacy OSs</h3><h1 id="Virtualization-Models"><a href="#Virtualization-Models" class="headerlink" title="Virtualization Models"></a>Virtualization Models</h1><h2 id="Bare-metal-or-Hypervisor-based-type1"><a href="#Bare-metal-or-Hypervisor-based-type1" class="headerlink" title="Bare-metal or Hypervisor-based (type1)"></a>Bare-metal or Hypervisor-based (type1)</h2><ul>
+<li><strong>VMM*hypervisor)</strong> manages all hardware resources and supports execution of VMs</li>
+<li><strong>Privileged, service VM</strong> to deal with devices (and other configuration and management task), and runs all drivers</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_12/OS_12_Screenshot2.png" class="[screenshot]">
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><h4 id="Xen"><a href="#Xen" class="headerlink" title="Xen"></a>Xen</h4><ul>
+<li>Opern source or Citrix XenServer</li>
+<li><strong>domain0</strong> - Privileged VM and <strong>domUs</strong>- Guest VM</li>
+<li>Drivers in <strong>domain0</strong></li>
+</ul>
+<h4 id="ESX-VMware"><a href="#ESX-VMware" class="headerlink" title="ESX (VMware)"></a>ESX (VMware)</h4><ul>
+<li>Many open APIs</li>
+<li>Drivers in VMM</li>
+<li>Used to have Linux control core, now remote APIs</li>
+</ul>
+<h2 id="Hosted-type2"><a href="#Hosted-type2" class="headerlink" title="Hosted (type2)"></a>Hosted (type2)</h2><ul>
+<li><strong>Host OS</strong> owns all hardware</li>
+<li>Special <strong>VMM Module</strong> provides <strong>hardware interfaces</strong> to VMs and deals with VM context switching</li>
+<li>Can leverage all existing features in Host OS</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_12/OS_12_Screenshot3.png" class="[screenshot]">
+<h3 id="Examples-1"><a href="#Examples-1" class="headerlink" title="Examples"></a>Examples</h3><h4 id="KVM-Kernel-basedVM"><a href="#KVM-Kernel-basedVM" class="headerlink" title="KVM (Kernel-basedVM)"></a>KVM (Kernel-basedVM)</h4><ul>
+<li>Based on Linux</li>
+<li>KVM kernel module + QEMU for hardware virtualization</li>
+<li>Leverages Linux open-source community</li>
+</ul>
+<h1 id="Hardware-Protection-Levels"><a href="#Hardware-Protection-Levels" class="headerlink" title="Hardware Protection Levels"></a>Hardware Protection Levels</h1><p>Commodity hardware has more than 2 <strong>protection levels</strong></p>
+<p>e.g. x86 has </p>
+<ul>
+<li><strong>4 protection levels</strong> (rings)<br>  ring3: apps<br>  ring1: OS<br>  ring0: hypervisor</li>
+<li>and <strong>2 protection modes</strong> (root &amp; non-root)<ul>
+<li>non-root: VMs<br>  ring3: apps<br>  ring0: OS</li>
+<li>root: ring0: hypervisor</li>
+</ul>
+</li>
+</ul>
+<h1 id="Processor-Virtualization-Trap-and-Emulate"><a href="#Processor-Virtualization-Trap-and-Emulate" class="headerlink" title="Processor Virtualization (Trap and Emulate)"></a>Processor Virtualization (Trap and Emulate)</h1><p>Guest instructions…</p>
+<pre><code>- Executed **directly by hardware**, VMM not involved
+- For **non-privileged operations**: hardware speeds -&gt; efficiency
+- For **privileged operations**: __TRAP__ to hypervisor
+- Hypervisor determines what needs to be done:
+    a. if **illegal op**: terminate VM
+    b. if **legal op**: __emulate__ the behavior the guest OS was expecting from the hardware
+</code></pre><h2 id="Problems-with-Trap-and-Emulate"><a href="#Problems-with-Trap-and-Emulate" class="headerlink" title="Problems with Trap-and-Emulate"></a>Problems with Trap-and-Emulate</h2><p>When privileged operations fail silently, the hyperevisor doesn’t know and hence would try to do anything; and the OS doesn’t know that hypervisor didn’t do anything, and would assume any operation it requested as successful operations. In <strong>Pre 2005 x86 machines</strong>, there are <strong>17</strong> such operations</p>
+<h2 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h2><h3 id="Binary-Translation"><a href="#Binary-Translation" class="headerlink" title="Binary Translation"></a>Binary Translation</h3><ul>
+<li>Main Idea: rewrite the VM binary to never issue those 17 instructions</li>
+<li>Commercialized by VMWare</li>
+<li>Goal: <strong>full virtualization</strong> == guest OS not modified</li>
+<li>Approach: <strong>Dynamic binary translation</strong><ol>
+<li>Inspect code blocks to be executed</li>
+<li>If needed, translate to alternate instruction sequence<ul>
+<li>e.g., to emulate desired behavior, possibly even avoiding trap</li>
+</ul>
+</li>
+<li>Otherwise, run at hardware speeds<ul>
+<li>Cache translations</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Paravirtualization"><a href="#Paravirtualization" class="headerlink" title="Paravirtualization"></a>Paravirtualization</h2><ul>
+<li>Goal: <strong>Performance</strong> - give up on unmodified guests</li>
+<li>Approach: <strong>paravirtualization</strong> == modify guest so that<ul>
+<li>its knows it’s running virtualized</li>
+<li>it makes explicit calls to the hypervisor <strong>(hypercalls)</strong>, for those 17 instructions</li>
+<li>hypercall (~system calls)<ol>
+<li>Package context info</li>
+<li>Specify desired hypercall</li>
+<li>Trap to VMM</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>e.g., Xen</li>
+</ul>
+<h1 id="Memory-Virtualization"><a href="#Memory-Virtualization" class="headerlink" title="Memory Virtualization"></a>Memory Virtualization</h1><h2 id="Full"><a href="#Full" class="headerlink" title="Full"></a>Full</h2><ul>
+<li>All guests expect contiguous physical memory, starting at 0</li>
+<li>Need to distinguish between<br>  a. Virtual Addresses<br>  b. Physical Addresses<br>  c. Machine Addresses<br>  d. Page frame bumbers</li>
+<li>Still leverages hardware <strong>MMU</strong>, <strong>TLB</strong>, …</li>
+<li>Option 1:<ul>
+<li>Guest page table: <strong>VA -&gt; PA</strong></li>
+<li>Hypervisor: <strong>PA -&gt; MA</strong></li>
+<li><strong>TOO EXPENSIVE</strong></li>
+</ul>
+</li>
+<li>Option 2:<ul>
+<li>Guest Page Tables: <strong>VA =&gt; PA</strong></li>
+<li>Hypervisor <strong>shadow PT</strong>: <strong>VA =&gt; MA</strong></li>
+<li>Hypervisor maintains consistence</li>
+</ul>
+</li>
+</ul>
+<h2 id="Paravirtualized"><a href="#Paravirtualized" class="headerlink" title="Paravirtualized"></a>Paravirtualized</h2><ul>
+<li>Guest aware of virtualization</li>
+<li>No longer strict requirement on contiguous physical memory starting @ 0</li>
+<li>Explicitly registers page tables with hypervisor</li>
+</ul>
+<h1 id="Device-Virtualization"><a href="#Device-Virtualization" class="headerlink" title="Device Virtualization"></a>Device Virtualization</h1><ul>
+<li>For <strong>CPUs and memory</strong> - <strong>less diversity</strong>, because ISA (Instruction Set Architecture) has standardization of interface, and it’s up to the hardware manufacturer to implement them</li>
+<li>For <strong>devices</strong> - <strong>high diversity</strong>, and lack of standard specification of device interface and behavior</li>
+</ul>
+<h2 id="3-Key-Models-for-Device-Virtualization"><a href="#3-Key-Models-for-Device-Virtualization" class="headerlink" title="3 Key Models for Device Virtualization"></a>3 Key Models for Device Virtualization</h2><h3 id="Passthrough-Model"><a href="#Passthrough-Model" class="headerlink" title="Passthrough Model"></a>Passthrough Model</h3><img src="/imgs/OMSCS/OS/OS_12/OS_12_Screenshot4.png" class="[screenshot]">
+<ul>
+<li>Approach: VMM-level driver configures device access permissions</li>
+<li>Benefits:<ul>
+<li>VM provided with exclusive access to the device</li>
+<li>VM can directly access the device (VMM - bypass)</li>
+</ul>
+</li>
+<li>Downside:<ul>
+<li>Device sharing difficult</li>
+<li>VMM must have exact type of device as what VM expects</li>
+<li>Because VM is tied to the device, it breaks the decouple rule and makes migration tricky</li>
+</ul>
+</li>
+</ul>
+<h3 id="Hypervisor-Direct-model"><a href="#Hypervisor-Direct-model" class="headerlink" title="Hypervisor-Direct model"></a>Hypervisor-Direct model</h3><img src="/imgs/OMSCS/OS/OS_12/OS_12_Screenshot5.png" class="[screenshot]">
+<ul>
+<li>Approach:<ul>
+<li>VMM interrupts all device accesses</li>
+<li>Emulate device operations:<br>  a. Translate to generic I/O Operations<br>  b. Tranverse VMM-resident I/O stack<br>  c. Invoke VMM-resident driver</li>
+</ul>
+</li>
+<li>Benefits<ul>
+<li>VM decoupled from physical device</li>
+<li>Sharing, migration beceom easier</li>
+</ul>
+</li>
+<li>Downside:<ul>
+<li>Latency of device operations</li>
+<li>Device driver ecosystem complexityin hypervisor</li>
+</ul>
+</li>
+</ul>
+<h3 id="Split-Device-Driver-Model"><a href="#Split-Device-Driver-Model" class="headerlink" title="Split-Device Driver Model"></a>Split-Device Driver Model</h3><img src="/imgs/OMSCS/OS/OS_12/OS_12_Screenshot6.png" class="[screenshot]">
+<ul>
+<li>Approach: Device access control <strong>split</strong> between<ul>
+<li><strong>front end driver</strong> in guest VM (device API)</li>
+<li><strong>back end driver</strong> in service VM (or host): just regular device driver</li>
+<li>Modified guest drivers =&gt; <strong>limited to paravirtualized guests</strong></li>
+</ul>
+</li>
+<li>Benefits:<ul>
+<li>Eliminate emulation overhead</li>
+<li>Allow for better management of shared devices, because we have a back-end device driver centralized across all guest VMs</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/07/omscs-os-13-remote-procedure-calls/" rel="next" title="Operating System - Remote Procedure Calls">
+                <i class="fa fa-chevron-left"></i> Operating System - Remote Procedure Calls
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/05/omscs-os-11-io-management/" rel="prev" title="Operating System - I/O Management">
+                Operating System - I/O Management <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.1.</span> <span class="nav-text">Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-virtualization"><span class="nav-number">2.</span> <span class="nav-text">What is virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Defining-Virtualization"><span class="nav-number">2.1.</span> <span class="nav-text">Defining Virtualization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benefits"><span class="nav-number">2.2.</span> <span class="nav-text">Benefits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consolidation"><span class="nav-number">2.2.1.</span> <span class="nav-text">Consolidation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Migration"><span class="nav-number">2.2.2.</span> <span class="nav-text">Migration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Security-debugging-support-for-legacy-OSs"><span class="nav-number">2.2.3.</span> <span class="nav-text">Security, debugging, support for legacy OSs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Virtualization-Models"><span class="nav-number">3.</span> <span class="nav-text">Virtualization Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bare-metal-or-Hypervisor-based-type1"><span class="nav-number">3.1.</span> <span class="nav-text">Bare-metal or Hypervisor-based (type1)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Examples"><span class="nav-number">3.1.1.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Xen"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">Xen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ESX-VMware"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">ESX (VMware)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hosted-type2"><span class="nav-number">3.2.</span> <span class="nav-text">Hosted (type2)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Examples-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#KVM-Kernel-basedVM"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">KVM (Kernel-basedVM)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hardware-Protection-Levels"><span class="nav-number">4.</span> <span class="nav-text">Hardware Protection Levels</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Processor-Virtualization-Trap-and-Emulate"><span class="nav-number">5.</span> <span class="nav-text">Processor Virtualization (Trap and Emulate)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-Trap-and-Emulate"><span class="nav-number">5.1.</span> <span class="nav-text">Problems with Trap-and-Emulate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solutions"><span class="nav-number">5.2.</span> <span class="nav-text">Solutions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Translation"><span class="nav-number">5.2.1.</span> <span class="nav-text">Binary Translation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paravirtualization"><span class="nav-number">5.3.</span> <span class="nav-text">Paravirtualization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Virtualization"><span class="nav-number">6.</span> <span class="nav-text">Memory Virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Full"><span class="nav-number">6.1.</span> <span class="nav-text">Full</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paravirtualized"><span class="nav-number">6.2.</span> <span class="nav-text">Paravirtualized</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-Virtualization"><span class="nav-number">7.</span> <span class="nav-text">Device Virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Key-Models-for-Device-Virtualization"><span class="nav-number">7.1.</span> <span class="nav-text">3 Key Models for Device Virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Passthrough-Model"><span class="nav-number">7.1.1.</span> <span class="nav-text">Passthrough Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hypervisor-Direct-model"><span class="nav-number">7.1.2.</span> <span class="nav-text">Hypervisor-Direct model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Split-Device-Driver-Model"><span class="nav-number">7.1.3.</span> <span class="nav-text">Split-Device Driver Model</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

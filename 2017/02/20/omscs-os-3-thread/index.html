@@ -1,0 +1,926 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Visual Metaphors   Features/Functionalities Thread Work in toy shop     Is an active entity Executing unit of a process Executing unit of toy order   Works simultaneously with others Many threads exec">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Thread">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/omscs-os-3-thread/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Visual Metaphors   Features/Functionalities Thread Work in toy shop     Is an active entity Executing unit of a process Executing unit of toy order   Works simultaneously with others Many threads exec">
+<meta property="og:updated_time" content="2017-02-24T03:31:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Thread">
+<meta name="twitter:description" content="Visual Metaphors   Features/Functionalities Thread Work in toy shop     Is an active entity Executing unit of a process Executing unit of toy order   Works simultaneously with others Many threads exec">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/20/omscs-os-3-thread/"/>
+
+
+
+
+
+  <title> Operating System - Thread | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/omscs-os-3-thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Thread
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T12:28:30-08:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Visual-Metaphors"><a href="#Visual-Metaphors" class="headerlink" title="Visual Metaphors"></a>Visual Metaphors</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Thread</th>
+<th style="text-align:center">Work in toy shop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Is an <strong>active</strong> entity</td>
+<td style="text-align:center">Executing unit of a process</td>
+<td style="text-align:center">Executing unit of toy order</td>
+</tr>
+<tr>
+<td style="text-align:center">Works simultaneously with others</td>
+<td style="text-align:center">Many threads executing concurrently</td>
+<td style="text-align:center">Many works completing toy orders</td>
+</tr>
+<tr>
+<td style="text-align:center">Requires corrdination</td>
+<td style="text-align:center">Sharing I/O, CPU, memory, etc.</td>
+<td style="text-align:center">Sharing of tools, ports, work stations</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Process-v-s-Thread"><a href="#Process-v-s-Thread" class="headerlink" title="Process v.s. Thread"></a>Process v.s. Thread</h1><ul>
+<li><p>Single Threaded Process - only one context</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Address Space:</div><div class="line"> ------------------</div><div class="line">| Code, data, file |</div><div class="line"> ------------------</div><div class="line">|      regs        |</div><div class="line">|      stack       |</div><div class="line">|       ...        |</div><div class="line"> -------------------</div></pre></td></tr></table></figure>
+</li>
+<li><p>Multiple Threaded Process - multiple context </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Address Space:</div><div class="line"> ---------------------------------------</div><div class="line">|           Code, data, file            |</div><div class="line"> ---------------------------------------</div><div class="line">|    regs    |    regs    |    regs     |</div><div class="line">|    stack   |    stack   |    stack    |</div><div class="line">|    ...     |    ...     |    ...      |</div><div class="line"> ---------------------------------------</div><div class="line"></div><div class="line">PCB:</div><div class="line"> ---------------------------------------</div><div class="line">|         Shared among threads          |</div><div class="line"> ---------------------------------------</div><div class="line">|      ----       ----       ----       |</div><div class="line">|     |    |     |    |     |    |      |</div><div class="line">|      ----       ----       ----       |</div><div class="line">|                                       |</div><div class="line">|        Per thread exec context        |</div><div class="line"> ---------------------------------------</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Benefits-of-threads"><a href="#Benefits-of-threads" class="headerlink" title="Benefits of threads"></a>Benefits of threads</h1><ul>
+<li>Parallelization -&gt; speed up</li>
+<li>Specializing different threads to run different tasks -&gt; better management (prioritizing) -&gt; Hot cache</li>
+<li>More efficient memory &amp; less memory requirement (only one shared address space)</li>
+</ul>
+<h2 id="Are-threads-useful-when-of-threads-gt-of-CPU"><a href="#Are-threads-useful-when-of-threads-gt-of-CPU" class="headerlink" title="Are threads useful when # of threads &gt; # of CPU?"></a>Are threads useful when # of threads &gt; # of CPU?</h2><ul>
+<li>If <strong>t_idle &gt; 2 * t_context_switch</strong>, then CPU could switch to other threads to <strong>hide idling time</strong></li>
+<li>Note that: because Address Space is shared, <strong>t_context_switch for threads &lt; t_context_switch for proccesses</strong></li>
+<li>Hide latency</li>
+</ul>
+<h1 id="What-do-we-need-to-support-threads"><a href="#What-do-we-need-to-support-threads" class="headerlink" title="What do we need to support threads?"></a>What do we need to support threads?</h1><ol>
+<li><strong>Thread Data Structure</strong>: identify threads, keep track of resource usage</li>
+<li><strong>Mechanism</strong> to <strong>create</strong> &amp; <strong>manage</strong> threads.</li>
+<li><strong>Mechanism</strong> to safely <strong>coordinate</strong> among threads running <strong>concurrently</strong> in the same address space</li>
+</ol>
+<h1 id="Threads-and-Concurrency"><a href="#Threads-and-Concurrency" class="headerlink" title="Threads and Concurrency"></a>Threads and Concurrency</h1><ul>
+<li>Because threads are sharing a common Address Space, meaning they could access a shared memory space simultaneously, and that could lead to issues.</li>
+<li><strong>Concurrency Control &amp; Coordination:</strong><ol>
+<li><strong>Mutual Exclusion</strong><ul>
+<li>Exclusive access to only one thread @ a time</li>
+<li><strong>mutex</strong></li>
+</ul>
+</li>
+<li><strong>Waiting</strong> on other threads<ul>
+<li>Specific condition before proceeding</li>
+<li>Condition variable (threads are listening to)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="Thread-Creation"><a href="#Thread-Creation" class="headerlink" title="Thread Creation"></a>Thread Creation</h1><ul>
+<li><strong>Thread type</strong> - Thread data structure<ul>
+<li>Thread ID</li>
+<li>Program Counter</li>
+<li>Stack Pointer</li>
+<li>Registers</li>
+<li>Stack</li>
+<li>Attributes</li>
+</ul>
+</li>
+<li><p><strong>Fork(proc, args)</strong></p>
+<ul>
+<li>Creates a thread</li>
+<li><strong>NOT</strong> Linux fork</li>
+</ul>
+</li>
+<li><p><strong>Join(thread)</strong></p>
+<ul>
+<li>Wait and terminate a thread</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">        T0  |</div><div class="line">            |</div><div class="line">            |</div><div class="line">         t1 = fork(proc, args) -&gt;  T1 |                 -------------------</div><div class="line">            |                         |                | T1 Data Structure |</div><div class="line">            |                         |                |     PC = proc     |</div><div class="line">            |                         |                |    stack = args   |</div><div class="line">    child.result=join(t1)    return result OR end      |        ...        |</div><div class="line">(will block till t1 completes)                          -------------------</div></pre></td></tr></table></figure>
+<h1 id="Mutual-Exclusion"><a href="#Mutual-Exclusion" class="headerlink" title="Mutual Exclusion"></a>Mutual Exclusion</h1><ul>
+<li><p><strong>Mutex</strong> - like a lock</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Lock(mutex) &#123;</div><div class="line">    critical section</div><div class="line">&#125;</div><div class="line"></div><div class="line">OR</div><div class="line"></div><div class="line">lock(m)</div><div class="line">    critical section</div><div class="line">unlock(m)</div></pre></td></tr></table></figure>
+</li>
+<li><p>Mutext type (data structure):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> --------------------------</div><div class="line">|          locked?         |</div><div class="line">|          owner           |</div><div class="line">|      blocked_threads     |</div><div class="line"> --------------------------</div></pre></td></tr></table></figure>
+</li>
+<li><p>Example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">                    T1 |</div><div class="line">                       |</div><div class="line">                       |        T2 |</div><div class="line">                       |           | </div><div class="line">                    lock(m)        |          T3 |</div><div class="line">                       |           |             |</div><div class="line">                       |       lock(m) **X**     |</div><div class="line">                       |                         |</div><div class="line">                       |                      lock(m) **X**</div><div class="line">                       |</div><div class="line">T1 frees lock    --------------------------------------------</div><div class="line">                       |           |</div><div class="line">                       |           |</div><div class="line">                       |           |</div><div class="line">T2 frees lock    --------------------------------------------</div><div class="line">                       |           |             |</div><div class="line">                       |           |             |</div><div class="line">                       |           |             |</div><div class="line">T3 frees lock    --------------------------------------------</div><div class="line">                       |           |             |</div><div class="line">                       |           |             |</div><div class="line">                      ...         ...           ...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Producer-Consumer-Example"><a href="#Producer-Consumer-Example" class="headerlink" title="Producer/Consumer Example"></a>Producer/Consumer Example</h1><ul>
+<li>Many <strong>producer</strong> generating an array</li>
+<li>Only one <strong>consumer</strong> printing the full array</li>
+<li>Need to perform <strong>Mutual Exclusion</strong> under certain conditions</li>
+<li><p>Psuedo code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Consumer:</div><div class="line">    Lock(m) &#123;</div><div class="line">        while (my_list.notfull())&#123;</div><div class="line">            // wait should frees m automatically upon invoking</div><div class="line">            // and lock m automatically upon returning </div><div class="line">            wait(m, list_full);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">Producer:</div><div class="line">    Lock(m)&#123;</div><div class="line">        my_list.insert(...);</div><div class="line">        if (my_list.full()) &#123;</div><div class="line">            signal(list_full);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>list_full</strong> is the condition variable for this Example</p>
+</li>
+</ul>
+<h1 id="Condition-Variable-API"><a href="#Condition-Variable-API" class="headerlink" title="Condition Variable API"></a>Condition Variable API</h1><ul>
+<li><p><strong>Condition Type</strong> (data structure)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">    Cond Variable</div><div class="line"> -------------------</div><div class="line">|     mutex ref     |</div><div class="line">|  waiting threads  |</div><div class="line">|       ...         |</div><div class="line"> -------------------</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>wait(mutex, cond)</strong>: mutex is automatically released &amp; re-acquired on wait</p>
+</li>
+<li><strong>signal(cond)</strong>: notify <strong>only one</strong> thread waiting on the cond</li>
+<li><strong>boardcast(cond)</strong>: notify <strong>all</strong> waiting threads</li>
+</ul>
+<h1 id="Reader-Writer-Problem"><a href="#Reader-Writer-Problem" class="headerlink" title="Reader/Writer Problem"></a>Reader/Writer Problem</h1><ul>
+<li>Could have 0 or many readers, but could only have 0 or 1 Writer</li>
+<li>Define state of resources:<ol>
+<li><strong>free</strong>: resource.counter = 0</li>
+<li><strong>reading</strong>: resource.counter &gt; 0</li>
+<li><strong>writing</strong>: resource.counter = -1</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">// Mutex</div><div class="line">var counter_mutex;</div><div class="line">// Condition var</div><div class="line">var read_phase, write_phase;</div><div class="line">var resource_counter = 0;</div><div class="line"></div><div class="line">Readers:</div><div class="line">    // Entering Critical Section</div><div class="line">    Lock(counter_mutex) &#123;</div><div class="line">        while(resource_counter == -1) &#123;</div><div class="line">            wait(counter_mutex, read_phase);</div><div class="line">        &#125;</div><div class="line">        resource_counter ++;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // real critical section</div><div class="line">    read data...</div><div class="line"></div><div class="line">    // Exiting Critical Section</div><div class="line">    Lock(counter_mutex) &#123;</div><div class="line">        resource_counter --;</div><div class="line">        if (readers == 0) &#123;</div><div class="line">            signal(write_phase);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">Writers:</div><div class="line">    // Entering Critical Section</div><div class="line">    Lock(counter_mutex) &#123;</div><div class="line">        while(resource_counter != 0) &#123;</div><div class="line">            wait(counter_mutex, write_phase);</div><div class="line">        &#125;</div><div class="line">        resource_counter = -1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // real critical section</div><div class="line">    write data...</div><div class="line"></div><div class="line">    // Exiting Critical Section</div><div class="line">    Lock(counter_mutex) &#123;</div><div class="line">        resource_counter = 0;</div><div class="line">        boardcast(read_phase);</div><div class="line">        signal(write_phase);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h1 id="Typical-Critical-Section-Structure"><a href="#Typical-Critical-Section-Structure" class="headerlink" title="Typical Critical Section Structure"></a>Typical Critical Section Structure</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Lock(mutex) &#123;</div><div class="line">    while (!predicate_indicating_access_ok) &#123;</div><div class="line">        wait(mutex, cond_var);</div><div class="line">    &#125;</div><div class="line">    update state -&gt; update predicate</div><div class="line">    signal/boardcast(cond_var_with_correct_waiting_threads);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Critical-Section-Structure-with-Proxy-Variable"><a href="#Critical-Section-Structure-with-Proxy-Variable" class="headerlink" title="Critical Section Structure with Proxy Variable"></a>Critical Section Structure with Proxy Variable</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// Enter Critical Section</div><div class="line">Lock(mutex) &#123;</div><div class="line">    while (!predicate_for_access) &#123;</div><div class="line">        wait(mutex, cond_var);</div><div class="line">    &#125;</div><div class="line">    update predicate</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Critical Section</div><div class="line">...</div><div class="line"></div><div class="line">// Exit Critical Section</div><div class="line">Lock(mutex) &#123;</div><div class="line">    update predicate;</div><div class="line">    boardcast/signal if it meets certain conditions</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Avoid-Common-Mistakes"><a href="#Avoid-Common-Mistakes" class="headerlink" title="Avoid Common Mistakes"></a>Avoid Common Mistakes</h1><ul>
+<li>Keep track of <strong>mutex/cond var</strong> used with a resource</li>
+<li>Check that you are always correctly using <strong>lock&amp;unlock</strong></li>
+<li>Use a <strong>single mutex</strong> to access a <strong>single resource</strong></li>
+<li>Check that you are signaling correct conditions</li>
+<li>Check that you are <strong>NOT</strong> using signal when boardcast is needed</li>
+</ul>
+<h2 id="Pitfall-Spurious-wake-ups"><a href="#Pitfall-Spurious-wake-ups" class="headerlink" title="Pitfall - Spurious wake-ups"></a>Pitfall - Spurious wake-ups</h2><ul>
+<li>Woke up but still waiting for mutex</li>
+<li>When we wake threads up knowing that thay may not be able to proceed.</li>
+<li>Solution: usually we could put the wakeup statement(boardcast/signal) outside the unlock section, but need to be very careful when doing this</li>
+</ul>
+<h2 id="Pitfall-Dead-Lock"><a href="#Pitfall-Dead-Lock" class="headerlink" title="Pitfall - Dead Lock"></a>Pitfall - Dead Lock</h2><ul>
+<li>Two or more competing threads are waiting on each other to complete, but none of them ever do.</li>
+<li>How to avoid?<ol>
+<li><strong>Fine-grained locking</strong>: Lock and unlock in certain order</li>
+<li>Get all lock up front and then release them @ the end</li>
+<li>Use <strong>mega lock</strong></li>
+<li><strong>Maintain lock order</strong><br>NOTE: 2&amp;3 will limit parallelism</li>
+</ol>
+</li>
+</ul>
+<h1 id="Kernel-Level-Thread-v-s-User-Level-Thread"><a href="#Kernel-Level-Thread-v-s-User-Level-Thread" class="headerlink" title="Kernel Level Thread v.s. User Level Thread"></a>Kernel Level Thread v.s. User Level Thread</h1><h2 id="Kernel-Level-Thread"><a href="#Kernel-Level-Thread" class="headerlink" title="Kernel Level Thread:"></a>Kernel Level Thread:</h2><p>OS is multi-threads</p>
+<h2 id="User-Level-Thread"><a href="#User-Level-Thread" class="headerlink" title="User Level Thread:"></a>User Level Thread:</h2><p>Must be linked to a kernel thread</p>
+<h2 id="Relationship"><a href="#Relationship" class="headerlink" title="Relationship:"></a>Relationship:</h2><ol>
+<li><p>One-to-one Model</p>
+<ul>
+<li>Each <strong>user level thread</strong> is associated with a <strong>kernel-level thread</strong></li>
+<li>Pros:<ol>
+<li>OS sees/understands threads, synchronizations, blockings, etc…</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>Must go to OS for all operations</li>
+<li>OS might have limits in terms of <strong>policies</strong>, <strong>thread #</strong>, etc…</li>
+<li>Portability is bad</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Many-to-one Model</p>
+<ul>
+<li>Pros:<ol>
+<li>Totally portable.</li>
+<li>Doesn’t depend on OS limits.</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>OS has no insights into applications.</li>
+<li>OS may block entire process if one user-level thread blocks I/O.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Many-to-many Model</p>
+<ul>
+<li>Pros:<ol>
+<li>Can be best for both worlds.</li>
+<li>Can have bound or unbound threads</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>Requires coordination in between</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="Multi-Threading-Patterns"><a href="#Multi-Threading-Patterns" class="headerlink" title="Multi-Threading Patterns"></a>Multi-Threading Patterns</h1><h2 id="Boss-Worker-Pattern"><a href="#Boss-Worker-Pattern" class="headerlink" title="Boss/Worker Pattern"></a>Boss/Worker Pattern</h2><ul>
+<li><strong>Boss</strong>: assigns work to workers</li>
+<li><strong>Worker</strong>: perform entire work</li>
+<li>Throughput is limited by boss thread: <strong>1/boss_time_per_order</strong></li>
+<li>Boss can assign work by:<ol>
+<li><strong>directly signaling specific worker</strong><ul>
+<li>Pros: workers dont need to synchronize</li>
+<li>Cons: Boss must keep track of what each worker is doing (Throughput is <strong>down</strong>)</li>
+</ul>
+</li>
+<li><strong>Placing work in Producer/Consumer Queue</strong><ul>
+<li>Pros: Boss doesn’t need to know details about workers</li>
+<li>Cons: Queue Synchronization</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong>Pros&amp;Cons:</strong><br>  +: Simplicity<br>  -: Thread pool management, locality</li>
+<li><p>How many workers?</p>
+<ol>
+<li>On demand -&gt; waste time in waiting/hiring workers</li>
+<li>Pool of workers (good)</li>
+<li>Static v.s. Dynamic (good)</li>
+</ol>
+</li>
+<li><p>Variant:</p>
+<ul>
+<li>Instead of equal workers, use <strong>workers specialized for certain tasks</strong></li>
+<li>This requires the boss to do a bit more for each order</li>
+<li>Pros:<ol>
+<li>Better locality</li>
+<li>Quality of Service (QoS) management</li>
+</ol>
+</li>
+<li>Cons: Load balancing</li>
+</ul>
+</li>
+</ul>
+<h2 id="Pipeline-Pattern"><a href="#Pipeline-Pattern" class="headerlink" title="Pipeline Pattern"></a>Pipeline Pattern</h2><ul>
+<li>Threads assigned one subtask in the system.</li>
+<li>Entire tasks = piplines of threads</li>
+<li>Multiple tasks concurrently in the system, but in <strong>different pipeline stage</strong><ul>
+<li><strong>Throughput:</strong> Weakest link</li>
+<li><strong>Pipeline stage == Thread Pool</strong></li>
+</ul>
+</li>
+<li>Shared-buffer based communication between stages<ul>
+<li>Pros: Specialization &amp; locality</li>
+<li>Cons: Balancing &amp; Synchronization overheads</li>
+</ul>
+</li>
+</ul>
+<h2 id="Layered-Pattern"><a href="#Layered-Pattern" class="headerlink" title="Layered Pattern"></a>Layered Pattern</h2><ul>
+<li>Each layer group of related subtasks</li>
+<li>End-to-end task must pass up &amp; down through all layers</li>
+<li>Pros:<ol>
+<li>Specialization &amp; locality</li>
+<li>Less fine-grained than pipeline</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>Not suitable for all applications</li>
+<li>Synchronization</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-4-pthread/" rel="next" title="Operating System - PThread Intro">
+                <i class="fa fa-chevron-left"></i> Operating System - PThread Intro
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-2-process/" rel="prev" title="Operating System - Process">
+                Operating System - Process <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphors"><span class="nav-number">1.</span> <span class="nav-text">Visual Metaphors</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Process-v-s-Thread"><span class="nav-number">2.</span> <span class="nav-text">Process v.s. Thread</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Benefits-of-threads"><span class="nav-number">3.</span> <span class="nav-text">Benefits of threads</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Are-threads-useful-when-of-threads-gt-of-CPU"><span class="nav-number">3.1.</span> <span class="nav-text">Are threads useful when # of threads > # of CPU?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-do-we-need-to-support-threads"><span class="nav-number">4.</span> <span class="nav-text">What do we need to support threads?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Threads-and-Concurrency"><span class="nav-number">5.</span> <span class="nav-text">Threads and Concurrency</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Thread-Creation"><span class="nav-number">6.</span> <span class="nav-text">Thread Creation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mutual-Exclusion"><span class="nav-number">7.</span> <span class="nav-text">Mutual Exclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Producer-Consumer-Example"><span class="nav-number">8.</span> <span class="nav-text">Producer/Consumer Example</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Condition-Variable-API"><span class="nav-number">9.</span> <span class="nav-text">Condition Variable API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reader-Writer-Problem"><span class="nav-number">10.</span> <span class="nav-text">Reader/Writer Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Typical-Critical-Section-Structure"><span class="nav-number">11.</span> <span class="nav-text">Typical Critical Section Structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Critical-Section-Structure-with-Proxy-Variable"><span class="nav-number">12.</span> <span class="nav-text">Critical Section Structure with Proxy Variable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Avoid-Common-Mistakes"><span class="nav-number">13.</span> <span class="nav-text">Avoid Common Mistakes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pitfall-Spurious-wake-ups"><span class="nav-number">13.1.</span> <span class="nav-text">Pitfall - Spurious wake-ups</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pitfall-Dead-Lock"><span class="nav-number">13.2.</span> <span class="nav-text">Pitfall - Dead Lock</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kernel-Level-Thread-v-s-User-Level-Thread"><span class="nav-number">14.</span> <span class="nav-text">Kernel Level Thread v.s. User Level Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-Level-Thread"><span class="nav-number">14.1.</span> <span class="nav-text">Kernel Level Thread:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Level-Thread"><span class="nav-number">14.2.</span> <span class="nav-text">User Level Thread:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Relationship"><span class="nav-number">14.3.</span> <span class="nav-text">Relationship:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Multi-Threading-Patterns"><span class="nav-number">15.</span> <span class="nav-text">Multi-Threading Patterns</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Boss-Worker-Pattern"><span class="nav-number">15.1.</span> <span class="nav-text">Boss/Worker Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipeline-Pattern"><span class="nav-number">15.2.</span> <span class="nav-text">Pipeline Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layered-Pattern"><span class="nav-number">15.3.</span> <span class="nav-text">Layered Pattern</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Simple Process Definition A pocess is an instance of an executing program. “task” or “job”  Visual Metaphor   Features/Functionalities Process An order of toys     State of execution Program Counter,">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Process">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/omscs-os-2-process/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Simple Process Definition A pocess is an instance of an executing program. “task” or “job”  Visual Metaphor   Features/Functionalities Process An order of toys     State of execution Program Counter,">
+<meta property="og:updated_time" content="2017-02-24T02:47:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Process">
+<meta name="twitter:description" content="Simple Process Definition A pocess is an instance of an executing program. “task” or “job”  Visual Metaphor   Features/Functionalities Process An order of toys     State of execution Program Counter,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/20/omscs-os-2-process/"/>
+
+
+
+
+
+  <title> Operating System - Process | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/omscs-os-2-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Process
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T01:18:57-08:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Simple-Process-Definition"><a href="#Simple-Process-Definition" class="headerlink" title="Simple Process Definition"></a>Simple Process Definition</h1><ul>
+<li>A pocess is an instance of an executing program.</li>
+<li>“task” or “job”</li>
+</ul>
+<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Process</th>
+<th style="text-align:center">An order of toys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">State of execution</td>
+<td style="text-align:center">Program Counter, stack</td>
+<td style="text-align:center">Completed toy, waiting to be built</td>
+</tr>
+<tr>
+<td style="text-align:center">Parts &amp; temporary holding data</td>
+<td style="text-align:center">data, register state, states in memory</td>
+<td style="text-align:center">plastic pieces, containers</td>
+</tr>
+<tr>
+<td style="text-align:center">May require special hardwares</td>
+<td style="text-align:center">I/O devices, Network, etc.</td>
+<td style="text-align:center">Sewing machines, glue guns, etc.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="What-is-a-Process"><a href="#What-is-a-Process" class="headerlink" title="What is a Process"></a>What is a Process</h1><ul>
+<li>Process = state of a program when executing and loaded in memory (<strong>active</strong> state)<ul>
+<li>OS manages hardware on behalf of <strong>applications</strong></li>
+<li>Applications = Programs on disk, flash memory, cloud, etc.. (<strong>static</strong> state)</li>
+</ul>
+</li>
+</ul>
+<h1 id="What-does-a-process-look-like"><a href="#What-does-a-process-look-like" class="headerlink" title="What does a process look like"></a>What does a process look like</h1><ol>
+<li>Address Space (V0 - Vmax): “in memory” representation of a process<ul>
+<li>Using <strong>Virtual Address</strong> and map it to <strong>Physical Address</strong> by <strong>Page Table</strong></li>
+<li>Type of state:<ol>
+<li><strong>Text &amp; data</strong> - static state when processes first loads</li>
+<li><strong>Heap</strong> - Dynamically created during execution</li>
+<li><strong>Stack</strong> - Grows &amp; shrinks ~ LIFO Queue</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Portions of the Address Space could be stored in disk. When needed, they will be swapped into memory</li>
+</ol>
+<h1 id="How-does-OS-know-what-a-process-is-doing"><a href="#How-does-OS-know-what-a-process-is-doing" class="headerlink" title="How does OS know what a process is doing"></a>How does OS know what a process is doing</h1><p>Typically an OS maintains several elements to recognize this:</p>
+<ol>
+<li>Program Counter -&gt; maintained in CPU</li>
+<li>CPU registers</li>
+<li>Stack Pointer</li>
+<li>OS maintains a <strong>Process Control Block (PCB)</strong> </li>
+</ol>
+<h1 id="PCB"><a href="#PCB" class="headerlink" title="PCB"></a>PCB</h1><ul>
+<li>A data structure that the OS maintains for every process it manages</li>
+<li>Created &amp; initialized when process is created</li>
+<li>Certain fields are updated when proess state changes (i.e. memory limits)</li>
+<li>Other fields change too frequently (e.g. <strong>PC</strong>). In this case, CPU will maintain them, and OS only collect&amp;store them in PCB</li>
+</ul>
+<h1 id="How-is-PCB-used"><a href="#How-is-PCB-used" class="headerlink" title="How is PCB used"></a>How is PCB used</h1><p>When context switch happens, for example, from P1 to P2, OS will save <strong>PCB_P1</strong> and restore <strong>PCB_P2</strong> by assigning <strong>PCB_P2</strong> to the related CPU register</p>
+<h1 id="Context-Switch-Mechanism"><a href="#Context-Switch-Mechanism" class="headerlink" title="Context Switch - Mechanism"></a>Context Switch - Mechanism</h1><ul>
+<li>Switching the CPU from the content of one process to the content of the other</li>
+<li><strong>EXPENSIVE:</strong><ol>
+<li>Direct costs: number of cycles to load/store data</li>
+<li>Indirect costs: Cold Cache - Cache miss</li>
+</ol>
+</li>
+</ul>
+<h1 id="Process-Life-cycles"><a href="#Process-Life-cycles" class="headerlink" title="Process Life cycles"></a>Process Life cycles</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    admitted        interupt           exit</div><div class="line">new --------&gt; ready &lt;-------- running -----&gt; terminated</div><div class="line">              ^  |                    ^ |</div><div class="line">          I/O |  | scheduler dispatch | | I/O</div><div class="line">        event |   --------------------- | event wait</div><div class="line">   completion |                         |</div><div class="line">               --------- waiting &lt;-------</div></pre></td></tr></table></figure>
+<h1 id="Process-Creation"><a href="#Process-Creation" class="headerlink" title="Process Creation"></a>Process Creation</h1><ul>
+<li>Tree structure: A root process is created first</li>
+<li>Mechanisms:<ol>
+<li><strong>fork:</strong> <ul>
+<li>Copy the parent PCB into child PCB</li>
+<li>Child continues execution @ instruction after <strong>fork</strong></li>
+</ul>
+</li>
+<li><strong>exec:</strong><ul>
+<li>Replace child image</li>
+<li>Load new program &amp; start from the first instruction</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="Role-of-the-CPU-scheduler"><a href="#Role-of-the-CPU-scheduler" class="headerlink" title="Role of the CPU scheduler"></a>Role of the CPU scheduler</h1><ul>
+<li>Determines <strong>which</strong> ready process will be run</li>
+<li>Determines <strong>how long</strong> it should run</li>
+<li>In order to manage CPU, OS must: (Need to be efficient!!)<ol>
+<li><strong>preempt</strong>: interrupt &amp; save current context</li>
+<li><strong>schedule</strong>: run scheduler to choose the next process</li>
+<li><strong>dispatch</strong>: dispatch process &amp; switch to its context</li>
+</ol>
+</li>
+</ul>
+<h1 id="Length-of-Process"><a href="#Length-of-Process" class="headerlink" title="Length of Process"></a>Length of Process</h1><ul>
+<li>Define some <strong>timeslice</strong>:<ul>
+<li>Tp - Allocated to a proccess on CPU</li>
+<li>Tsche - Scheduling time</li>
+</ul>
+</li>
+<li>Useful CPU work = total processing time / total time = Tp / (Tp + Tsche)</li>
+<li>If Tp == Tsche: only 50% of CPU time spent on useful work</li>
+<li>If Tp == 10 * Tsche: 91% of CPU time spent on useful work</li>
+</ul>
+<h1 id="Scheduling-I-O-amp-how-could-a-process-go-back-to-ready-queue"><a href="#Scheduling-I-O-amp-how-could-a-process-go-back-to-ready-queue" class="headerlink" title="Scheduling I/O &amp; how could a process go back to ready queue"></a>Scheduling I/O &amp; how could a process go back to ready queue</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-----&gt; ready queue ----------------------------------------&gt; CPU -----&gt;</div><div class="line">        ^                                                     |</div><div class="line">        |                                                     |</div><div class="line">         ----- I/O &lt;---- I/O queue &lt;---- I/O request &lt;---------</div><div class="line">        |                                                     |</div><div class="line">         ------------------------ time slice expired &lt;---------</div><div class="line">        |                                                     |</div><div class="line">         -------- child executes ------ fork a child &lt;---------</div><div class="line">        |                                                     |</div><div class="line">         --- interupt occurs --- wait for an interupt &lt;--------</div></pre></td></tr></table></figure>
+<h1 id="Inter-Process-Communication-IPC"><a href="#Inter-Process-Communication-IPC" class="headerlink" title="Inter Process Communication (IPC)"></a>Inter Process Communication (IPC)</h1><ul>
+<li>IPC Mechanisms:</li>
+</ul>
+<ol>
+<li>Transfer data/info between address spaces</li>
+<li>Maintain protection &amp; isolation</li>
+<li>Provide flexibility &amp; performance</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-3-thread/" rel="next" title="Operating System - Thread">
+                <i class="fa fa-chevron-left"></i> Operating System - Thread
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-1/" rel="prev" title="Operating System Note1 - Introduction">
+                Operating System Note1 - Introduction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Simple-Process-Definition"><span class="nav-number">1.</span> <span class="nav-text">Simple Process Definition</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">2.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-a-Process"><span class="nav-number">3.</span> <span class="nav-text">What is a Process</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-does-a-process-look-like"><span class="nav-number">4.</span> <span class="nav-text">What does a process look like</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-OS-know-what-a-process-is-doing"><span class="nav-number">5.</span> <span class="nav-text">How does OS know what a process is doing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCB"><span class="nav-number">6.</span> <span class="nav-text">PCB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-is-PCB-used"><span class="nav-number">7.</span> <span class="nav-text">How is PCB used</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Context-Switch-Mechanism"><span class="nav-number">8.</span> <span class="nav-text">Context Switch - Mechanism</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Process-Life-cycles"><span class="nav-number">9.</span> <span class="nav-text">Process Life cycles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Process-Creation"><span class="nav-number">10.</span> <span class="nav-text">Process Creation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Role-of-the-CPU-scheduler"><span class="nav-number">11.</span> <span class="nav-text">Role of the CPU scheduler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Length-of-Process"><span class="nav-number">12.</span> <span class="nav-text">Length of Process</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scheduling-I-O-amp-how-could-a-process-go-back-to-ready-queue"><span class="nav-number">13.</span> <span class="nav-text">Scheduling I/O & how could a process go back to ready queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inter-Process-Communication-IPC"><span class="nav-number">14.</span> <span class="nav-text">Inter Process Communication (IPC)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

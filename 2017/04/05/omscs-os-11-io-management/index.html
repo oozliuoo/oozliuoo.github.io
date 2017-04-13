@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview OS support for I/O devices Block device stack File system architecture  Visual Metaphor   Features/Functionalities I/O Shipping department in toy shop     Have protocols How/what comes in/goes">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - I/O Management">
+<meta property="og:url" content="http://yoursite.com/2017/04/05/omscs-os-11-io-management/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview OS support for I/O devices Block device stack File system architecture  Visual Metaphor   Features/Functionalities I/O Shipping department in toy shop     Have protocols How/what comes in/goes">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot4.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot5.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot6.png">
+<meta property="og:updated_time" content="2017-04-07T03:29:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - I/O Management">
+<meta name="twitter:description" content="Preview OS support for I/O devices Block device stack File system architecture  Visual Metaphor   Features/Functionalities I/O Shipping department in toy shop     Have protocols How/what comes in/goes">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_11/OS_11_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/05/omscs-os-11-io-management/"/>
+
+
+
+
+
+  <title> Operating System - I/O Management | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/omscs-os-11-io-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - I/O Management
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-05T22:39:05-07:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>OS support for <strong>I/O devices</strong></li>
+<li><strong>Block device</strong> stack</li>
+<li><strong>File system</strong> architecture</li>
+</ul>
+<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">I/O</th>
+<th style="text-align:center">Shipping department in toy shop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Have protocols</td>
+<td style="text-align:center">How/what comes in/goes out</td>
+<td style="text-align:center">Interfaces for device I/O</td>
+</tr>
+<tr>
+<td style="text-align:center">Have dedicated handlers</td>
+<td style="text-align:center">Dedicated staff</td>
+<td style="text-align:center">Device drivers, interrupt handlers</td>
+</tr>
+<tr>
+<td style="text-align:center">Decouple I/O details from core processing</td>
+<td style="text-align:center">Abstracts shipping details from making toys</td>
+<td style="text-align:center">Abstract I/O device dtail from applications</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Basic-I-O-Device-Features"><a href="#Basic-I-O-Device-Features" class="headerlink" title="Basic I/O Device Features"></a>Basic I/O Device Features</h1><h2 id="Control-registers-that-CPU-can-access"><a href="#Control-registers-that-CPU-can-access" class="headerlink" title="Control registers that CPU can access"></a>Control registers that CPU can access</h2><ul>
+<li>command: control what the device is doing</li>
+<li>status: what is happening</li>
+<li>data: used for data transfer in/out</li>
+</ul>
+<h2 id="Micro-Controller"><a href="#Micro-Controller" class="headerlink" title="Micro Controller"></a>Micro Controller</h2><p>Device’s CPU</p>
+<h2 id="On-Device-memory"><a href="#On-Device-memory" class="headerlink" title="On Device memory"></a>On Device memory</h2><h2 id="Other-logic"><a href="#Other-logic" class="headerlink" title="Other logic"></a>Other logic</h2><ul>
+<li>Analog to digital convert</li>
+</ul>
+<h1 id="CPU-Device-Interconnect"><a href="#CPU-Device-Interconnect" class="headerlink" title="CPU Device Interconnect"></a>CPU Device Interconnect</h1><img src="/imgs/OMSCS/OS/OS_11/OS_11_Screenshot1.png" class="[screenshot]">
+<h2 id="Peripheral-Component-Interconnect-PCI-bus"><a href="#Peripheral-Component-Interconnect-PCI-bus" class="headerlink" title="Peripheral Component Interconnect (PCI) bus"></a>Peripheral Component Interconnect (PCI) bus</h2><ul>
+<li>Used to connect devices via CPU</li>
+<li>Now mostlly use PCIe (PCI Express) &gt; PCI-X</li>
+</ul>
+<h2 id="Other-types-of-interconnects"><a href="#Other-types-of-interconnects" class="headerlink" title="Other types of interconnects"></a>Other types of interconnects</h2><ul>
+<li>SCSI bus</li>
+<li>Peripheral bus</li>
+<li>Bridges handle differences</li>
+</ul>
+<h1 id="Device-Drivers"><a href="#Device-Drivers" class="headerlink" title="Device Drivers"></a>Device Drivers</h1><ul>
+<li>Per <strong>each device type</strong></li>
+<li>Responsible for <strong>device access</strong>, <strong>management</strong> and <strong>control</strong></li>
+<li>Provied by device manufacturers per OS/version</li>
+<li>Each OS standardizes interfaces: device <strong>independence &amp; diversity</strong></li>
+</ul>
+<h1 id="Types-of-Devices"><a href="#Types-of-Devices" class="headerlink" title="Types of Devices"></a>Types of Devices</h1><p>Operating representation of a device == <strong>special device file (file descriptor)</strong></p>
+<h2 id="Block-disk"><a href="#Block-disk" class="headerlink" title="Block: disk"></a>Block: disk</h2><ul>
+<li>Read/write blocks of data</li>
+<li>Direct access to arbitrary block</li>
+</ul>
+<h2 id="Character-keyboard"><a href="#Character-keyboard" class="headerlink" title="Character: keyboard"></a>Character: keyboard</h2><ul>
+<li>Get/put character</li>
+</ul>
+<h2 id="Network-devices"><a href="#Network-devices" class="headerlink" title="Network devices"></a>Network devices</h2><h1 id="CPU-Device-Interactions"><a href="#CPU-Device-Interactions" class="headerlink" title="CPU Device Interactions"></a>CPU Device Interactions</h1><h2 id="CPU-to-Devices"><a href="#CPU-to-Devices" class="headerlink" title="CPU to Devices"></a>CPU to Devices</h2><ul>
+<li>Device access is pretty much accessing memory, and then the PCI bus will route the memory access to related devices. This needs part of the physical memory be mapped for I/O -&gt; use some <strong>Base Address Register</strong></li>
+<li>I/O port: dedicated in/out instructions for device accesses</li>
+</ul>
+<h2 id="Devices-to-CPU"><a href="#Devices-to-CPU" class="headerlink" title="Devices to CPU"></a>Devices to CPU</h2><h3 id="Interrupt"><a href="#Interrupt" class="headerlink" title="Interrupt"></a>Interrupt</h3><p>Devices generate interrupts to CPU, and gets handled by oppose</p>
+<p>+: Can response as soon as possible<br>-: Interrupt handling could be expensive</p>
+<h3 id="Polling"><a href="#Polling" class="headerlink" title="Polling"></a>Polling</h3><p>CPU keeps polling devices by reading their status registers to see if there are actions/data available</p>
+<p>+: Convenient time for Operating Systems<br>-: Delay or CPU overhead</p>
+<h1 id="Device-access"><a href="#Device-access" class="headerlink" title="Device access"></a>Device access</h1><h2 id="Programmed-I-O-PIO"><a href="#Programmed-I-O-PIO" class="headerlink" title="Programmed I/O (PIO)"></a>Programmed I/O (PIO)</h2><ul>
+<li>No additional hardware support. CPU directly issues instructions by writing to the <strong>command register</strong> of a device, and controls data movement by accessing the <strong>data register</strong> of a device</li>
+</ul>
+<h2 id="Direct-Memory-Acceess-DMA"><a href="#Direct-Memory-Acceess-DMA" class="headerlink" title="Direct Memory Acceess (DMA)"></a>Direct Memory Acceess (DMA)</h2><ul>
+<li>Relies on DMA controller</li>
+<li>CPU still issues instructions directly to <strong>command registers</strong></li>
+<li>CPU interacts with <strong>data register</strong> via <strong>DMA Controller</strong></li>
+<li>This will result in <strong>less</strong> steps, but the DMA step is complexed</li>
+<li>Data buffer used by DMA must be in physical memory untill transfer completes =&gt; <strong>pinned region (not swappable)</strong></li>
+</ul>
+<h2 id="Typical-Device-Accesses"><a href="#Typical-Device-Accesses" class="headerlink" title="Typical Device Accesses"></a>Typical Device Accesses</h2><img src="/imgs/OMSCS/OS/OS_11/OS_11_Screenshot2.png" class="[screenshot]">
+<h2 id="Operating-System-Bypass"><a href="#Operating-System-Bypass" class="headerlink" title="Operating System Bypass"></a>Operating System Bypass</h2><ul>
+<li>User process can directly access <strong>device regs/data</strong></li>
+<li>Operating System involves in configuration, but then out-of-the-way</li>
+<li>Needs <strong>user-level driver (~library)</strong> to connect user process and drivers, usually provide by manufacturer</li>
+<li>Relies on <strong>device features</strong>, e.x. sufficient registers so that OS can map some to user processes</li>
+<li>Operating System retains <strong>coarse-grain</strong> control</li>
+</ul>
+<h2 id="What-happens-to-a-thread-calling-devices"><a href="#What-happens-to-a-thread-calling-devices" class="headerlink" title="What happens to a thread calling devices?"></a>What happens to a thread calling devices?</h2><img src="/imgs/OMSCS/OS/OS_11/OS_11_Screenshot2.png" class="[screenshot]">
+<h3 id="Synchronous-I-O-Operations"><a href="#Synchronous-I-O-Operations" class="headerlink" title="Synchronous I/O Operations"></a>Synchronous I/O Operations</h3><ul>
+<li>Process is blocked</li>
+</ul>
+<h3 id="Asynchronous-I-O-Operations"><a href="#Asynchronous-I-O-Operations" class="headerlink" title="Asynchronous I/O Operations"></a>Asynchronous I/O Operations</h3><ul>
+<li>Process continues</li>
+<li>Later, either<br>  a. Process checks and retrieves result (polling based)<br>  b. Process is notified that the operation is completed and results are ready (interupt based)</li>
+</ul>
+<h2 id="Block-Device-Stack"><a href="#Block-Device-Stack" class="headerlink" title="Block Device Stack"></a>Block Device Stack</h2><p>Typical storage for files</p>
+<h3 id="User-Process-file"><a href="#User-Process-file" class="headerlink" title="User Process (file)"></a>User Process (file)</h3><ul>
+<li>Processes use files: a logical unit</li>
+</ul>
+<h3 id="Kernel"><a href="#Kernel" class="headerlink" title="Kernel"></a>Kernel</h3><ul>
+<li>Uses <strong>File System</strong></li>
+<li>Where, how to find and access file</li>
+<li>Operating specifies interface such as <strong>POSIX API</strong> for read/write operations</li>
+</ul>
+<h3 id="Generic-Block-layer"><a href="#Generic-Block-layer" class="headerlink" title="Generic Block layer"></a>Generic Block layer</h3><ul>
+<li>OS standardized block interface</li>
+<li>Passes operations to driver, and interpret errors/notifications from driver</li>
+</ul>
+<h3 id="Device-Driver"><a href="#Device-Driver" class="headerlink" title="Device Driver"></a>Device Driver</h3><ul>
+<li>Uses protocol specific APIs to interact with devices</li>
+</ul>
+<h2 id="Virtual-File-system"><a href="#Virtual-File-system" class="headerlink" title="Virtual File system"></a>Virtual File system</h2><h3 id="Abstractions"><a href="#Abstractions" class="headerlink" title="Abstractions"></a>Abstractions</h3><ul>
+<li><strong>File</strong> == elements on which the VFS operates</li>
+<li><strong>file descriptor</strong> == Operating System representation of file; support different actions (e.x. open, read, write)</li>
+<li><strong>inode</strong> persistent representation of file “index”<ol>
+<li>list of all data blocks</li>
+<li>device, permissions, size, …</li>
+</ol>
+</li>
+<li><strong>dentry</strong> == directory entry, corresponds to single path component, only in memory maintained by OS</li>
+<li><strong>dentry cache</strong></li>
+<li><strong>superblock</strong>: file system - specific information regarding the FS layout</li>
+</ul>
+<h3 id="VFS-on-Disk-other-than-the-dentry"><a href="#VFS-on-Disk-other-than-the-dentry" class="headerlink" title="VFS on Disk (other than the dentry)"></a>VFS on Disk (other than the dentry)</h3><ul>
+<li><strong>file</strong> == data blocks on disk</li>
+<li><strong>inode</strong> == track files’ blocks, also resides on disk in some blocks</li>
+<li><strong>superblock</strong> == overall map of disk blocks<ol>
+<li>inode blocks</li>
+<li>data blocks</li>
+<li>free blocks</li>
+</ol>
+</li>
+</ul>
+<h3 id="Example-ext2-Second-Extended-Filesystem"><a href="#Example-ext2-Second-Extended-Filesystem" class="headerlink" title="Example - ext2: Second Extended Filesystem"></a>Example - ext2: Second Extended Filesystem</h3><img src="/imgs/OMSCS/OS/OS_11/OS_11_Screenshot4.png" class="[screenshot]">
+<h3 id="inodes"><a href="#inodes" class="headerlink" title="inodes"></a>inodes</h3><img src="/imgs/OMSCS/OS/OS_11/OS_11_Screenshot5.png" class="[screenshot]">
+<ul>
+<li>Limits file size</li>
+</ul>
+<h3 id="inodes-with-indirect-pointers"><a href="#inodes-with-indirect-pointers" class="headerlink" title="inodes with indirect pointers"></a>inodes with indirect pointers</h3><img src="/imgs/OMSCS/OS/OS_11/OS_11_Screenshot6.png" class="[screenshot]">
+<ul>
+<li>Benefits: small inode could map to large file size</li>
+<li>Downside: slow down file access<ul>
+<li>e.g. direct ptr =&gt; <strong>2 disk access</strong>, while double indirect ptr =&gt; <strong>up to 4 disk accesses</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Disk-Access-Optimizations"><a href="#Disk-Access-Optimizations" class="headerlink" title="Disk Access Optimizations"></a>Disk Access Optimizations</h2><h3 id="Caching-buffering"><a href="#Caching-buffering" class="headerlink" title="Caching/buffering"></a>Caching/buffering</h3><ul>
+<li>Reduce # disk accesses</li>
+<li>In main memory</li>
+<li>Read/write from cache</li>
+<li>Periodically flush to disk</li>
+</ul>
+<h3 id="I-O-Scheduling"><a href="#I-O-Scheduling" class="headerlink" title="I/O Scheduling"></a>I/O Scheduling</h3><ul>
+<li>Reduce disk head movement</li>
+<li>Maximize <strong>sequential</strong> v.s. <strong>random</strong> access</li>
+<li>e.g., write block 25, write block 17; if head is at 15 =&gt; write 17, 25; they are still in memory (i.e. will be lost if crashes)</li>
+</ul>
+<h3 id="Prefetching"><a href="#Prefetching" class="headerlink" title="Prefetching"></a>Prefetching</h3><ul>
+<li>Increases cache hits</li>
+<li>Leverages locality</li>
+<li>e.g., read block 17 =&gt; also read 18, 19</li>
+</ul>
+<h3 id="Journaling-logging"><a href="#Journaling-logging" class="headerlink" title="Journaling/logging"></a>Journaling/logging</h3><ul>
+<li>Reduce random access</li>
+<li>“describe” write in <strong>log</strong>: block, offset, value…</li>
+<li>Periodically apply updates to proper disk locations</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/omscs-os-12-system-virtualization/" rel="next" title="Operating System - System Virtualization">
+                <i class="fa fa-chevron-left"></i> Operating System - System Virtualization
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/22/omscs-os-10-sync-construct/" rel="prev" title="Operating System - Synchronization Construct">
+                Operating System - Synchronization Construct <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">2.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-I-O-Device-Features"><span class="nav-number">3.</span> <span class="nav-text">Basic I/O Device Features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Control-registers-that-CPU-can-access"><span class="nav-number">3.1.</span> <span class="nav-text">Control registers that CPU can access</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Micro-Controller"><span class="nav-number">3.2.</span> <span class="nav-text">Micro Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#On-Device-memory"><span class="nav-number">3.3.</span> <span class="nav-text">On Device memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-logic"><span class="nav-number">3.4.</span> <span class="nav-text">Other logic</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU-Device-Interconnect"><span class="nav-number">4.</span> <span class="nav-text">CPU Device Interconnect</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Peripheral-Component-Interconnect-PCI-bus"><span class="nav-number">4.1.</span> <span class="nav-text">Peripheral Component Interconnect (PCI) bus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-types-of-interconnects"><span class="nav-number">4.2.</span> <span class="nav-text">Other types of interconnects</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-Drivers"><span class="nav-number">5.</span> <span class="nav-text">Device Drivers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Types-of-Devices"><span class="nav-number">6.</span> <span class="nav-text">Types of Devices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-disk"><span class="nav-number">6.1.</span> <span class="nav-text">Block: disk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Character-keyboard"><span class="nav-number">6.2.</span> <span class="nav-text">Character: keyboard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-devices"><span class="nav-number">6.3.</span> <span class="nav-text">Network devices</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU-Device-Interactions"><span class="nav-number">7.</span> <span class="nav-text">CPU Device Interactions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-to-Devices"><span class="nav-number">7.1.</span> <span class="nav-text">CPU to Devices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Devices-to-CPU"><span class="nav-number">7.2.</span> <span class="nav-text">Devices to CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Interrupt"><span class="nav-number">7.2.1.</span> <span class="nav-text">Interrupt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polling"><span class="nav-number">7.2.2.</span> <span class="nav-text">Polling</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-access"><span class="nav-number">8.</span> <span class="nav-text">Device access</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Programmed-I-O-PIO"><span class="nav-number">8.1.</span> <span class="nav-text">Programmed I/O (PIO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-Memory-Acceess-DMA"><span class="nav-number">8.2.</span> <span class="nav-text">Direct Memory Acceess (DMA)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Typical-Device-Accesses"><span class="nav-number">8.3.</span> <span class="nav-text">Typical Device Accesses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operating-System-Bypass"><span class="nav-number">8.4.</span> <span class="nav-text">Operating System Bypass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-happens-to-a-thread-calling-devices"><span class="nav-number">8.5.</span> <span class="nav-text">What happens to a thread calling devices?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronous-I-O-Operations"><span class="nav-number">8.5.1.</span> <span class="nav-text">Synchronous I/O Operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asynchronous-I-O-Operations"><span class="nav-number">8.5.2.</span> <span class="nav-text">Asynchronous I/O Operations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-Device-Stack"><span class="nav-number">8.6.</span> <span class="nav-text">Block Device Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#User-Process-file"><span class="nav-number">8.6.1.</span> <span class="nav-text">User Process (file)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kernel"><span class="nav-number">8.6.2.</span> <span class="nav-text">Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-Block-layer"><span class="nav-number">8.6.3.</span> <span class="nav-text">Generic Block layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Device-Driver"><span class="nav-number">8.6.4.</span> <span class="nav-text">Device Driver</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-File-system"><span class="nav-number">8.7.</span> <span class="nav-text">Virtual File system</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstractions"><span class="nav-number">8.7.1.</span> <span class="nav-text">Abstractions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VFS-on-Disk-other-than-the-dentry"><span class="nav-number">8.7.2.</span> <span class="nav-text">VFS on Disk (other than the dentry)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-ext2-Second-Extended-Filesystem"><span class="nav-number">8.7.3.</span> <span class="nav-text">Example - ext2: Second Extended Filesystem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inodes"><span class="nav-number">8.7.4.</span> <span class="nav-text">inodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inodes-with-indirect-pointers"><span class="nav-number">8.7.5.</span> <span class="nav-text">inodes with indirect pointers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk-Access-Optimizations"><span class="nav-number">8.8.</span> <span class="nav-text">Disk Access Optimizations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching-buffering"><span class="nav-number">8.8.1.</span> <span class="nav-text">Caching/buffering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O-Scheduling"><span class="nav-number">8.8.2.</span> <span class="nav-text">I/O Scheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prefetching"><span class="nav-number">8.8.3.</span> <span class="nav-text">Prefetching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Journaling-logging"><span class="nav-number">8.8.4.</span> <span class="nav-text">Journaling/logging</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

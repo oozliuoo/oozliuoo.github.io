@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview Remote Procedure Calls  ReferencesImplementing Remote Procedure Calls Why RPC Common steps related to remote Inter Process Communication -&amp;gt; Remote Procedure Calls Simplify the development o">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Remote Procedure Calls">
+<meta property="og:url" content="http://yoursite.com/2017/04/07/omscs-os-13-remote-procedure-calls/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview Remote Procedure Calls  ReferencesImplementing Remote Procedure Calls Why RPC Common steps related to remote Inter Process Communication -&amp;gt; Remote Procedure Calls Simplify the development o">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_13/OS_13_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_13/OS_13_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_13/OS_13_Screenshot3.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_13/OS_13_Screenshot4.png">
+<meta property="og:updated_time" content="2017-04-08T20:15:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Remote Procedure Calls">
+<meta name="twitter:description" content="Preview Remote Procedure Calls  ReferencesImplementing Remote Procedure Calls Why RPC Common steps related to remote Inter Process Communication -&amp;gt; Remote Procedure Calls Simplify the development o">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_13/OS_13_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/07/omscs-os-13-remote-procedure-calls/"/>
+
+
+
+
+
+  <title> Operating System - Remote Procedure Calls | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/07/omscs-os-13-remote-procedure-calls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Remote Procedure Calls
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-07T19:16:57-07:00">
+                2017-04-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>Remote Procedure Calls</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-birrell-nelson-paper.pdf" target="_blank" rel="external">Implementing Remote Procedure Calls</a></p>
+<h1 id="Why-RPC"><a href="#Why-RPC" class="headerlink" title="Why RPC"></a>Why RPC</h1><ul>
+<li>Common steps related to remote Inter Process Communication -&gt; <strong>Remote Procedure Calls</strong></li>
+<li>Simplify the development of cross-address space &amp; cross-machine interactions</li>
+<li>Benefits<ul>
+<li>Higher-level interface for data movement and communication</li>
+<li>Error handling</li>
+<li>Hiding complexities of cross-machine interactions</li>
+</ul>
+</li>
+</ul>
+<h1 id="RPC-Requirements"><a href="#RPC-Requirements" class="headerlink" title="RPC Requirements"></a>RPC Requirements</h1><ol>
+<li>Client/Server Interactions</li>
+<li>Procedure Call Interface =&gt; sync call semantics</li>
+<li>Type Checking<ul>
+<li>Error handling</li>
+<li>Packet bytes interpretation</li>
+</ul>
+</li>
+<li>Cross-machine conversion. Should hide the differences from programmers<ul>
+<li>e.g. big/little endian; negative numbers</li>
+<li>One way to solve is to agree with a format, such as nnetwork format</li>
+</ul>
+</li>
+<li>Higher-level Protocol<ul>
+<li>Access control, fault tolerance…</li>
+<li>Different transport protocols</li>
+</ul>
+</li>
+</ol>
+<h1 id="RPC-Structure"><a href="#RPC-Structure" class="headerlink" title="RPC Structure"></a>RPC Structure</h1><img src="/imgs/OMSCS/OS/OS_13/OS_13_Screenshot1.png" class="[screenshot]">
+<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><ol>
+<li><strong>register</strong>: server <strong>registers</strong> procedure, args types, locations, etc…</li>
+<li><strong>bind</strong>: client finds and <strong>bind</strong> to desired server<br><strong>Client</strong></li>
+<li><strong>call</strong>: client makes <strong>RPC call</strong>; control passed to stub, client code <strong>blocks</strong></li>
+<li><strong>marshal</strong>: client stub <strong>marshals</strong> arguments (serialize args into buffer)</li>
+<li><strong>send</strong>: client <strong>sends</strong> message to server<br><strong>Server</strong></li>
+<li><strong>receive</strong>: server <strong>receives</strong> message; pass msg to server-stub; access control</li>
+<li><strong>unmarshal</strong>: server stub <strong>unmarshals</strong> args (extracts args &amp; creates data structures)</li>
+<li><strong>actual call</strong>: server stub <strong>calls</strong> local procedure implementation</li>
+<li><strong>result</strong>: server performs operation and computes <strong>result</strong> of RPC operation</li>
+</ol>
+<h2 id="Interface-Definition-Language"><a href="#Interface-Definition-Language" class="headerlink" title="Interface Definition Language"></a>Interface Definition Language</h2><h3 id="Reasoning"><a href="#Reasoning" class="headerlink" title="Reasoning"></a>Reasoning</h3><ul>
+<li>Server and Client can be developed separately</li>
+<li>But do need <strong>an agreement</strong> to support<ul>
+<li>client side <strong>bind</strong> decision. (i.e. which server to bind to, and what operations to perform)</li>
+<li>runtime to <strong>automate stub generation</strong></li>
+</ul>
+</li>
+<li>IDL is basically a protocol of how these agreements are expressed</li>
+</ul>
+<h3 id="Interface-Specification"><a href="#Interface-Specification" class="headerlink" title="Interface Specification"></a>Interface Specification</h3><ul>
+<li>Used to describe the interface the server exports:<ul>
+<li>Procedure name, arg &amp; result types -&gt; pretty much like a function definition</li>
+<li>version #: helps client identify which server has latest implementation, and is useful when performing upgrades</li>
+</ul>
+</li>
+<li>RPC can use <strong>IDL</strong> that is<ul>
+<li>language-agnostic: <strong>XDR in SunRPC</strong></li>
+<li>language-specific: <strong>Java in Java RMI</strong></li>
+</ul>
+</li>
+<li>Only for specification, not for implementation</li>
+</ul>
+<h2 id="Binding"><a href="#Binding" class="headerlink" title="Binding"></a>Binding</h2><ul>
+<li><strong>Client</strong> determines<ul>
+<li>which <strong>server</strong> to bind to: service name, version number, etc.</li>
+<li>how to connect to that <strong>server</strong>: IP Address, network protocol</li>
+</ul>
+</li>
+<li>It will use a <strong>Registry</strong>, which is pretty much a <strong>database of available services</strong><ul>
+<li>Search for <strong>service name</strong> to find <strong>service (which)</strong> and <strong>contact details (now)</strong></li>
+<li>Could be <strong>distributed</strong>: any RPC service can register</li>
+<li>OR could be <strong>machine-specific</strong>: only for services running on same machine, and requires client to know machine address</li>
+</ul>
+</li>
+<li>Needs <strong>naming protocol</strong></li>
+</ul>
+<h2 id="Marshalling-add-program-as-an-example"><a href="#Marshalling-add-program-as-an-example" class="headerlink" title="Marshalling - add program as an example"></a>Marshalling - add program as an example</h2><img src="/imgs/OMSCS/OS/OS_13/OS_13_Screenshot2.png" class="[screenshot]">
+<ul>
+<li>Provided by <strong>RPC System Compiler</strong></li>
+<li>Encode data and argument in a readable and understandable way</li>
+</ul>
+<h2 id="Un-marshalling"><a href="#Un-marshalling" class="headerlink" title="Un-marshalling"></a>Un-marshalling</h2><img src="/imgs/OMSCS/OS/OS_13/OS_13_Screenshot3.png" class="[screenshot]">
+<ul>
+<li>Provided by <strong>RPC System Compiler</strong></li>
+<li>Interpret the address space and decode data</li>
+</ul>
+<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Applications using binding &amp; registries</th>
+<th style="text-align:center">Toy shops use directories of outsourcing services</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Who can provide a service?</td>
+<td style="text-align:center">look up registry for image processing</td>
+<td style="text-align:center">shops to outsource assembly</td>
+</tr>
+<tr>
+<td style="text-align:center">What services do they provide</td>
+<td style="text-align:center">compress, filter, version # -&gt; IDL</td>
+<td style="text-align:center">that will create train carts</td>
+</tr>
+<tr>
+<td style="text-align:center">How will they ship/package?</td>
+<td style="text-align:center">TCP/UDP -&gt; registry</td>
+<td style="text-align:center">that will ship via UPS</td>
+</tr>
+</tbody>
+</table>
+<h1 id="What-about-pointers"><a href="#What-about-pointers" class="headerlink" title="What about pointers?"></a>What about pointers?</h1><p>Pointers are pointing to loction in caller address space</p>
+<h2 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h2><ol>
+<li>No pointers!</li>
+<li>Serialize pointers; copy referenced (“pointed to”) data structure to send buffer</li>
+</ol>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><ul>
+<li><strong>Binding</strong>: How to find the server. (Distributed or machine specific)</li>
+<li><strong>IDL</strong>: How to talk to the server; how to package data. (Language agnostic or language specific)</li>
+<li><strong>Pointers as arguments</strong>: disallow or serialize pointed data</li>
+<li><strong>Partial failures</strong>: Special error notifications</li>
+</ul>
+<h1 id="Sun-RPC"><a href="#Sun-RPC" class="headerlink" title="Sun RPC"></a>Sun RPC</h1><h2 id="Design-Choices"><a href="#Design-Choices" class="headerlink" title="Design Choices"></a>Design Choices</h2><ul>
+<li><strong>Binding</strong>: Assumes server machine is know upfront -&gt; per-machine registry daemon</li>
+<li><strong>IDL</strong>: Language agnostic: XDR (for interface specification and for encoding)</li>
+<li><strong>Pointers</strong>: allowed and serialized</li>
+<li><strong>Failure</strong>: retries; return as much information as possible</li>
+</ul>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p><a href="https://docs.oracle.com/cd/E19683-01/816-1435/index.html" target="_blank" rel="external">SunRPC Overview</a></p>
+<ul>
+<li><strong>client-server</strong> via <strong>procedure calls</strong></li>
+<li>Interface specified via <strong>XDR (.x file)</strong></li>
+<li><strong>rpcgen compiler</strong>: converts <strong>.x</strong> to <strong>language-specific stubs</strong></li>
+<li>Server registers with local registry daemon</li>
+<li>Registry (per-machine): name of service, version, protocol(s), port number…</li>
+<li>Binding creates handle<ul>
+<li>client uses handle in calls</li>
+<li>RPC runtime uses handle to track per-client RPC state</li>
+</ul>
+</li>
+<li>Coule be on the same or different machines</li>
+</ul>
+<h2 id="XDR-Example"><a href="#XDR-Example" class="headerlink" title="XDR Example"></a>XDR Example</h2><ul>
+<li>XDR (.x file) describes:<ul>
+<li>datatypes</li>
+<li>procedures (name, version)</li>
+<li>service ID</li>
+</ul>
+</li>
+<li>Client uses: <strong>service name</strong>, <strong>proc name</strong> and <strong>version number</strong></li>
+<li>RPC runtime refers to <strong>service id</strong> and <strong>proc id</strong> and <strong>version number</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> square_in &#123;</div><div class="line">    <span class="keyword">int</span> arg1;</div><div class="line">&#125;</div><div class="line"><span class="keyword">struct</span> square_out &#123;</div><div class="line">    <span class="keyword">int</span> res1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">program SQUARE_PROG &#123; <span class="comment">/* RPC service name */</span></div><div class="line">    version SQUARE_VERS &#123;</div><div class="line">        <span class="function">square_out <span class="title">SQUARE_PROC</span><span class="params">(square_in)</span> </span>= <span class="number">1</span>; <span class="comment">/* proc1 */</span></div><div class="line">    &#125; = <span class="number">1</span>; <span class="comment">/* version1 */</span></div><div class="line">&#125; = <span class="number">0x31230000</span>; <span class="comment">/* service id */</span></div></pre></td></tr></table></figure>
+<h2 id="Compiling-XDR"><a href="#Compiling-XDR" class="headerlink" title="Compiling XDR"></a>Compiling XDR</h2><ul>
+<li>rpcgen compiler: <strong>rpcgen -c square.x</strong> for C</li>
+<li>Generates:<ol>
+<li>square.h: <strong>data types</strong> and <strong>function definitions</strong></li>
+<li>square_svc.c: <strong>server stub</strong> and skeleton (main) - no implementations<ul>
+<li><strong>main</strong>: registration/housekeeping</li>
+<li><strong>square_prog_1</strong>: internal code, request parsing, arg marshalling</li>
+<li><strong>square_proc_1_svc</strong>: prototype of actual procedure; must be implemented by developers</li>
+</ul>
+</li>
+<li>square_clnt.c: <strong>client stub</strong><ul>
+<li><strong>squareproc_1</strong>: wrapper of RPC call to <strong>square_proc_1_svc</strong> </li>
+<li>Developers can then do <strong>y = squareproc_1(&amp;x, …)</strong></li>
+</ul>
+</li>
+<li>square_xdr.c: common marshalling routines</li>
+</ol>
+</li>
+</ul>
+<h2 id="XDR-Compilation-Summary"><a href="#XDR-Compilation-Summary" class="headerlink" title="XDR Compilation Summary"></a>XDR Compilation Summary</h2><img src="/imgs/OMSCS/OS/OS_13/OS_13_Screenshot4.png" class="[screenshot]">
+<ul>
+<li>rpcgen <strong>-c</strong> square.x: not thread safe</li>
+<li>rpcgen <strong>-c -M</strong> square.x: multithreading safe!</li>
+</ul>
+<h2 id="RPC-Binding"><a href="#RPC-Binding" class="headerlink" title="RPC Binding"></a>RPC Binding</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// client</span></div><div class="line"><span class="function">CLIENT* <span class="title">clnt_create</span><span class="params">(<span class="keyword">char</span>* host, <span class="keyword">unsigned</span> <span class="keyword">long</span> prog, <span class="keyword">unsigned</span> <span class="keyword">long</span> vers, <span class="keyword">char</span>* proto)</span></span>;</div><div class="line"></div><div class="line"><span class="comment">// for square example</span></div><div class="line">CLIENT * clnt_handle;</div><div class="line">clnt_handle = clnt_create(rpc_host_name, SQUARE_PROG, SQUARE_VERS, <span class="string">"tcp"</span>);</div></pre></td></tr></table></figure>
+<h2 id="XDR-Data-Types"><a href="#XDR-Data-Types" class="headerlink" title="XDR Data Types"></a>XDR Data Types</h2><ul>
+<li>Default types: char, byte, int, float, etc.</li>
+<li>Additional XDR types<ul>
+<li>const (#define)</li>
+<li>hyper (64-bit integer)</li>
+<li>quadruple (128-bit float)</li>
+<li>opaque (~C byte): uninterpreted binary data</li>
+</ul>
+</li>
+<li>Fixed-length array: e.g. int data[80]</li>
+<li>Variable-length array: e.g. int data<80> <ul>
+<li>translates to data structure with “len” and “val” fields. “len” is the actual length of the array and “val” points to the base memory</li>
+<li>Except for string</li>
+</ul>
+</80></li>
+</ul>
+<h2 id="XDR-Routines"><a href="#XDR-Routines" class="headerlink" title="XDR Routines"></a>XDR Routines</h2><ul>
+<li>marshalling/unmarshalling: found in <strong>square_xdr.c</strong></li>
+<li>Cleanup<ul>
+<li>xdr_free()</li>
+<li>User defined <strong>_freeresult procedure</strong>, e.g. square_prog_q_freeresult</li>
+<li>Called after result is returneds</li>
+</ul>
+</li>
+</ul>
+<h2 id="Encoding"><a href="#Encoding" class="headerlink" title="Encoding"></a>Encoding</h2><ul>
+<li>Need to encode arguments or results into a bytestream depending on data type</li>
+<li>Need agreement on this</li>
+</ul>
+<h3 id="XDR-Encoding"><a href="#XDR-Encoding" class="headerlink" title="XDR Encoding"></a>XDR Encoding</h3><ul>
+<li>XDR == IDL + encoding</li>
+<li>XDR Encoding Rules<ul>
+<li>all data types are encoded in multiples of 4 bytes</li>
+<li>big endian is the transmission standard`</li>
+<li>two’s complement is used for integers</li>
+<li>IEEE format is used for floating nmber</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/06/omscs-os-12-system-virtualization/" rel="prev" title="Operating System - System Virtualization">
+                Operating System - System Virtualization <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.1.</span> <span class="nav-text">References</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-RPC"><span class="nav-number">2.</span> <span class="nav-text">Why RPC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC-Requirements"><span class="nav-number">3.</span> <span class="nav-text">RPC Requirements</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC-Structure"><span class="nav-number">4.</span> <span class="nav-text">RPC Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps"><span class="nav-number">4.1.</span> <span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface-Definition-Language"><span class="nav-number">4.2.</span> <span class="nav-text">Interface Definition Language</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reasoning"><span class="nav-number">4.2.1.</span> <span class="nav-text">Reasoning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface-Specification"><span class="nav-number">4.2.2.</span> <span class="nav-text">Interface Specification</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binding"><span class="nav-number">4.3.</span> <span class="nav-text">Binding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Marshalling-add-program-as-an-example"><span class="nav-number">4.4.</span> <span class="nav-text">Marshalling - add program as an example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Un-marshalling"><span class="nav-number">4.5.</span> <span class="nav-text">Un-marshalling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">5.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-about-pointers"><span class="nav-number">6.</span> <span class="nav-text">What about pointers?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solutions"><span class="nav-number">6.1.</span> <span class="nav-text">Solutions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">7.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sun-RPC"><span class="nav-number">8.</span> <span class="nav-text">Sun RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Choices"><span class="nav-number">8.1.</span> <span class="nav-text">Design Choices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">8.2.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XDR-Example"><span class="nav-number">8.3.</span> <span class="nav-text">XDR Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compiling-XDR"><span class="nav-number">8.4.</span> <span class="nav-text">Compiling XDR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XDR-Compilation-Summary"><span class="nav-number">8.5.</span> <span class="nav-text">XDR Compilation Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC-Binding"><span class="nav-number">8.6.</span> <span class="nav-text">RPC Binding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XDR-Data-Types"><span class="nav-number">8.7.</span> <span class="nav-text">XDR Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XDR-Routines"><span class="nav-number">8.8.</span> <span class="nav-text">XDR Routines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Encoding"><span class="nav-number">8.9.</span> <span class="nav-text">Encoding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XDR-Encoding"><span class="nav-number">8.9.1.</span> <span class="nav-text">XDR Encoding</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

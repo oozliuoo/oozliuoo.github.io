@@ -1,0 +1,710 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AI,NanoDegree," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Main Topics Adversarial search Minimax Algorithm Alpha-Beta Pruning Evaluation Functions Isolation Game player Multi-Player, Probabilistic Games  MiniMaxGeneral Ideas Use Max and Min node for each lay">
+<meta name="keywords" content="AI,NanoDegree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NanoDegree AI - Intro to Game Playing">
+<meta property="og:url" content="http://yoursite.com/2017/03/19/nanodegree-ai-2/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Main Topics Adversarial search Minimax Algorithm Alpha-Beta Pruning Evaluation Functions Isolation Game player Multi-Player, Probabilistic Games  MiniMaxGeneral Ideas Use Max and Min node for each lay">
+<meta property="og:updated_time" content="2017-03-22T17:24:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NanoDegree AI - Intro to Game Playing">
+<meta name="twitter:description" content="Main Topics Adversarial search Minimax Algorithm Alpha-Beta Pruning Evaluation Functions Isolation Game player Multi-Player, Probabilistic Games  MiniMaxGeneral Ideas Use Max and Min node for each lay">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/19/nanodegree-ai-2/"/>
+
+
+
+
+
+  <title> NanoDegree AI - Intro to Game Playing | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/19/nanodegree-ai-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NanoDegree AI - Intro to Game Playing
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T19:08:45-07:00">
+                2017-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Main-Topics"><a href="#Main-Topics" class="headerlink" title="Main Topics"></a>Main Topics</h1><ol>
+<li>Adversarial search</li>
+<li>Minimax Algorithm</li>
+<li>Alpha-Beta Pruning</li>
+<li>Evaluation Functions</li>
+<li>Isolation Game player</li>
+<li>Multi-Player, Probabilistic Games</li>
+</ol>
+<h1 id="MiniMax"><a href="#MiniMax" class="headerlink" title="MiniMax"></a>MiniMax</h1><h2 id="General-Ideas"><a href="#General-Ideas" class="headerlink" title="General Ideas"></a>General Ideas</h2><ul>
+<li>Use Max and Min node for each layer</li>
+<li>Indicating that oponents are always trying to minimize my (from computer perspective) score, and I am trying to maximize it.</li>
+<li>Player representing computer will always be the top node (max node)</li>
+<li>Propagate the value from bottom to top</li>
+</ul>
+<h2 id="Maximum-number-of-nodes-visited"><a href="#Maximum-number-of-nodes-visited" class="headerlink" title="Maximum number of nodes visited"></a>Maximum number of nodes visited</h2><ul>
+<li>Could be extremely large without pruning</li>
+<li>b^d: b is <strong>branch factor</strong> and d is <strong>depth</strong></li>
+<li>Cannot brute-force the game!</li>
+</ul>
+<h2 id="Depth-Limited-search"><a href="#Depth-Limited-search" class="headerlink" title="Depth Limited search"></a>Depth Limited search</h2><ul>
+<li>Calculate the maximum depth it can search, based on provided limited time</li>
+<li>When reaching the limited depth, use an <strong>Evaluation Function</strong> to find the best move (node)</li>
+</ul>
+<h3 id="Evaluation-function"><a href="#Evaluation-function" class="headerlink" title="Evaluation function"></a>Evaluation function</h3><ul>
+<li>Choose wisely</li>
+<li>Need testing - When reaching different levels, the result could be different for the same evaluation function</li>
+</ul>
+<h2 id="Quiescent-search"><a href="#Quiescent-search" class="headerlink" title="Quiescent search"></a>Quiescent search</h2><ul>
+<li>Seaching through different depth to see if the result is consistent</li>
+<li>Will usually use at the beginning/end of the game</li>
+</ul>
+<h2 id="Iterative-Deepening"><a href="#Iterative-Deepening" class="headerlink" title="Iterative Deepening"></a>Iterative Deepening</h2><ul>
+<li>Incrementally search thru different depth</li>
+<li>Keep the result of each level, and try to search the next level. If time limit exceeds, return the stored result</li>
+<li>Could search deeper towards the end of the game</li>
+</ul>
+<h3 id="Horizon-Effect"><a href="#Horizon-Effect" class="headerlink" title="Horizon Effect"></a>Horizon Effect</h3><ul>
+<li>When it is obvious for human player what the next move is, but computer cannot search far enough to figure it out.</li>
+</ul>
+<h2 id="Alpha-beta-pruning"><a href="#Alpha-beta-pruning" class="headerlink" title="Alpha-beta pruning"></a>Alpha-beta pruning</h2><ul>
+<li>Could save time by a factor of 2<pre><code class="javascript">
+</code></pre>
+</li>
+</ul>
+<h2 id="Expectimax"><a href="#Expectimax" class="headerlink" title="Expectimax"></a>Expectimax</h2><ul>
+<li>Handle probablistic moves</li>
+<li>Can only prune when you have known bounds for values</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/NanoDegree/" rel="tag"># NanoDegree</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/omscs-os-9-inner-process-communication/" rel="next" title="Operating System - Inner Process Communication">
+                <i class="fa fa-chevron-left"></i> Operating System - Inner Process Communication
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/15/nanodegree-ai-1/" rel="prev" title="NanoDegree AI - Intro">
+                NanoDegree AI - Intro <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Main-Topics"><span class="nav-number">1.</span> <span class="nav-text">Main Topics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MiniMax"><span class="nav-number">2.</span> <span class="nav-text">MiniMax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#General-Ideas"><span class="nav-number">2.1.</span> <span class="nav-text">General Ideas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maximum-number-of-nodes-visited"><span class="nav-number">2.2.</span> <span class="nav-text">Maximum number of nodes visited</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Depth-Limited-search"><span class="nav-number">2.3.</span> <span class="nav-text">Depth Limited search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluation-function"><span class="nav-number">2.3.1.</span> <span class="nav-text">Evaluation function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quiescent-search"><span class="nav-number">2.4.</span> <span class="nav-text">Quiescent search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterative-Deepening"><span class="nav-number">2.5.</span> <span class="nav-text">Iterative Deepening</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Horizon-Effect"><span class="nav-number">2.5.1.</span> <span class="nav-text">Horizon Effect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Alpha-beta-pruning"><span class="nav-number">2.6.</span> <span class="nav-text">Alpha-beta pruning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Expectimax"><span class="nav-number">2.7.</span> <span class="nav-text">Expectimax</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

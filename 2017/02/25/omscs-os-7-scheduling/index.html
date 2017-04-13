@@ -1,0 +1,969 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview Scheduling Mechanisms, Algorithmn and data structures Linux O(1) scheduler Scheduling on **Multi-CPUs  Visual Methaphor   Features/Functionalities OS Scheduler Toy shop manager     Dispatch/As">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Scheduling">
+<meta property="og:url" content="http://yoursite.com/2017/02/25/omscs-os-7-scheduling/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview Scheduling Mechanisms, Algorithmn and data structures Linux O(1) scheduler Scheduling on **Multi-CPUs  Visual Methaphor   Features/Functionalities OS Scheduler Toy shop manager     Dispatch/As">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot3.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot5.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot4.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot6.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot7.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot8.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot9.png">
+<meta property="og:updated_time" content="2017-04-07T02:36:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Scheduling">
+<meta name="twitter:description" content="Preview Scheduling Mechanisms, Algorithmn and data structures Linux O(1) scheduler Scheduling on **Multi-CPUs  Visual Methaphor   Features/Functionalities OS Scheduler Toy shop manager     Dispatch/As">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_7/OS_7_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/25/omscs-os-7-scheduling/"/>
+
+
+
+
+
+  <title> Operating System - Scheduling | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/25/omscs-os-7-scheduling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Scheduling
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-25T19:20:13-08:00">
+                2017-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li><strong>Scheduling</strong> Mechanisms, Algorithmn and data structures</li>
+<li>Linux O(1) scheduler</li>
+<li>Scheduling on **Multi-CPUs</li>
+</ul>
+<h1 id="Visual-Methaphor"><a href="#Visual-Methaphor" class="headerlink" title="Visual Methaphor"></a>Visual Methaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">OS Scheduler</th>
+<th style="text-align:center">Toy shop manager</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Dispatch/Assign orders/tasks immediately</td>
+<td style="text-align:center">Scheduling is simple (FCFS)</td>
+<td style="text-align:center">Scheduling is simple (FiFO)</td>
+</tr>
+<tr>
+<td style="text-align:center">Dispatch/Assign simpler orders/tasks first</td>
+<td style="text-align:center">Maximize throughput (Shortest Job First)</td>
+<td style="text-align:center">Maximize # of orders processed over time (Need more time to process time to decide and pick order)</td>
+</tr>
+<tr>
+<td style="text-align:center">Dispatch/Assign complex orders/tasks first</td>
+<td style="text-align:center">Maximize utilization of CPU, devices, memory, …</td>
+<td style="text-align:center">Keep workbenches busy</td>
+</tr>
+</tbody>
+</table>
+<h1 id="CPU-Scheduling"><a href="#CPU-Scheduling" class="headerlink" title="CPU Scheduling"></a>CPU Scheduling</h1><h2 id="CPU-scheduler"><a href="#CPU-scheduler" class="headerlink" title="CPU scheduler"></a>CPU scheduler</h2><ul>
+<li>Decides how and when <strong>tasks (processes and threads)</strong> access shared CPUs</li>
+<li>Schedules <strong>tasks</strong> running both <strong>user-level proccesses/threads</strong> and <strong>kernel level threads</strong></li>
+<li>Chooses <strong>one</strong> of ready <strong>tasks</strong> to run on CPU</li>
+<li>Runs when <ol>
+<li><strong>CPU</strong> becomes <strong>idle</strong></li>
+<li><strong>New tasks</strong> become ready (will interupt CPU)</li>
+<li><strong>Timeslice</strong> expired timeout</li>
+</ol>
+</li>
+<li>When <strong>Tasks</strong> are <strong>dispatched</strong> on CPU -&gt; context switch, set PC, etc…</li>
+<li>The purose is to choose <strong>tasks from ready queue</strong></li>
+<li>Immediate Questions:<ol>
+<li><strong>Which</strong> task should be selected? -&gt; Scheduling policy/Algorithmn</li>
+<li><strong>How</strong> is this done? -&gt; Depends on <strong>runqueue</strong> data structure (used to implement <strong>ready queue</strong>)</li>
+</ol>
+</li>
+</ul>
+<h2 id="“Run-to-Completion”-Scheduling"><a href="#“Run-to-Completion”-Scheduling" class="headerlink" title="“Run-to-Completion” Scheduling"></a>“Run-to-Completion” Scheduling</h2><h3 id="Initial-Assumptions"><a href="#Initial-Assumptions" class="headerlink" title="Initial Assumptions"></a>Initial Assumptions</h3><ol>
+<li>Group of tasks/jobs</li>
+<li>Known execution times</li>
+<li>No preemption</li>
+<li>Single CPU</li>
+</ol>
+<h3 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h3><ol>
+<li>Throughput</li>
+<li>Avg Completion time</li>
+<li>Avg Wait Time</li>
+<li></li>
+</ol>
+<h3 id="Algorithmn"><a href="#Algorithmn" class="headerlink" title="Algorithmn"></a>Algorithmn</h3><ul>
+<li>First Come First Serve (FCFS)<ul>
+<li>runqueue == <strong>queue(FIFO)</strong></li>
+</ul>
+</li>
+<li>Shortest Job First (SJF)<ul>
+<li>Schedules tasks in order of their <strong>execution time</strong></li>
+<li>Runqueue == <strong>queue(priority queue)</strong> || <strong>tree(also a form of order)</strong> </li>
+</ul>
+</li>
+</ul>
+<h2 id="Preemptive-Scheduling"><a href="#Preemptive-Scheduling" class="headerlink" title="Preemptive Scheduling"></a>Preemptive Scheduling</h2><h3 id="SJF-Preemption"><a href="#SJF-Preemption" class="headerlink" title="SJF + Preemption"></a>SJF + Preemption</h3><ul>
+<li>T2 arrives first</li>
+<li>T2 should be preempted<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot1.png" class="[screenshot]"></li>
+<li>When execution time is <strong>unknown</strong>, need to use <strong>heuristics</strong> based on history:<ol>
+<li>How long did a task run last time?</li>
+<li>How long did a task run last n times? <strong>(Windowed Average)</strong></li>
+</ol>
+</li>
+</ul>
+<h2 id="Priority-Scheduling"><a href="#Priority-Scheduling" class="headerlink" title="Priority Scheduling"></a>Priority Scheduling</h2><ul>
+<li>Task have different <strong>priority levels</strong></li>
+<li>Run <strong>highest priority</strong> task next (preemption)</li>
+<li>Runqueues:<ol>
+<li>One queue per priority</li>
+<li>Tree ordered based on priority</li>
+</ol>
+</li>
+<li><strong>DANGEROUS: Starvation</strong>: low priority task never gets executed<ul>
+<li>Fix -&gt; <strong>“priority aging”</strong>: priority = f(actual_priority, time spent in run queue)</li>
+<li>The longer the task in run queue, the higher its priority is</li>
+<li>Tasks will eventually run</li>
+</ul>
+</li>
+</ul>
+<h2 id="Priority-Inversion"><a href="#Priority-Inversion" class="headerlink" title="Priority Inversion"></a>Priority Inversion</h2><img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot2.png" class="[screenshot]">
+<h2 id="Round-Robin-Scheduling"><a href="#Round-Robin-Scheduling" class="headerlink" title="Round Robin Scheduling"></a>Round Robin Scheduling</h2><ul>
+<li>Pick up first task from queue (like FCFS)</li>
+<li><strong>Task may yield, to wait on I/O (unlike FCFS)</strong></li>
+<li>Round Robin with <strong>Priorities</strong>: include preemption</li>
+<li>Round Robin with <strong>Interleaving</strong>: introduce <strong>timeslicing</strong></li>
+</ul>
+<h2 id="Timesharing-and-Timeslices"><a href="#Timesharing-and-Timeslices" class="headerlink" title="Timesharing and Timeslices"></a>Timesharing and Timeslices</h2><h3 id="Timeslice"><a href="#Timeslice" class="headerlink" title="Timeslice"></a>Timeslice</h3><ul>
+<li>Maximum amount of uninterrupted time given to a task =&gt; <strong>time quantum</strong></li>
+<li>Task may run <strong>less than</strong> timeslice time. Due to:<ol>
+<li>Has to wait on I/O, synchronization… =&gt; will be placed on a queue</li>
+<li>Higher priority task becomes runnable</li>
+</ol>
+</li>
+<li>Using timeslices tasks are <strong>interleaved</strong>: timesharing the CPU<ul>
+<li>Preempted after <strong>timeslice</strong></li>
+</ul>
+</li>
+<li><strong>Note: FSFC == Round Robin without timeslices</strong></li>
+<li>Benefits:<ol>
+<li>Keeps the simplicity, just as FCFS Has</li>
+<li>Achieved good metrics as SJF algorithmn, but doesn’t need to worry about the finding out the “shortest” task</li>
+<li>Short tasks finish sooner</li>
+<li>More responsive (User will see the task is running)</li>
+<li>Lengthy I/O operations initiated sooner</li>
+</ol>
+</li>
+<li>Downside:<ul>
+<li>Overheads: interrupt, schedule, context switch =&gt; <strong>keep timeslice &gt;&gt;&gt; context_switch_time</strong></li>
+</ul>
+</li>
+<li>Example:<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot3.png" class="[screenshot]">
+</li>
+</ul>
+<h3 id="How-long-should-a-timeslice-be"><a href="#How-long-should-a-timeslice-be" class="headerlink" title="How long should a timeslice be?"></a>How long should a timeslice be?</h3><ul>
+<li>Balance <strong>benefits</strong> and <strong>overheads</strong></li>
+</ul>
+<h4 id="For-IO-bound-tasks"><a href="#For-IO-bound-tasks" class="headerlink" title="For IO-bound tasks"></a>For <strong>IO-bound</strong> tasks</h4><ul>
+<li>Example<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot5.png" class="[screenshot]"></li>
+<li>Pick smaller timeslice, because:<ul>
+<li>It will run more quickly to issue I/O requests</li>
+<li>Keeps both the CPU and the I/O devices busy</li>
+<li>Better user-perceived performance (i.e. Responsive)</li>
+</ul>
+</li>
+</ul>
+<h3 id="For-CPU-bound-tasks"><a href="#For-CPU-bound-tasks" class="headerlink" title="For CPU-bound tasks"></a>For <strong>CPU-bound</strong> tasks</h3><ul>
+<li>Example<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot4.png" class="[screenshot]"></li>
+<li>Pick larger timeslice, because:<ul>
+<li>users will care more about <strong>completion time</strong> and <strong>throughput</strong> instead of <strong>wait time</strong></li>
+<li>Limits context switching overheads</li>
+<li>Keeps CPU utilization and throughput high</li>
+</ul>
+</li>
+</ul>
+<h2 id="Runqueue-Data-structures"><a href="#Runqueue-Data-structures" class="headerlink" title="Runqueue Data structures"></a>Runqueue Data structures</h2><ul>
+<li>The philosophy is to allow scheduler easily finding the next and best task to schedule</li>
+<li>If we want <strong>I/O and CPU bound tasks</strong> to have different timeslices, then<ol>
+<li>Same runqueue, check type</li>
+<li>Two different structures</li>
+</ol>
+</li>
+<li>Example:<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot6.png" class="[screenshot]"></li>
+<li>How do we know if a task is I/O or CPU bound? How intensive it is? -&gt; Use <strong>history heuristic</strong></li>
+<li>How about new tasks and dynamically changing tasks?<ul>
+<li>Multi-Level Feedback Queue (MLFQ)</li>
+<li>Not Priority Queues<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot7.png" class="[screenshot]">
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Linux-O-1-Scheduler"><a href="#Linux-O-1-Scheduler" class="headerlink" title="Linux O(1) Scheduler"></a>Linux O(1) Scheduler</h1><img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot8.png" class="[screenshot]">
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><ul>
+<li>Constant time to select/add task, regardless of task count</li>
+<li><strong>Preemptive, priority-based</strong><ul>
+<li>real time (0-99)</li>
+<li>timesharing (100-139)</li>
+</ul>
+</li>
+<li>User processes<ul>
+<li>Default 120</li>
+<li>nicevalue(-20 to 19)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Timeslice-Value"><a href="#Timeslice-Value" class="headerlink" title="Timeslice Value"></a>Timeslice Value</h2><ul>
+<li>Depends on priority</li>
+<li>Smallest for low priority</li>
+<li>Highest for hight priority</li>
+</ul>
+<h2 id="Feedback"><a href="#Feedback" class="headerlink" title="Feedback"></a>Feedback</h2><ul>
+<li>Sleep time: waiting/idling</li>
+<li>Longer sleep =&gt; interactive =&gt; priority - 5 =&gt; <strong>boost</strong></li>
+<li>Smaller Sleep (compute intensive) =&gt; priority + 5 =&gt; <strong>lower priority</strong></li>
+</ul>
+<h2 id="Runqueue"><a href="#Runqueue" class="headerlink" title="Runqueue"></a>Runqueue</h2><img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot9.png" class="[screenshot]">
+<ul>
+<li>2 arrays of tasks</li>
+<li><strong>Active</strong><ul>
+<li>Used to pick next task to run</li>
+<li>Constant time to <strong>add/select</strong></li>
+<li>Tasks remain in queue in active until timeslice expires</li>
+</ul>
+</li>
+<li><strong>Expired</strong><ul>
+<li>Inactive list</li>
+<li>When no more tasks in active array =&gt; <strong>swap active and expired arrays</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Pros-and-Cons"><a href="#Pros-and-Cons" class="headerlink" title="Pros and Cons"></a>Pros and Cons</h2><ul>
+<li>Pros: O(1)</li>
+<li>Cons:<ul>
+<li>Performance of interactive tasks (tasks in expired queue is not scheduled)</li>
+<li>Fairness</li>
+</ul>
+</li>
+</ul>
+<h1 id="Completely-Fair-Scheduler-CFS"><a href="#Completely-Fair-Scheduler-CFS" class="headerlink" title="Completely Fair Scheduler (CFS)"></a>Completely Fair Scheduler (CFS)</h1><h2 id="Runqueue-1"><a href="#Runqueue-1" class="headerlink" title="Runqueue"></a>Runqueue</h2><ul>
+<li>Red-Black Tree</li>
+<li>Ordered by “virtural runtime”</li>
+<li>“Virtual time” == time spent on CPU</li>
+</ul>
+<h2 id="CFS-Scheduling"><a href="#CFS-Scheduling" class="headerlink" title="CFS Scheduling"></a>CFS Scheduling</h2><ul>
+<li>Always pick left-most node (always schedule task with least amount of time on CPU)</li>
+<li>Periodically adjust <strong>virtual runtime</strong></li>
+<li>Compare to <strong>left most virtual runtime</strong><ul>
+<li>If smaller, continue running</li>
+<li>If larger, preempt and place appropriately in the tree</li>
+</ul>
+</li>
+</ul>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><ul>
+<li>Select task =&gt; O(1)</li>
+<li>Add Task =&gt; O(logN)</li>
+</ul>
+<h1 id="Scheduling-on-Multi-CPU-Systems"><a href="#Scheduling-on-Multi-CPU-Systems" class="headerlink" title="Scheduling on Multi-CPU Systems"></a>Scheduling on Multi-CPU Systems</h1><h2 id="Shared-Memory-Multiprocessor-SMP-v-s-Multi-Cores"><a href="#Shared-Memory-Multiprocessor-SMP-v-s-Multi-Cores" class="headerlink" title="Shared Memory Multiprocessor (SMP) v.s. Multi-Cores"></a>Shared Memory Multiprocessor (SMP) v.s. Multi-Cores</h2><ul>
+<li>SMP has multiple CPUs sharing the same memory, and each of them will have their own caches, and may or maynot share Last Level Cache (LLC)</li>
+<li>Multi-Cores are CPUs that have multi cores inside it, each core has its private caches, and they share a LLC and memory</li>
+<li>As far as OS concerns, both CPUs and Cores in a CPU are entities that they could schedule a thread/proccess on</li>
+</ul>
+<h2 id="Scheduling-on-Multi-CPU-Systems-1"><a href="#Scheduling-on-Multi-CPU-Systems-1" class="headerlink" title="Scheduling on Multi-CPU Systems"></a>Scheduling on Multi-CPU Systems</h2><ul>
+<li>Cache-affinity <strong>IMPORTANT</strong><ul>
+<li>Keep tasks on the same CPU as much as possible</li>
+<li>Hiearchieal scheduler architecture</li>
+<li><strong>Per-CPU</strong> runqueue and <strong>scheduler</strong><ol>
+<li>Load balane across CPUs based on<br> a. Queue length<br> b. When CPU is idle</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Non-Uniform-Memory-Access-Platform-NUMA-Platform"><a href="#Non-Uniform-Memory-Access-Platform-NUMA-Platform" class="headerlink" title="Non-Uniform Memory Access Platform (NUMA Platform)"></a>Non-Uniform Memory Access Platform (NUMA Platform)</h2><ul>
+<li>Multiple <strong>memory nodes</strong></li>
+<li><strong>Memory Node</strong> closer to a “”soket” of multiple processor<ul>
+<li>Access to local main memory node is faster than access to remote main memory node</li>
+</ul>
+</li>
+<li>Keep tasks on CPU closer to Main Memory where their state is -&gt; <strong>NUMA-aware scheduling</strong></li>
+</ul>
+<h1 id="Hyperthreading-SMT-Simultaneous-Multithreading"><a href="#Hyperthreading-SMT-Simultaneous-Multithreading" class="headerlink" title="Hyperthreading (SMT - Simultaneous Multithreading)"></a>Hyperthreading (SMT - Simultaneous Multithreading)</h1><ul>
+<li>Multiple hardware-supported execution contexts (i.e. multiple sets of registers for different threads)</li>
+<li>Still 1 CPU but with <strong>very fast</strong> context switch</li>
+<li>From OS’s perspective, each set of regs will be seen as a virtual CPU</li>
+<li>Can hide <strong>memory latency</strong> because now context switch is 0 cycle, but memory access is much greater</li>
+<li>Reference: <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-fedorova-paper.pdf" target="_blank" rel="external">“Chip Multithreading Systems Need a New Operating System Scheduler”.</a></li>
+</ul>
+<h1 id="Threads-and-SMT"><a href="#Threads-and-SMT" class="headerlink" title="Threads and SMT"></a>Threads and SMT</h1><h2 id="Assumptions"><a href="#Assumptions" class="headerlink" title="Assumptions"></a>Assumptions</h2><ol>
+<li>Thread issues instruction on each cycle, max <strong>instruction per cycle (IPC)</strong> is 1</li>
+<li>Memory access = 4 cycles</li>
+<li>Hardware switching instaneously</li>
+<li>SMT with 2 hardware threads</li>
+</ol>
+<h2 id="Co-schedule-compute-bound-threads"><a href="#Co-schedule-compute-bound-threads" class="headerlink" title="Co-schedule compute-bound threads"></a>Co-schedule <strong>compute-bound</strong> threads</h2><ul>
+<li>Threads <strong>“interfere”</strong></li>
+<li><strong>“contend”</strong> for CPU pipline resource</li>
+<li><strong>Performance degrades</strong> by 2x</li>
+<li>Memory Idle</li>
+</ul>
+<h2 id="Co-schedule-memory-bound-threads"><a href="#Co-schedule-memory-bound-threads" class="headerlink" title="Co-schedule memory-bound threads"></a>Co-schedule <strong>memory-bound</strong> threads</h2><ul>
+<li>CPU idle</li>
+<li>Waste CPU cycles</li>
+</ul>
+<h2 id="Co-schedule-compute-and-memory-bound-threads"><a href="#Co-schedule-compute-and-memory-bound-threads" class="headerlink" title="Co-schedule compute- and memory-bound threads"></a>Co-schedule <strong>compute- and memory-bound</strong> threads</h2><ul>
+<li>Mix of CPU- and Memory-intensive threads</li>
+<li>BINGO!</li>
+<li>Avoid/limit contention on processor pipeline</li>
+<li>All components (CPU and memory) are well utilized</li>
+<li>Still leads to interference and degration, but minimal</li>
+</ul>
+<h2 id="CPU-bound-or-Memory-Boud"><a href="#CPU-bound-or-Memory-Boud" class="headerlink" title="CPU bound or Memory Boud?"></a>CPU bound or Memory Boud?</h2><ul>
+<li>Use historic information<ul>
+<li>“sleep time” wont work: the thread is not sleeping when waiting on Mm</li>
+<li>Software takse too much time to compute this</li>
+</ul>
+</li>
+<li>Use Hardware Counters</li>
+</ul>
+<h2 id="Is-Cycle-per-Instruction-useful"><a href="#Is-Cycle-per-Instruction-useful" class="headerlink" title="Is Cycle-per-Instruction useful?"></a>Is Cycle-per-Instruction useful?</h2><ul>
+<li>Simulation based evaluation</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/26/vue-doc-notes/" rel="next" title="Notes for Vue Documentation">
+                <i class="fa fa-chevron-left"></i> Notes for Vue Documentation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/omscs-os-6-thread-performance/" rel="prev" title="Operating System - Thread Performance">
+                Operating System - Thread Performance <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Methaphor"><span class="nav-number">2.</span> <span class="nav-text">Visual Methaphor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU-Scheduling"><span class="nav-number">3.</span> <span class="nav-text">CPU Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-scheduler"><span class="nav-number">3.1.</span> <span class="nav-text">CPU scheduler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“Run-to-Completion”-Scheduling"><span class="nav-number">3.2.</span> <span class="nav-text">“Run-to-Completion” Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Initial-Assumptions"><span class="nav-number">3.2.1.</span> <span class="nav-text">Initial Assumptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metrics"><span class="nav-number">3.2.2.</span> <span class="nav-text">Metrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Algorithmn"><span class="nav-number">3.2.3.</span> <span class="nav-text">Algorithmn</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preemptive-Scheduling"><span class="nav-number">3.3.</span> <span class="nav-text">Preemptive Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SJF-Preemption"><span class="nav-number">3.3.1.</span> <span class="nav-text">SJF + Preemption</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Priority-Scheduling"><span class="nav-number">3.4.</span> <span class="nav-text">Priority Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Priority-Inversion"><span class="nav-number">3.5.</span> <span class="nav-text">Priority Inversion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Round-Robin-Scheduling"><span class="nav-number">3.6.</span> <span class="nav-text">Round Robin Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Timesharing-and-Timeslices"><span class="nav-number">3.7.</span> <span class="nav-text">Timesharing and Timeslices</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Timeslice"><span class="nav-number">3.7.1.</span> <span class="nav-text">Timeslice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-long-should-a-timeslice-be"><span class="nav-number">3.7.2.</span> <span class="nav-text">How long should a timeslice be?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#For-IO-bound-tasks"><span class="nav-number">3.7.2.1.</span> <span class="nav-text">For IO-bound tasks</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#For-CPU-bound-tasks"><span class="nav-number">3.7.3.</span> <span class="nav-text">For CPU-bound tasks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runqueue-Data-structures"><span class="nav-number">3.8.</span> <span class="nav-text">Runqueue Data structures</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-O-1-Scheduler"><span class="nav-number">4.</span> <span class="nav-text">Linux O(1) Scheduler</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties"><span class="nav-number">4.1.</span> <span class="nav-text">Properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Timeslice-Value"><span class="nav-number">4.2.</span> <span class="nav-text">Timeslice Value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Feedback"><span class="nav-number">4.3.</span> <span class="nav-text">Feedback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runqueue"><span class="nav-number">4.4.</span> <span class="nav-text">Runqueue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pros-and-Cons"><span class="nav-number">4.5.</span> <span class="nav-text">Pros and Cons</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Completely-Fair-Scheduler-CFS"><span class="nav-number">5.</span> <span class="nav-text">Completely Fair Scheduler (CFS)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Runqueue-1"><span class="nav-number">5.1.</span> <span class="nav-text">Runqueue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CFS-Scheduling"><span class="nav-number">5.2.</span> <span class="nav-text">CFS Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance"><span class="nav-number">5.3.</span> <span class="nav-text">Performance</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scheduling-on-Multi-CPU-Systems"><span class="nav-number">6.</span> <span class="nav-text">Scheduling on Multi-CPU Systems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shared-Memory-Multiprocessor-SMP-v-s-Multi-Cores"><span class="nav-number">6.1.</span> <span class="nav-text">Shared Memory Multiprocessor (SMP) v.s. Multi-Cores</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scheduling-on-Multi-CPU-Systems-1"><span class="nav-number">6.2.</span> <span class="nav-text">Scheduling on Multi-CPU Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-Uniform-Memory-Access-Platform-NUMA-Platform"><span class="nav-number">6.3.</span> <span class="nav-text">Non-Uniform Memory Access Platform (NUMA Platform)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hyperthreading-SMT-Simultaneous-Multithreading"><span class="nav-number">7.</span> <span class="nav-text">Hyperthreading (SMT - Simultaneous Multithreading)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Threads-and-SMT"><span class="nav-number">8.</span> <span class="nav-text">Threads and SMT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Assumptions"><span class="nav-number">8.1.</span> <span class="nav-text">Assumptions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Co-schedule-compute-bound-threads"><span class="nav-number">8.2.</span> <span class="nav-text">Co-schedule compute-bound threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Co-schedule-memory-bound-threads"><span class="nav-number">8.3.</span> <span class="nav-text">Co-schedule memory-bound threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Co-schedule-compute-and-memory-bound-threads"><span class="nav-number">8.4.</span> <span class="nav-text">Co-schedule compute- and memory-bound threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-bound-or-Memory-Boud"><span class="nav-number">8.5.</span> <span class="nav-text">CPU bound or Memory Boud?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Is-Cycle-per-Instruction-useful"><span class="nav-number">8.6.</span> <span class="nav-text">Is Cycle-per-Instruction useful?</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

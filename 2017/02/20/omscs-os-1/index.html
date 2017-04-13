@@ -1,0 +1,792 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Main Topics OS Abstractions Mechanisms Policies  Simple OS Definition: A special piece of software that abstracts and arbitrates the underlying hardware Abstract: simplify Arbitrate: manage, oversee a">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System Note1 - Introduction">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/omscs-os-1/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Main Topics OS Abstractions Mechanisms Policies  Simple OS Definition: A special piece of software that abstracts and arbitrates the underlying hardware Abstract: simplify Arbitrate: manage, oversee a">
+<meta property="og:updated_time" content="2017-02-20T20:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System Note1 - Introduction">
+<meta name="twitter:description" content="Main Topics OS Abstractions Mechanisms Policies  Simple OS Definition: A special piece of software that abstracts and arbitrates the underlying hardware Abstract: simplify Arbitrate: manage, oversee a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/20/omscs-os-1/"/>
+
+
+
+
+
+  <title> Operating System Note1 - Introduction | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/omscs-os-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System Note1 - Introduction
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T00:35:15-08:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Main-Topics"><a href="#Main-Topics" class="headerlink" title="Main Topics"></a>Main Topics</h1><ul>
+<li>OS Abstractions</li>
+<li>Mechanisms</li>
+<li>Policies</li>
+</ul>
+<h1 id="Simple-OS-Definition"><a href="#Simple-OS-Definition" class="headerlink" title="Simple OS Definition:"></a>Simple OS Definition:</h1><ul>
+<li>A special piece of software that <strong>abstracts</strong> and <strong>arbitrates</strong> the underlying hardware<ul>
+<li>Abstract: simplify</li>
+<li>Arbitrate: manage, oversee and control</li>
+</ul>
+</li>
+</ul>
+<h1 id="Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager"><a href="#Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager" class="headerlink" title="Visual Metaphor: Operating System v.s. Toy shop Manager"></a>Visual Metaphor: Operating System v.s. Toy shop Manager</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Operating System</th>
+<th style="text-align:center">Toy shop Manager</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Direct operational resources</td>
+<td style="text-align:center">Control use of CPU, Memory</td>
+<td style="text-align:center">control use of employee time, parts &amp; tools</td>
+</tr>
+<tr>
+<td style="text-align:center">Enforce working policies</td>
+<td style="text-align:center">Fair resource access, limits to resource usage</td>
+<td style="text-align:center">Fairness, safety, cleanup</td>
+</tr>
+<tr>
+<td style="text-align:center">Migrates difficulty of computer tasks</td>
+<td style="text-align:center">Abstract hardware details (system call)</td>
+<td style="text-align:center">Simplifies operation &amp; optimize performance</td>
+</tr>
+</tbody>
+</table>
+<h1 id="What-is-an-Operating-System"><a href="#What-is-an-Operating-System" class="headerlink" title="What is an Operating System"></a>What is an Operating System</h1><ul>
+<li>Hide hardware complexity.</li>
+<li>Resource Management</li>
+<li>Provide isolation &amp; protection</li>
+<li>Directly has priviledged access to underlying hardware</li>
+</ul>
+<h1 id="Operating-System-Elements"><a href="#Operating-System-Elements" class="headerlink" title="Operating System Elements"></a>Operating System Elements</h1><ol>
+<li>Abstractions<ul>
+<li>software<ul>
+<li>process, thread</li>
+</ul>
+</li>
+<li>hardware<ul>
+<li>file</li>
+<li>socket</li>
+<li>memory page</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Mechanisms</p>
+<ul>
+<li>create, schedule</li>
+<li>open, write, allocate</li>
+</ul>
+</li>
+<li><p>Policies</p>
+<ul>
+<li>Least-recently used (LRU)</li>
+<li>Earliest deadline first (EDF)<br>…</li>
+</ul>
+</li>
+</ol>
+<h1 id="Design-Principles"><a href="#Design-Principles" class="headerlink" title="Design Principles"></a>Design Principles</h1><ul>
+<li>Separation of mechanisms &amp; policies</li>
+<li>Optimize for common case</li>
+</ul>
+<h1 id="Basic-Operating-System-Services"><a href="#Basic-Operating-System-Services" class="headerlink" title="Basic Operating System Services"></a>Basic Operating System Services</h1><ul>
+<li>Scheduler -&gt; CPU</li>
+<li>Main Memory (Mm) Manager -&gt; Main Memory</li>
+<li>Block Device Driver</li>
+<li>File System</li>
+</ul>
+<h1 id="Different-Types-of-Operating-Systems"><a href="#Different-Types-of-Operating-Systems" class="headerlink" title="Different Types of Operating Systems"></a>Different Types of Operating Systems</h1><ol>
+<li><p>Monolithic Operating System</p>
+<ul>
+<li>Pros:<ul>
+<li>Compile time optimizations</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>All services and abstractions are already in an Operating System</li>
+<li>Really large</li>
+<li>Hard to maintain</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Modular Operating System</p>
+<ul>
+<li>Everything can be added as modules</li>
+<li>Operating System contains interfaces to allow alternatives</li>
+<li>Pros:<ul>
+<li>Smaller code basis</li>
+<li>Less resource needed</li>
+<li>Easier to maintain</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>Indirection impact on performance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Microkernel:</p>
+<ul>
+<li>Only require the most basic services. e.g. Address Space, threads</li>
+<li>All others reside in user level</li>
+<li>Requires lots of inter process communication</li>
+<li>Pros:<ul>
+<li>Very small</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>Portability will be bad.</li>
+<li>Complexity of Software Development</li>
+<li>Cost of user/kernel crossing</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-2-process/" rel="next" title="Operating System - Process">
+                <i class="fa fa-chevron-left"></i> Operating System - Process
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/19/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Main-Topics"><span class="nav-number">1.</span> <span class="nav-text">Main Topics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Simple-OS-Definition"><span class="nav-number">2.</span> <span class="nav-text">Simple OS Definition:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager"><span class="nav-number">3.</span> <span class="nav-text">Visual Metaphor: Operating System v.s. Toy shop Manager</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-an-Operating-System"><span class="nav-number">4.</span> <span class="nav-text">What is an Operating System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Operating-System-Elements"><span class="nav-number">5.</span> <span class="nav-text">Operating System Elements</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Design-Principles"><span class="nav-number">6.</span> <span class="nav-text">Design Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Operating-System-Services"><span class="nav-number">7.</span> <span class="nav-text">Basic Operating System Services</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Different-Types-of-Operating-Systems"><span class="nav-number">8.</span> <span class="nav-text">Different Types of Operating Systems</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

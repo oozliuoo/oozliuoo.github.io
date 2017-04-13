@@ -1,0 +1,1003 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview kernel thread v.s. user thread Thread and interupt Thread and signal Linux thread model  References Beyond Multiprocessing…Multithreading the SunOS Kernel Implementing Lightweight Thread  Kern">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Thread Design">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/omscs-os-5-pthread-implementation/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview kernel thread v.s. user thread Thread and interupt Thread and signal Linux thread model  References Beyond Multiprocessing…Multithreading the SunOS Kernel Implementing Lightweight Thread  Kern">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot3.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot4.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot5.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot6.png">
+<meta property="og:updated_time" content="2017-04-07T02:36:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Thread Design">
+<meta name="twitter:description" content="Preview kernel thread v.s. user thread Thread and interupt Thread and signal Linux thread model  References Beyond Multiprocessing…Multithreading the SunOS Kernel Implementing Lightweight Thread  Kern">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_5/OS_5_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/20/omscs-os-5-pthread-implementation/"/>
+
+
+
+
+
+  <title> Operating System - Thread Design | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/omscs-os-5-pthread-implementation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Thread Design
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T17:43:56-08:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li><strong>kernel thread</strong> v.s. <strong>user thread</strong></li>
+<li>Thread and <strong>interupt</strong></li>
+<li>Thread and <strong>signal</strong></li>
+<li>Linux thread model</li>
+</ul>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li><a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-eykholt-paper.pdf" target="_blank" rel="external">Beyond Multiprocessing…Multithreading the SunOS Kernel</a></li>
+<li><a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-stein-shah-paper.pdf" target="_blank" rel="external">Implementing Lightweight Thread</a></li>
+</ol>
+<h1 id="Kernel-Level-Threads-v-s-Usere-Level-Thread"><a href="#Kernel-Level-Threads-v-s-Usere-Level-Thread" class="headerlink" title="Kernel Level Threads v.s. Usere Level Thread"></a>Kernel Level Threads v.s. Usere Level Thread</h1><h2 id="Kernel-Level-Threads"><a href="#Kernel-Level-Threads" class="headerlink" title="Kernel Level Threads"></a>Kernel Level Threads</h2><ul>
+<li>OS kernel maintains<ol>
+<li>thread abstraction</li>
+<li>scheduling, sync, etc…</li>
+</ol>
+</li>
+<li>Data Structures<ul>
+<li>Split the <strong>Process Control Block</strong>:<ol>
+<li><strong>PCB:</strong> Virtual Addresses mappings and other additional information used by all threads</li>
+<li><strong>Kernel Level Thread (KLT):</strong> stack, registers, etc…</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>When context switching KLT, a portion of information in PCB will be only linked to a specific thread, so we need to respect that. Hence, split PCB infor into:<ol>
+<li><strong>“Hard” process state:</strong> relevant for all of the <strong>user level threads</strong> that execute within the process<ul>
+<li>Virtual Addresses</li>
+</ul>
+</li>
+<li><strong>“Light” process state:</strong> <strong>a subset of the user level threads</strong> that are currently associated with a particular KLT<ul>
+<li>Signal</li>
+<li>Systemcall</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="User-Level-Threads"><a href="#User-Level-Threads" class="headerlink" title="User Level Threads"></a>User Level Threads</h2><ul>
+<li>User level uses library to provide<ol>
+<li>thread abstraction</li>
+<li>scheduling, sync, etc…</li>
+</ol>
+</li>
+<li>Libraries could vary in different applications/processes</li>
+<li>Data Structures <strong>(User Level Thread (ULT))</strong> - Managed by the thread library<ul>
+<li>UL thread ID</li>
+<li>UL regs</li>
+<li>Thread stack</li>
+</ul>
+</li>
+<li>From User Level Threads’ perspective, Kernel Level Thread will be like a virtual CPU.</li>
+</ul>
+<h2 id="Rationale-for-Multiple-Data-Structures"><a href="#Rationale-for-Multiple-Data-Structures" class="headerlink" title="Rationale for Multiple Data Structures"></a>Rationale for Multiple Data Structures</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Single PCB</th>
+<th style="text-align:center">Multiple Data Structure</th>
+<th style="text-align:center">Benefit of multiple data structure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Large continuous data structure</td>
+<td style="text-align:center">Smaller data structure</td>
+<td style="text-align:center">Scalability</td>
+</tr>
+<tr>
+<td style="text-align:center">Private for each entity</td>
+<td style="text-align:center">Easier to share</td>
+<td style="text-align:center">Overheads</td>
+</tr>
+<tr>
+<td style="text-align:center">Saved and restored on each context switch</td>
+<td style="text-align:center">On context switch only save and restore what needs to change</td>
+<td style="text-align:center">Performance</td>
+</tr>
+<tr>
+<td style="text-align:center">Update for any changes</td>
+<td style="text-align:center">User Level library needs only update portion of the state</td>
+<td style="text-align:center">Flexibility</td>
+</tr>
+</tbody>
+</table>
+<h2 id="User-Level-Thread-Data-Structure-in-Implementing-Lightweight-Thread"><a href="#User-Level-Thread-Data-Structure-in-Implementing-Lightweight-Thread" class="headerlink" title="User Level Thread Data Structure in Implementing Lightweight Thread"></a>User Level Thread Data Structure in <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-stein-shah-paper.pdf" target="_blank" rel="external">Implementing Lightweight Thread</a></h2><ul>
+<li><strong>NOT</strong> PThread, but similar</li>
+<li>Thread creation =&gt; thread ID (tid)<ul>
+<li><strong>tid</strong> is and index into table of pointers, not directly pointing the thread structure</li>
+<li>Table pointers point to per thread data structure. The nice thing of this is: when there is error in the thread, the tid is still a valid pointer, and the table content could be encoded to imply errors/feedbacks</li>
+<li>Stack growth can be <strong>dangerous</strong>, as one thread could overwrite other threads’ information<ul>
+<li>Solution: Red zone. When a thread is trying to access/writing into the red zone, it will raise up a fault, so that OS could aware of what is happening and which thread is causing this problem</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Kernel-Level-Thread-Data-Structure-in-Implementing-Lightweight-Thread"><a href="#Kernel-Level-Thread-Data-Structure-in-Implementing-Lightweight-Thread" class="headerlink" title="Kernel Level Thread Data Structure in Implementing Lightweight Thread"></a>Kernel Level Thread Data Structure in <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-stein-shah-paper.pdf" target="_blank" rel="external">Implementing Lightweight Thread</a></h2><h3 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h3><ul>
+<li>List of <strong>kernel level threads</strong></li>
+<li>Virtual Address Space</li>
+<li>User Credentials</li>
+<li>Signal handlers</li>
+</ul>
+<h3 id="Light-weight-Process-LWP"><a href="#Light-weight-Process-LWP" class="headerlink" title="Light-weight Process (LWP)"></a>Light-weight Process (LWP)</h3><ul>
+<li>User level registers</li>
+<li>System call args</li>
+<li>Resource usage info</li>
+<li>Signal Mask</li>
+<li>It is similar to ULT, but visible to kernel. </li>
+<li><strong>Not needed when process is not running</strong> (Swappable)</li>
+</ul>
+<h3 id="Kernel-Level-Threads-1"><a href="#Kernel-Level-Threads-1" class="headerlink" title="Kernel Level Threads"></a>Kernel Level Threads</h3><ul>
+<li>Kernel Level registers</li>
+<li>Stack pointer</li>
+<li>Scheduling info (class, …)</li>
+<li>Pointers to associated <strong>LWP, process, CPU Structures</strong></li>
+<li>Information needed even when process is not running =&gt; <strong>NOT Swappable</strong></li>
+</ul>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><ul>
+<li>Current thread</li>
+<li>List of <strong>kernel-level thread</strong></li>
+<li>Dispatching&amp;interrupt handling information</li>
+</ul>
+<h2 id="Kernel-Level-Thread-Data-Structure-in-Beyond-Multiprocessing…Multithreading-the-SunOS-Kernel"><a href="#Kernel-Level-Thread-Data-Structure-in-Beyond-Multiprocessing…Multithreading-the-SunOS-Kernel" class="headerlink" title="Kernel Level Thread Data Structure in Beyond Multiprocessing…Multithreading the SunOS Kernel"></a>Kernel Level Thread Data Structure in <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-eykholt-paper.pdf" target="_blank" rel="external">Beyond Multiprocessing…Multithreading the SunOS Kernel</a></h2><img src="/imgs/OMSCS/OS/OS_5/OS_5_Screenshot1.png" class="[screenshot]">
+<h2 id="Problem-in-Basic-Thread-Management-Interations"><a href="#Problem-in-Basic-Thread-Management-Interations" class="headerlink" title="Problem in Basic Thread Management Interations"></a>Problem in Basic Thread Management Interations</h2><ul>
+<li>User Level Library doesnot know what is happening in the kernel</li>
+<li>Kernel does not know what is happening in User Level Library<br>Therefore, need <strong>system calls</strong> and <strong>special signals</strong> allow kernel and ULT library to interact and coordinate.</li>
+</ul>
+<h1 id="Lack-of-Thread-Management-Visibility"><a href="#Lack-of-Thread-Management-Visibility" class="headerlink" title="Lack of Thread Management Visibility"></a>Lack of Thread Management Visibility</h1><ul>
+<li><strong>UL Library</strong> sees<ul>
+<li>ULTs</li>
+<li>Available KLTs</li>
+</ul>
+</li>
+<li><strong>Kernel</strong> sees<ul>
+<li>KLTs</li>
+<li>CPUs</li>
+<li>Kernel Level Scheduler</li>
+</ul>
+</li>
+<li>Problem: <strong>visibility</strong> of <strong>state</strong> and <strong>decisions</strong> between kernel and UL library<ul>
+<li><strong>1-1 model</strong> helps address some of these issues</li>
+</ul>
+</li>
+</ul>
+<h2 id="How-When-does-the-UL-Library-run"><a href="#How-When-does-the-UL-Library-run" class="headerlink" title="How/When does the UL Library run?"></a>How/When does the UL Library run?</h2><ul>
+<li><strong>ULTs</strong> explicitly yield</li>
+<li>Timer set by <strong>UL Library</strong> expires</li>
+<li><strong>ULTs</strong> call library functions like lock/unlock</li>
+<li>Blocked threads become runnable</li>
+<li>Runs on <strong>signals</strong> from <strong>timer</strong> or <strong>kernel</strong></li>
+</ul>
+<h2 id="Issues-on-Multiple-CPUs"><a href="#Issues-on-Multiple-CPUs" class="headerlink" title="Issues on Multiple CPUs"></a>Issues on Multiple CPUs</h2><ul>
+<li>KLT could be run in different CPUs, and they need to impact with others.</li>
+<li>Need to send signal to other threads, on other CPUs to run library code locally to do some schedulings and decisions.</li>
+</ul>
+<h2 id="Synchronization-Related-Issues"><a href="#Synchronization-Related-Issues" class="headerlink" title="Synchronization Related Issues"></a>Synchronization Related Issues</h2><ul>
+<li>When the thread that currently holds mutex is running on one CPU, while the thread requesting mutex is running on the other CPU. <ul>
+<li><strong>If critical section is short</strong>, DONT BLOCK, SPIN! Because if we do context switch and place that thread into the <strong>mutex queue</strong>. In this period, the critical section could be completed.</li>
+<li><strong>If critical section is long</strong>, default blocking behavior</li>
+<li>This is called <strong>Adaptive Mutexes</strong> (only for this special scenario in multi-CPUs)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Destroying-Threads"><a href="#Destroying-Threads" class="headerlink" title="Destroying Threads"></a>Destroying Threads</h2><ul>
+<li>Because thread creation could be expensive, nstead of destroying, <strong>reuse threads</strong></li>
+<li>When a thread exits…<ul>
+<li>Put on a <strong>“death row”</strong></li>
+<li>Periodically destroyed by <strong>reaper thread</strong></li>
+<li>Otherwise thread structures/stacks are <strong>reused</strong> =&gt; Performance gains!</li>
+</ul>
+</li>
+</ul>
+<h1 id="Interrupts-v-s-signals"><a href="#Interrupts-v-s-signals" class="headerlink" title="Interrupts v.s. signals"></a>Interrupts v.s. signals</h1><h2 id="Interrupts"><a href="#Interrupts" class="headerlink" title="Interrupts"></a>Interrupts</h2><ul>
+<li>Events <strong>generated externally by components</strong> other than the CPU. (I/O devices, timers, other CPUs)</li>
+<li>Determined <strong>based on the physical platform</strong></li>
+<li>Appear <strong>asynchronously</strong></li>
+</ul>
+<h2 id="Signals"><a href="#Signals" class="headerlink" title="Signals"></a>Signals</h2><ul>
+<li>Events <strong>triggered by the CPU&amp;software</strong> running on it.</li>
+<li>Determined <strong>based on the operating system</strong></li>
+<li>Appear <strong>synchronously or asynchronously</strong> (in response to a specific action took place in the CPU)</li>
+</ul>
+<h2 id="Similarities-Between-Interrupt-and-Signal"><a href="#Similarities-Between-Interrupt-and-Signal" class="headerlink" title="Similarities Between Interrupt and Signal"></a>Similarities Between Interrupt and Signal</h2><ul>
+<li>Have a <strong>unique Id</strong> depending on the hardware or OS</li>
+<li>Can be <strong>masked</strong> and <strong>disabled/suspended</strong> via corresponding mask<ul>
+<li><strong>per-CPU</strong> interrupt mask</li>
+<li><strong>per-process</strong> signal mask</li>
+</ul>
+</li>
+<li>If enabled, trigger corresponding <strong>handler</strong><ul>
+<li>Interrupt handler set <strong>for entire system</strong> by <strong>OS</strong></li>
+<li>Signal handlers set <strong>on per process basis</strong> by <strong>process</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Interrupt/Signal</th>
+<th style="text-align:center">Snowstorm warning/“Battery is low” warning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Handled in specific ways</td>
+<td style="text-align:center">Interrupt and signal handlers</td>
+<td style="text-align:center">safety protocols, hazard plans</td>
+</tr>
+<tr>
+<td style="text-align:center">Can be ignored</td>
+<td style="text-align:center">Interrupt/signal mask</td>
+<td style="text-align:center">continue working</td>
+</tr>
+<tr>
+<td style="text-align:center">Expected or unexpected</td>
+<td style="text-align:center">Appear synchronously or asynchronously</td>
+<td style="text-align:center">Happen regularly or irregularly</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Interrupt-Handlings"><a href="#Interrupt-Handlings" class="headerlink" title="Interrupt Handlings"></a>Interrupt Handlings</h2><ul>
+<li>Device sends notification to CPU, interrupts the thread currently run on CPU</li>
+<li>Based on the interrupt, look for <strong>handler</strong> in <strong>interrupt handler table</strong> based on the <strong>interrupt #</strong></li>
+<li>Interrupt number is defined by <strong>hardware</strong></li>
+<li>Interrupt handlers are defined by <strong>Operating System</strong></li>
+</ul>
+<h2 id="Signal-Handlings"><a href="#Signal-Handlings" class="headerlink" title="Signal Handlings"></a>Signal Handlings</h2><ul>
+<li>CPU/Software triggers events to OS, and OS generates a <strong>signal</strong>.</li>
+<li>OS maintains a <strong>signal handler table</strong>, and will use that to look for <strong>handler</strong> based on <strong>signal number</strong>.</li>
+<li>Signal number is defined by <strong>Operating System</strong></li>
+<li>Signal handlers <strong>could be</strong> defined by <strong>Process</strong><ul>
+<li>A process could skip handlers, because OS provides <strong>default actions/handlers</strong><ol>
+<li>Terminate, Ignore</li>
+<li>Terminate and Core Dump</li>
+<li>Stop or continue</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Why-Disable-Interrupts-or-Signals"><a href="#Why-Disable-Interrupts-or-Signals" class="headerlink" title="Why Disable Interrupts or Signals"></a>Why Disable Interrupts or Signals</h2><ul>
+<li>There could be <strong>Dead Lock</strong> scenario: The interrupt/signal handler is requesting a mutex that is held by the process caused this intterupt/signal<ul>
+<li>Solutions:<ol>
+<li>Keep handler code simple (no mutex) =&gt; too restrictive</li>
+<li>Control interruptions by handler code =&gt; use <strong>interrupt/signal masks</strong></li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Example Routine:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">    clear_field_in_mask(mask)</div><div class="line">               |</div><div class="line">               |</div><div class="line">          lock(mutex)</div><div class="line">               |</div><div class="line">               |</div><div class="line">    disabled =&gt; remain pending</div><div class="line">               |</div><div class="line">               |</div><div class="line">         unlock(mutex)</div><div class="line">               |</div><div class="line">               |</div><div class="line">    reset_field_in_mask(mask)</div><div class="line">               |</div><div class="line">               |</div><div class="line">enabled =&gt; execute handler code</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="More-on-masks"><a href="#More-on-masks" class="headerlink" title="More on masks"></a>More on masks</h2><ul>
+<li><strong>Interrupt masks</strong> are per CPU<ul>
+<li>If mask <strong>disabled</strong> interrupt, hardware interrupt routing mechanism will not deliver interrupt to CPU</li>
+</ul>
+</li>
+<li><strong>Signal masks</strong> are per execution context (ULT on top of KLT)<ul>
+<li>If mask <strong>disabled</strong> signal =&gt; kernel sees mask and will not interrupt corresponding thread</li>
+</ul>
+</li>
+</ul>
+<h2 id="Interrupts-on-Multicore-Systems"><a href="#Interrupts-on-Multicore-Systems" class="headerlink" title="Interrupts on Multicore Systems"></a>Interrupts on Multicore Systems</h2><ul>
+<li>Interrupts can be directed to any CPU that has them enabled</li>
+<li>May set interrupt on just a single core =&gt; avoids overheads on all other cores</li>
+</ul>
+<h2 id="Types-of-Signals"><a href="#Types-of-Signals" class="headerlink" title="Types of Signals"></a>Types of Signals</h2><ol>
+<li>One-shot signals<ul>
+<li>“n signals pending == 1 signal pending”” - <strong>overwrite Behavior</strong></li>
+<li>Must be explicitly re-enabled. (When the handler is executed, any future same signals will use default actions unless re-enabling)</li>
+</ul>
+</li>
+<li>Real Time Signals<ul>
+<li>If n signals raised, then handler is called n times. - <strong>Queuing Behavior</strong></li>
+</ul>
+</li>
+</ol>
+<h2 id="Handling-Interrupts-as-Threads"><a href="#Handling-Interrupts-as-Threads" class="headerlink" title="Handling Interrupts as Threads"></a>Handling Interrupts as Threads</h2><ul>
+<li><p>Mechanism to avoid dead lock in interupt handling.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">    lock(mutex)</div><div class="line">        |</div><div class="line">        |</div><div class="line">interrupt (or signal)</div><div class="line">        |</div><div class="line">        |  -------------&gt;  handler code</div><div class="line">        |                       |</div><div class="line">        |                       |</div><div class="line">        |                  lock(mutex)</div><div class="line">        |                       |</div><div class="line">        ------------------------------- blocked</div><div class="line">        |</div><div class="line">        |</div><div class="line">unlock(mutex) ------------------------- unblocked</div><div class="line">        |                       |</div></pre></td></tr></table></figure>
+</li>
+<li><p>Dynamic thread creation is <strong>expensive</strong></p>
+</li>
+<li>Dynamic Decision:<ul>
+<li>If handler doesn’t lock =&gt; execute on interrupted thread’s stack</li>
+<li>If handler can block =&gt; turn into real thread</li>
+</ul>
+</li>
+<li>Optimization<ul>
+<li>Precreate &amp; preinitialize thread structures for interrupt routines</li>
+</ul>
+</li>
+</ul>
+<h2 id="Top-v-s-Bottom-Half-Philosophy"><a href="#Top-v-s-Bottom-Half-Philosophy" class="headerlink" title="Top v.s. Bottom Half Philosophy"></a>Top v.s. Bottom Half Philosophy</h2><ul>
+<li>Top Half: Fast, non-blocking, minimum amount of processing</li>
+<li>Bottom Half: Arbitrary, complexity work. can be blocked</li>
+</ul>
+<h2 id="Threads-and-Signal-Handling"><a href="#Threads-and-Signal-Handling" class="headerlink" title="Threads and Signal Handling"></a>Threads and Signal Handling</h2><ul>
+<li><p>Case 1: </p>
+<ul>
+<li>No problem because both user and kernel are synced<img src="/imgs/OMSCS/OS/OS_5/OS_5_Screenshot2.png" class="[screenshot]">
+</li>
+</ul>
+</li>
+<li><p>Case 2:</p>
+<ul>
+<li>The user library should wrap the signal hanlder so that it could put the thread with mask enabled on the kernel level thread and handles the signal<img src="/imgs/OMSCS/OS/OS_5/OS_5_Screenshot3.png" class="[screenshot]">
+</li>
+</ul>
+</li>
+<li><p>Case 3:</p>
+<ul>
+<li>The user library will redirect the signal to the kernel level thread, where there is a user kernel thread with signal enabled running on.<img src="/imgs/OMSCS/OS/OS_5/OS_5_Screenshot4.png" class="[screenshot]">
+</li>
+</ul>
+</li>
+<li><p>Case 4:</p>
+<ul>
+<li>User library will make a system call to the kernel level thread and update its mask to 0. Then it will reissue the signal for the entire process to update all kernel level signal masks.</li>
+<li>When the user level mask is re-enabled, the user library should make another system call to update one of the kernel level signal mask<img src="/imgs/OMSCS/OS/OS_5/OS_5_Screenshot5.png" class="[screenshot]">
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Task-struct-in-Linux"><a href="#Task-struct-in-Linux" class="headerlink" title="Task struct in Linux"></a>Task struct in Linux</h1><ul>
+<li>Main execution abstraction: <strong>task</strong><ul>
+<li>Kernel Level Thread</li>
+</ul>
+</li>
+<li>Single-threaded process =&gt; 1 task</li>
+<li>Multi-threaded process =&gt; many tasks</li>
+<li><strong>pid</strong> is the id of task, and also procees id. When multi tasks in a process, the first task id will be the process id</li>
+</ul>
+<h2 id="Task-creation"><a href="#Task-creation" class="headerlink" title="Task creation"></a>Task creation</h2><img src="/imgs/OMSCS/OS/OS_5/OS_5_Screenshot6.png" class="[screenshot]">
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/omscs-os-6-thread-performance/" rel="next" title="Operating System - Thread Performance">
+                <i class="fa fa-chevron-left"></i> Operating System - Thread Performance
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-4-pthread/" rel="prev" title="Operating System - PThread Intro">
+                Operating System - PThread Intro <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kernel-Level-Threads-v-s-Usere-Level-Thread"><span class="nav-number">3.</span> <span class="nav-text">Kernel Level Threads v.s. Usere Level Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-Level-Threads"><span class="nav-number">3.1.</span> <span class="nav-text">Kernel Level Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Level-Threads"><span class="nav-number">3.2.</span> <span class="nav-text">User Level Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rationale-for-Multiple-Data-Structures"><span class="nav-number">3.3.</span> <span class="nav-text">Rationale for Multiple Data Structures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Level-Thread-Data-Structure-in-Implementing-Lightweight-Thread"><span class="nav-number">3.4.</span> <span class="nav-text">User Level Thread Data Structure in Implementing Lightweight Thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-Level-Thread-Data-Structure-in-Implementing-Lightweight-Thread"><span class="nav-number">3.5.</span> <span class="nav-text">Kernel Level Thread Data Structure in Implementing Lightweight Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process"><span class="nav-number">3.5.1.</span> <span class="nav-text">Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Light-weight-Process-LWP"><span class="nav-number">3.5.2.</span> <span class="nav-text">Light-weight Process (LWP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kernel-Level-Threads-1"><span class="nav-number">3.5.3.</span> <span class="nav-text">Kernel Level Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">3.5.4.</span> <span class="nav-text">CPU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-Level-Thread-Data-Structure-in-Beyond-Multiprocessing…Multithreading-the-SunOS-Kernel"><span class="nav-number">3.6.</span> <span class="nav-text">Kernel Level Thread Data Structure in Beyond Multiprocessing…Multithreading the SunOS Kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem-in-Basic-Thread-Management-Interations"><span class="nav-number">3.7.</span> <span class="nav-text">Problem in Basic Thread Management Interations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lack-of-Thread-Management-Visibility"><span class="nav-number">4.</span> <span class="nav-text">Lack of Thread Management Visibility</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-When-does-the-UL-Library-run"><span class="nav-number">4.1.</span> <span class="nav-text">How/When does the UL Library run?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Issues-on-Multiple-CPUs"><span class="nav-number">4.2.</span> <span class="nav-text">Issues on Multiple CPUs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Synchronization-Related-Issues"><span class="nav-number">4.3.</span> <span class="nav-text">Synchronization Related Issues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Destroying-Threads"><span class="nav-number">4.4.</span> <span class="nav-text">Destroying Threads</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interrupts-v-s-signals"><span class="nav-number">5.</span> <span class="nav-text">Interrupts v.s. signals</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interrupts"><span class="nav-number">5.1.</span> <span class="nav-text">Interrupts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Signals"><span class="nav-number">5.2.</span> <span class="nav-text">Signals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Similarities-Between-Interrupt-and-Signal"><span class="nav-number">5.3.</span> <span class="nav-text">Similarities Between Interrupt and Signal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">5.4.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interrupt-Handlings"><span class="nav-number">5.5.</span> <span class="nav-text">Interrupt Handlings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Signal-Handlings"><span class="nav-number">5.6.</span> <span class="nav-text">Signal Handlings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Disable-Interrupts-or-Signals"><span class="nav-number">5.7.</span> <span class="nav-text">Why Disable Interrupts or Signals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#More-on-masks"><span class="nav-number">5.8.</span> <span class="nav-text">More on masks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interrupts-on-Multicore-Systems"><span class="nav-number">5.9.</span> <span class="nav-text">Interrupts on Multicore Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-Signals"><span class="nav-number">5.10.</span> <span class="nav-text">Types of Signals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handling-Interrupts-as-Threads"><span class="nav-number">5.11.</span> <span class="nav-text">Handling Interrupts as Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Top-v-s-Bottom-Half-Philosophy"><span class="nav-number">5.12.</span> <span class="nav-text">Top v.s. Bottom Half Philosophy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Threads-and-Signal-Handling"><span class="nav-number">5.13.</span> <span class="nav-text">Threads and Signal Handling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Task-struct-in-Linux"><span class="nav-number">6.</span> <span class="nav-text">Task struct in Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-creation"><span class="nav-number">6.1.</span> <span class="nav-text">Task creation</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

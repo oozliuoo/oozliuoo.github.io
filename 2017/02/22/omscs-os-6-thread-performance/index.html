@@ -1,0 +1,826 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OS,OMSCS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preview Performance comparison betwee multi-process, multi-thread and event-driven Event Driven Architecture: Flash: An Efficient and Portable Web Server v.s. Apache  Metrics to determine which model">
+<meta name="keywords" content="OS,OMSCS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System - Thread Performance">
+<meta property="og:url" content="http://yoursite.com/2017/02/22/omscs-os-6-thread-performance/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Preview Performance comparison betwee multi-process, multi-thread and event-driven Event Driven Architecture: Flash: An Efficient and Portable Web Server v.s. Apache  Metrics to determine which model">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot3.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot4.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot5.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot6.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot7.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot8.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot9.png">
+<meta property="og:updated_time" content="2017-04-07T02:36:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operating System - Thread Performance">
+<meta name="twitter:description" content="Preview Performance comparison betwee multi-process, multi-thread and event-driven Event Driven Architecture: Flash: An Efficient and Portable Web Server v.s. Apache  Metrics to determine which model">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_6/OS_6_Screenshot1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/22/omscs-os-6-thread-performance/"/>
+
+
+
+
+
+  <title> Operating System - Thread Performance | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/22/omscs-os-6-thread-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Operating System - Thread Performance
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T20:16:35-08:00">
+                2017-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>Performance comparison betwee <strong>multi-process</strong>, <strong>multi-thread</strong> and <strong>event-driven</strong></li>
+<li>Event Driven Architecture: <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-pai-paper.pdf" target="_blank" rel="external">Flash: An Efficient and Portable Web Server</a> v.s. <strong>Apache</strong></li>
+</ul>
+<h1 id="Metrics-to-determine-which-model-is-better"><a href="#Metrics-to-determine-which-model-is-better" class="headerlink" title="Metrics to determine which model is better?"></a>Metrics to determine which model is better?</h1><ul>
+<li>Execution time</li>
+<li>Avg time to complete order</li>
+</ul>
+<h1 id="Are-Threads-Useful"><a href="#Are-Threads-Useful" class="headerlink" title="Are Threads Useful?"></a>Are Threads Useful?</h1><h2 id="Previously-yes"><a href="#Previously-yes" class="headerlink" title="Previously, yes:"></a>Previously, yes:</h2><ul>
+<li><strong>Parallelization</strong> -&gt; Speed up!</li>
+<li><strong>Specialization</strong> -&gt; Hot cache!</li>
+<li><strong>Efficiency</strong> -&gt; Lower memory requirement and cheaper synchronization</li>
+<li>Hide latency of I/O Operation on <strong>single CPU</strong></li>
+</ul>
+<h2 id="But-what-is-useful-could-be-different-from-case-to-case"><a href="#But-what-is-useful-could-be-different-from-case-to-case" class="headerlink" title="But what is useful could be different from case to case"></a>But what is useful could be different from case to case</h2><ul>
+<li>For a matrix multiply app, <strong>execution time</strong> is important.</li>
+<li>For a web service, <strong>avg time, min/max</strong> are important. (e.g. number of requests, response time)</li>
+<li>For hardware, <strong>high utilization</strong> is important.</li>
+</ul>
+<h2 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Metrics in Thread</th>
+<th style="text-align:center">Metrics in toy shop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Throughput</td>
+<td style="text-align:center">Process completion time</td>
+<td style="text-align:center">How many toys per hour</td>
+</tr>
+<tr>
+<td style="text-align:center">Response Time</td>
+<td style="text-align:center">Average time to response to input (e.g. mouse click)</td>
+<td style="text-align:center">Avg time to react to an order</td>
+</tr>
+<tr>
+<td style="text-align:center">Utilization</td>
+<td style="text-align:center">Percentage of CPU</td>
+<td style="text-align:center">Percentage of workbenches in use overtime</td>
+</tr>
+<tr>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Performance-Metrics"><a href="#Performance-Metrics" class="headerlink" title="Performance Metrics"></a>Performance Metrics</h2><p>Metrics is a measurement standard that is <strong>measurable</strong> and <strong>quantifiable</strong>, and can be used to <strong>evaluate system behavior</strong>.</p>
+<img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot1.png" class="[screenshot]">
+<h2 id="Are-Threads-Really-Useful"><a href="#Are-Threads-Really-Useful" class="headerlink" title="Are Threads Really Useful?"></a>Are Threads Really Useful?</h2><ul>
+<li><strong>(Almost)</strong> alwasy correct, but <strong>NEVER ACCEPTED</strong></li>
+<li>It depends on <strong>metrics</strong> and <strong>workload</strong></li>
+<li>Examples:<ol>
+<li>Different number of toy orders =&gt; <strong>Different implementations of toy shop</strong></li>
+<li>Different graph =&gt; <strong>Different shortest path algorithms</strong></li>
+<li>Different file patterns =&gt; <strong>Different file system</strong></li>
+</ol>
+</li>
+</ul>
+<h1 id="How-to-provide-best-concurrency"><a href="#How-to-provide-best-concurrency" class="headerlink" title="How to provide best concurrency?"></a>How to provide best concurrency?</h1><h2 id="Multi-threads-v-s-Multi-processes"><a href="#Multi-threads-v-s-Multi-processes" class="headerlink" title="Multi-threads v.s. Multi-processes"></a><strong>Multi-threads</strong> v.s. <strong>Multi-processes</strong></h2><p>Imagine a <strong>simple</strong> web server like this</p>
+<img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot2.png" class="[screenshot]">
+<h3 id="Multi-Processes"><a href="#Multi-Processes" class="headerlink" title="Multi Processes"></a>Multi Processes</h3><img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot3.png" class="[screenshot]">
+<h3 id="Multi-Threaded"><a href="#Multi-Threaded" class="headerlink" title="Multi Threaded"></a>Multi Threaded</h3><img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot4.png" class="[screenshot]">
+<h2 id="Event-Driven-Model"><a href="#Event-Driven-Model" class="headerlink" title="Event Driven Model"></a>Event Driven Model</h2><ul>
+<li>Single address space!</li>
+<li>Single process!</li>
+<li>Single thread!</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot5.png" class="[screenshot]">
+<ul>
+<li>The <strong>handler</strong> will <strong>run to completion</strong>. If it needs to blocking, will perform the blocking operation and hand over controls to <strong>dispatcher</strong>.</li>
+</ul>
+<h2 id="Concurrency-in-different-models"><a href="#Concurrency-in-different-models" class="headerlink" title="Concurrency in different models:"></a>Concurrency in different models:</h2><ul>
+<li>In <strong>Multi-threaded</strong> and <strong>Multi-processes</strong>, one request per execution context(i.e. thread/process).</li>
+<li>In <strong>Event Driven</strong>, many requests <strong>interleaved</strong> in an execution context.<ul>
+<li>Single thread switches among processing different requests</li>
+</ul>
+</li>
+</ul>
+<h2 id="WHY-Event-Driven-Model"><a href="#WHY-Event-Driven-Model" class="headerlink" title="WHY Event Driven Model"></a><strong>WHY</strong> Event Driven Model</h2><img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot6.png" class="[screenshot]">
+<h2 id="Benefits-of-Event-Driven-Model"><a href="#Benefits-of-Event-Driven-Model" class="headerlink" title="Benefits of Event Driven Model"></a>Benefits of Event Driven Model</h2><ul>
+<li><strong>Single</strong> address space</li>
+<li><strong>Single</strong> flow of control</li>
+<li><strong>Smaller</strong> memory requirements</li>
+<li><strong>NO</strong> context switch</li>
+<li><strong>NO</strong> synchronization</li>
+</ul>
+<h2 id="Problems-with-Event-Driven-Model"><a href="#Problems-with-Event-Driven-Model" class="headerlink" title="Problems with Event Driven Model"></a>Problems with Event Driven Model</h2><p>A blocking request/handler will block the entire process</p>
+<h3 id="Asynchronous-I-O-Operation-System-Calls"><a href="#Asynchronous-I-O-Operation-System-Calls" class="headerlink" title="Asynchronous I/O Operation, System Calls"></a>Asynchronous I/O Operation, System Calls</h3><ul>
+<li><strong>Process/thread</strong> makes system Calls</li>
+<li><strong>Operating System</strong> collect all the necessary info from stack, and either learns where to return the result or tell the caller where to collect result</li>
+<li><strong>Process/thread</strong> can continue</li>
+<li>Require supports from <strong>kernel</strong> or <strong>device</strong></li>
+<li><strong>Fit nice</strong> in Event Driven Model</li>
+</ul>
+<h3 id="Introduce-Helpers-when-async-calls-are-not-available"><a href="#Introduce-Helpers-when-async-calls-are-not-available" class="headerlink" title="Introduce Helpers when async calls are not available"></a>Introduce <strong>Helpers</strong> when async calls are not available</h3><ul>
+<li>Designated for <strong>blocking I/O Operations only</strong></li>
+<li><strong>pipe/socket</strong> based communication with event dispatch. They also have a <strong>file descriptor</strong> interface, which means <strong>select(), poll() and epoll()</strong> all work</li>
+<li>Helper blocks but main loop continues.</li>
+<li>If helpers are processes, the system is called <strong>Asymmetric Multi-Processes Event Driven Model (AMPED)</strong></li>
+<li>If helpers are threads, the system is called <strong>Asymmetric Multi-Threaded Event Driven Model (AMTED)</strong></li>
+<li>Pros:<ol>
+<li>Resolves portability limitation of basic Event Driven Model</li>
+<li>Smaller footprints than regular worker threads</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>Applicability to certain classes of applications</li>
+<li>Event routing on multi CPU system could be a problem</li>
+</ol>
+</li>
+</ul>
+<h2 id="Flash-Server"><a href="#Flash-Server" class="headerlink" title="Flash Server"></a>Flash Server</h2><img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot7.png" class="[screenshot]">
+<img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot8.png" class="[screenshot]">
+<h2 id="Apache-Server"><a href="#Apache-Server" class="headerlink" title="Apache Server"></a>Apache Server</h2><img src="/imgs/OMSCS/OS/OS_6/OS_6_Screenshot9.png" class="[screenshot]">
+<h1 id="Experimental-Methodology"><a href="#Experimental-Methodology" class="headerlink" title="Experimental Methodology"></a>Experimental Methodology</h1><h2 id="Setting-up-Performance-comparison"><a href="#Setting-up-Performance-comparison" class="headerlink" title="Setting up Performance comparison"></a>Setting up Performance comparison</h2><h3 id="Define-Comparison-Point"><a href="#Define-Comparison-Point" class="headerlink" title="Define Comparison Point"></a>Define Comparison Point</h3><ul>
+<li><strong>What systems</strong> are you comparing</li>
+<li>Multi-Process (each process has one thread)</li>
+<li>Multi-Thread</li>
+<li>Single Process Event Driven (SPED);</li>
+<li>Apache</li>
+<li>Flash (AMPED)</li>
+</ul>
+<h3 id="Define-Inputs"><a href="#Define-Inputs" class="headerlink" title="Define Inputs"></a>Define Inputs</h3><ul>
+<li><strong>What workloads</strong> will be used</li>
+<li>Realistic workload: Distribution of web pages request over time</li>
+<li>Controlled, reproducible workload <strong>(Trace based)</strong>:<ol>
+<li>CS Web Server Trace</li>
+<li>Owlnet Trace</li>
+<li>Synthetic workload</li>
+</ol>
+</li>
+</ul>
+<h3 id="Define-Metrics"><a href="#Define-Metrics" class="headerlink" title="Define Metrics"></a>Define Metrics</h3><ul>
+<li><strong>How</strong> will you measure performance</li>
+<li><strong>Bandwidth</strong>: bytes/time - <strong>total bytes transferred / transferred time</strong></li>
+<li><strong>Connection Rate</strong>: Request/Time - <strong>total request connection / total time</strong></li>
+<li>Evaluate <strong>both</strong> as a function of file size:<ul>
+<li>Larger file: higher Bandwidth</li>
+<li>Larger file: lower connection rate</li>
+</ul>
+</li>
+</ul>
+<h2 id="Summary-of-Performance-Results"><a href="#Summary-of-Performance-Results" class="headerlink" title="Summary of Performance Results"></a>Summary of Performance Results</h2><h3 id="When-Data-is-in-Cache"><a href="#When-Data-is-in-Cache" class="headerlink" title="When Data is in Cache:"></a>When Data is in Cache:</h3><ul>
+<li><strong>SPED &gt;&gt; AMPED Flash</strong>, because AMPED Flash has unnecessary test for memory presence</li>
+<li><strong>SPED &amp; AMPED Flash &gt;&gt; MP&amp;MT</strong>, because of synchronization and context switching overhead in MP&amp;MT</li>
+</ul>
+<h3 id="When-disk-bound-work-load"><a href="#When-disk-bound-work-load" class="headerlink" title="When disk-bound work load:"></a>When disk-bound work load:</h3><ul>
+<li><strong>AMPED Flash &gt;&gt; SPED</strong>, because SPED will be blocked because of no async I/O</li>
+<li><strong>AMPED Flash &gt;&gt; MT&amp;MP</strong>, because of more memory efficiency and less context switching</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+            <a href="/tags/OMSCS/" rel="tag"># OMSCS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/25/omscs-os-7-scheduling/" rel="next" title="Operating System - Scheduling">
+                <i class="fa fa-chevron-left"></i> Operating System - Scheduling
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/omscs-os-5-pthread-implementation/" rel="prev" title="Operating System - Thread Design">
+                Operating System - Thread Design <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metrics-to-determine-which-model-is-better"><span class="nav-number">2.</span> <span class="nav-text">Metrics to determine which model is better?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Are-Threads-Useful"><span class="nav-number">3.</span> <span class="nav-text">Are Threads Useful?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Previously-yes"><span class="nav-number">3.1.</span> <span class="nav-text">Previously, yes:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#But-what-is-useful-could-be-different-from-case-to-case"><span class="nav-number">3.2.</span> <span class="nav-text">But what is useful could be different from case to case</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-Metaphor"><span class="nav-number">3.3.</span> <span class="nav-text">Visual Metaphor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance-Metrics"><span class="nav-number">3.4.</span> <span class="nav-text">Performance Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Are-Threads-Really-Useful"><span class="nav-number">3.5.</span> <span class="nav-text">Are Threads Really Useful?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-provide-best-concurrency"><span class="nav-number">4.</span> <span class="nav-text">How to provide best concurrency?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-threads-v-s-Multi-processes"><span class="nav-number">4.1.</span> <span class="nav-text">Multi-threads v.s. Multi-processes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Processes"><span class="nav-number">4.1.1.</span> <span class="nav-text">Multi Processes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Threaded"><span class="nav-number">4.1.2.</span> <span class="nav-text">Multi Threaded</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-Driven-Model"><span class="nav-number">4.2.</span> <span class="nav-text">Event Driven Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Concurrency-in-different-models"><span class="nav-number">4.3.</span> <span class="nav-text">Concurrency in different models:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WHY-Event-Driven-Model"><span class="nav-number">4.4.</span> <span class="nav-text">WHY Event Driven Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benefits-of-Event-Driven-Model"><span class="nav-number">4.5.</span> <span class="nav-text">Benefits of Event Driven Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-Event-Driven-Model"><span class="nav-number">4.6.</span> <span class="nav-text">Problems with Event Driven Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Asynchronous-I-O-Operation-System-Calls"><span class="nav-number">4.6.1.</span> <span class="nav-text">Asynchronous I/O Operation, System Calls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduce-Helpers-when-async-calls-are-not-available"><span class="nav-number">4.6.2.</span> <span class="nav-text">Introduce Helpers when async calls are not available</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flash-Server"><span class="nav-number">4.7.</span> <span class="nav-text">Flash Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Server"><span class="nav-number">4.8.</span> <span class="nav-text">Apache Server</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experimental-Methodology"><span class="nav-number">5.</span> <span class="nav-text">Experimental Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Setting-up-Performance-comparison"><span class="nav-number">5.1.</span> <span class="nav-text">Setting up Performance comparison</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Define-Comparison-Point"><span class="nav-number">5.1.1.</span> <span class="nav-text">Define Comparison Point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Define-Inputs"><span class="nav-number">5.1.2.</span> <span class="nav-text">Define Inputs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Define-Metrics"><span class="nav-number">5.1.3.</span> <span class="nav-text">Define Metrics</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary-of-Performance-Results"><span class="nav-number">5.2.</span> <span class="nav-text">Summary of Performance Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#When-Data-is-in-Cache"><span class="nav-number">5.2.1.</span> <span class="nav-text">When Data is in Cache:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When-disk-bound-work-load"><span class="nav-number">5.2.2.</span> <span class="nav-text">When disk-bound work load:</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
