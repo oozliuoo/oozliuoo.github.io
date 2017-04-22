@@ -247,6 +247,1148 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/19/nanodegree-ai-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/19/nanodegree-ai-2/" itemprop="url">
+                  NanoDegree AI - Intro to Game Playing
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T19:08:45-07:00">
+                2017-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Main-Topics"><a href="#Main-Topics" class="headerlink" title="Main Topics"></a>Main Topics</h1><ol>
+<li>Adversarial search</li>
+<li>Minimax Algorithm</li>
+<li>Alpha-Beta Pruning</li>
+<li>Evaluation Functions</li>
+<li>Isolation Game player</li>
+<li>Multi-Player, Probabilistic Games</li>
+</ol>
+<h1 id="MiniMax"><a href="#MiniMax" class="headerlink" title="MiniMax"></a>MiniMax</h1><h2 id="General-Ideas"><a href="#General-Ideas" class="headerlink" title="General Ideas"></a>General Ideas</h2><ul>
+<li>Use Max and Min node for each layer</li>
+<li>Indicating that oponents are always trying to minimize my (from computer perspective) score, and I am trying to maximize it.</li>
+<li>Player representing computer will always be the top node (max node)</li>
+<li>Propagate the value from bottom to top</li>
+</ul>
+<h2 id="Maximum-number-of-nodes-visited"><a href="#Maximum-number-of-nodes-visited" class="headerlink" title="Maximum number of nodes visited"></a>Maximum number of nodes visited</h2><ul>
+<li>Could be extremely large without pruning</li>
+<li>b^d: b is <strong>branch factor</strong> and d is <strong>depth</strong></li>
+<li>Cannot brute-force the game!</li>
+</ul>
+<h2 id="Depth-Limited-search"><a href="#Depth-Limited-search" class="headerlink" title="Depth Limited search"></a>Depth Limited search</h2><ul>
+<li>Calculate the maximum depth it can search, based on provided limited time</li>
+<li>When reaching the limited depth, use an <strong>Evaluation Function</strong> to find the best move (node)</li>
+</ul>
+<h3 id="Evaluation-function"><a href="#Evaluation-function" class="headerlink" title="Evaluation function"></a>Evaluation function</h3><ul>
+<li>Choose wisely</li>
+<li>Need testing - When reaching different levels, the result could be different for the same evaluation function</li>
+</ul>
+<h2 id="Quiescent-search"><a href="#Quiescent-search" class="headerlink" title="Quiescent search"></a>Quiescent search</h2><ul>
+<li>Seaching through different depth to see if the result is consistent</li>
+<li>Will usually use at the beginning/end of the game</li>
+</ul>
+<h2 id="Iterative-Deepening"><a href="#Iterative-Deepening" class="headerlink" title="Iterative Deepening"></a>Iterative Deepening</h2><ul>
+<li>Incrementally search thru different depth</li>
+<li>Keep the result of each level, and try to search the next level. If time limit exceeds, return the stored result</li>
+<li>Could search deeper towards the end of the game</li>
+</ul>
+<h3 id="Horizon-Effect"><a href="#Horizon-Effect" class="headerlink" title="Horizon Effect"></a>Horizon Effect</h3><ul>
+<li>When it is obvious for human player what the next move is, but computer cannot search far enough to figure it out.</li>
+</ul>
+<h2 id="Alpha-beta-pruning"><a href="#Alpha-beta-pruning" class="headerlink" title="Alpha-beta pruning"></a>Alpha-beta pruning</h2><ul>
+<li>Could save time by a factor of 2<pre><code class="javascript">
+</code></pre>
+</li>
+</ul>
+<h2 id="Expectimax"><a href="#Expectimax" class="headerlink" title="Expectimax"></a>Expectimax</h2><ul>
+<li>Handle probablistic moves</li>
+<li>Can only prune when you have known bounds for values</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/15/nanodegree-ai-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/15/nanodegree-ai-1/" itemprop="url">
+                  NanoDegree AI - Intro
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T20:18:29-07:00">
+                2017-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Introduce-two-concepts"><a href="#Introduce-two-concepts" class="headerlink" title="Introduce two concepts"></a>Introduce two concepts</h1><ol>
+<li>Constraint Propogation</li>
+<li>search</li>
+</ol>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="http://norvig.com/sudoku.html" target="_blank" rel="external">Solving Every Sudoku Puzzle</a></p>
+<h1 id="Heuristic"><a href="#Heuristic" class="headerlink" title="Heuristic"></a>Heuristic</h1><p>Some additional piece of information - a rule, function, constraints - that informs an otherwice brute-force algorithm to act in a more optimal manner</p>
+<h1 id="Defining-intelligence"><a href="#Defining-intelligence" class="headerlink" title="Defining intelligence"></a>Defining intelligence</h1><ul>
+<li>Should no equal human as intelligence, that will rule out almost all intelligent systems</li>
+<li><strong>Intelligence should be defined in the context of tasks</strong>, rather than how we percieve the world.</li>
+</ul>
+<h1 id="Agent-Environment-and-state"><a href="#Agent-Environment-and-state" class="headerlink" title="Agent, Environment and state"></a>Agent, Environment and state</h1><img src="/imgs/nanodegree/ai1/nd_ai1_1/ai1_1_Screenshot1.png" class="[screenshot]">
+<ul>
+<li>Only software is the agent</li>
+<li>Hardwares such as sensors will be considered part of the environment</li>
+<li>But in a higher levell, the entire robot is considered as an agent</li>
+<li>State - current state, goal state, history, etc…</li>
+</ul>
+<h1 id="Perception-action-cognition"><a href="#Perception-action-cognition" class="headerlink" title="Perception, action, cognition"></a>Perception, action, cognition</h1><ul>
+<li>Perception - Agent retrieves properties of environment and knowing the environment</li>
+<li>Action - Agent performs to change the properties of environment</li>
+<li>Cognition - The process of determining what actions to take</li>
+</ul>
+<h1 id="Types-of-AI-Problems"><a href="#Types-of-AI-Problems" class="headerlink" title="Types of AI Problems"></a>Types of AI Problems</h1><ul>
+<li>Fully observable - like Tic Tac Toe, where you can see the entire board and rules</li>
+<li>Partial observable - like Battleship, where you cannot see your oponent’s position</li>
+<li>Deterministic - where you know the result of each action</li>
+<li>Stochastic - where there is uncertainty</li>
+<li>Discrete - Only finite number of states</li>
+<li>Continuous - Could be infinite number of states</li>
+<li>Benign - Where only one agent can take action against environment</li>
+<li>Adversarial - Multiple agents involved</li>
+</ul>
+<h1 id="Rational-Behavior-and-Bounded-Optimality"><a href="#Rational-Behavior-and-Bounded-Optimality" class="headerlink" title="Rational Behavior and Bounded Optimality"></a>Rational Behavior and Bounded Optimality</h1><h2 id="Rational-behavior"><a href="#Rational-behavior" class="headerlink" title="Rational behavior"></a>Rational behavior</h2><p>An agent will always take action in an environment in order to maximize its utility. - This could be hard to achieve in real world because there could be many limitations</p>
+<h2 id="Bounded-Optimality"><a href="#Bounded-Optimality" class="headerlink" title="Bounded Optimality"></a>Bounded Optimality</h2><p>Also consider all limitations in real world. Hence, rather than requiring agent to act optimally, will set a feasible goal for agent that counts all obstacle and limitations in the real world problem. This also provide a good way to quantify an agent.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/omscs-os-8-memory-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/08/omscs-os-8-memory-management/" itemprop="url">
+                  Operating System - Memory Management
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-08T21:45:18-08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li><strong>Physical</strong> &amp; <strong>Virtual Memory</strong> management</li>
+<li>Review of memory management mechanisms</li>
+<li>Illustration of advanced services</li>
+</ul>
+<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">OS Memory</th>
+<th style="text-align:center">Toy shop Part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Uses intelligently sized container</td>
+<td style="text-align:center">Memory pages or segments</td>
+<td style="text-align:center">Crates of toy parts</td>
+</tr>
+<tr>
+<td style="text-align:center">Not all parts are needed @ once</td>
+<td style="text-align:center">Tasks operate on subset of memory</td>
+<td style="text-align:center">toy orders completed in shapes</td>
+</tr>
+<tr>
+<td style="text-align:center">Optimized for performances</td>
+<td style="text-align:center">Reduce time to access state in memory -&gt; better performance</td>
+<td style="text-align:center">reduce wait time for parts -&gt; make more toy</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Memory-Management-Goal"><a href="#Memory-Management-Goal" class="headerlink" title="Memory Management Goal"></a>Memory Management Goal</h1><h2 id="Virtual-Memory-v-s-Physical-Memory"><a href="#Virtual-Memory-v-s-Physical-Memory" class="headerlink" title="Virtual Memory v.s. Physical Memory"></a>Virtual Memory v.s. Physical Memory</h2><pre><code>* Introducing virtual memory better supports address space for each process.
+* Virtual Memory could be way larger than physical memory.
+* Often cooperate with swapping mechanisms
+</code></pre><h2 id="Operating-System-Should"><a href="#Operating-System-Should" class="headerlink" title="Operating System Should"></a>Operating System Should</h2><h3 id="1-Allocate"><a href="#1-Allocate" class="headerlink" title="1. Allocate"></a>1. Allocate</h3><pre><code>* **allocation**: Mechanisms &amp; algorithms &amp; data structure to track usage and status of Physical memory
+* **replacement**: Because VM could be way larger than PM, and part of them will be in disk (swap)
+</code></pre><h3 id="2-Arbitrate"><a href="#2-Arbitrate" class="headerlink" title="2. Arbitrate"></a>2. Arbitrate</h3><pre><code>* **Address Translation**
+* **Address Validation**
+</code></pre><h2 id="Page-based-Management"><a href="#Page-based-Management" class="headerlink" title="Page-based Management:"></a>Page-based Management:</h2><pre><code>* **Allocate**: Pages (VM) =&gt; Page Frames (PM)
+* **Arbitrate**: Page tablespoon
+</code></pre><h2 id="Segment-based-Management"><a href="#Segment-based-Management" class="headerlink" title="Segment-based Management:"></a>Segment-based Management:</h2><pre><code>* **Allocate**: Segments
+* **Arbitrate**: Segment registers: base + bound pair, one pair for each segment
+</code></pre><h1 id="Hardware-support"><a href="#Hardware-support" class="headerlink" title="Hardware support"></a>Hardware support</h1><h2 id="Memory-Management-Unit-MMU"><a href="#Memory-Management-Unit-MMU" class="headerlink" title="Memory Management Unit (MMU)"></a>Memory Management Unit (MMU)</h2><pre><code>1. Translate VM to PM **(TLB - Translation Lookaside Buffer)**
+2. Reports **Faults**
+    * Illegal access
+    * Permission
+    * Not presented in Main Memory
+3. register
+    * Pointer to **page tables** (Page table - based)
+    * Base and bound registers, num of segments (Segment-based)
+4. Cache - Translation Lookaside Buffer
+5. Translation: Actual Physical Address Generation done in hardware
+</code></pre><h1 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><ol>
+<li>Address space could be divided into segments</li>
+<li>Flexible - arbitrary sizes instead of fixed size</li>
+</ol>
+<h2 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h2><ul>
+<li>Virtual Addresses are divided into <strong>segment number</strong> and offset</li>
+<li>Keeps a pair of base and bound registers to track validity inside a segment</li>
+<li>Each segment is mapped (by CPU) to a physical address, and use <strong>segment selector + offset</strong> to get the physical address</li>
+</ul>
+<h2 id="Pros-and-cons"><a href="#Pros-and-cons" class="headerlink" title="Pros and cons"></a>Pros and cons</h2><ul>
+<li>Pros:<ol>
+<li>Flexible</li>
+<li>OS keeps track of a list of free memory segments to decide which one will be allocated next</li>
+<li>Relatively easy implementation</li>
+</ol>
+</li>
+<li>Cons:<ol>
+<li>Could lead to <strong>external fragmentation</strong></li>
+<li>OS needs well designed mechanisms/algorisms to keep track and manipulate the <strong>free memory list</strong></li>
+</ol>
+</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot1.png" class="[screenshot]">
+<h1 id="Page-Table"><a href="#Page-Table" class="headerlink" title="Page Table"></a>Page Table</h1><h2 id="Motivation-1"><a href="#Motivation-1" class="headerlink" title="Motivation"></a>Motivation</h2><ol>
+<li>Varying sized memory blocks (i.e. segments) will lead to external fragmentation, and will result in memory waste.</li>
+<li>Could use multi-level page tables to manage page table sizes, and utilize memory efficiently.</li>
+</ol>
+<h2 id="How-it-works-1"><a href="#How-it-works-1" class="headerlink" title="How it works"></a>How it works</h2><ul>
+<li>Resides in <strong>Main Memory</strong></li>
+<li>Map Virtual Addresses to Physical Addresses via <strong>Page Table</strong></li>
+<li>For single level paging:<ol>
+<li>Number of entries in page table equals to number of virtual pages</li>
+<li>Each <strong>Page Table Entry (PTE)</strong> holds the <strong>Physical Page Number</strong> pointing to a page frame with same size in <strong>physical memory</strong>, as well as useful bits.</li>
+<li>Virtial Address is divided into <strong>Virtual Page Number (VPN)</strong> and Offset. Using <strong>VPN</strong> to index the <strong>Physical Page Frame</strong>, and adding offset to locate the actual <strong>Physical Address</strong></li>
+<li>One Page Table per process, managed by Operating System.</li>
+<li>Hardware will maintain register pointing to the active page table, and it needs to be updated during context switch</li>
+</ol>
+</li>
+</ul>
+<h2 id="Pros-and-Cons"><a href="#Pros-and-Cons" class="headerlink" title="Pros and Cons"></a>Pros and Cons</h2><pre><code>* Pros:
+    1. Fixed size pages would eliminate External Fragmentation
+    2. 
+* Cons:
+    1. Because each translation will go through two menmory index, performance will be impacted. (**TBL** is introduced to address this)
+    2. Waste memory if page is not used at all (will still allocate page entry for unused page) - Multi-layer page table is introduced to address this
+</code></pre><img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot2.png" class="[screenshot]">
+<h2 id="Multi-Level-page"><a href="#Multi-Level-page" class="headerlink" title="Multi Level page"></a>Multi Level page</h2><h3 id="How-it-works-2"><a href="#How-it-works-2" class="headerlink" title="How it works"></a>How it works</h3><ul>
+<li>Outter Page Table - Page Directory: a table that holds entry which points to the actual page table</li>
+<li>Internal Page Table - only for valid virtual memory regions</li>
+<li>Virtual Address is split further</li>
+</ul>
+<h2 id="Could-keep-adding-additional-layers-especially-useful-for-64-bits"><a href="#Could-keep-adding-additional-layers-especially-useful-for-64-bits" class="headerlink" title="Could keep adding additional layers (especially useful for 64 bits)"></a>Could keep adding additional layers (especially useful for 64 bits)</h2><ul>
+<li><strong>Plus</strong>: Reduce page size - smaller internal page tables/directories</li>
+<li><strong>Downside</strong>: More memory accesses are required</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot3.png" class="[screenshot]">
+<h1 id="TLB-Translation-Lookaside-Buffer"><a href="#TLB-Translation-Lookaside-Buffer" class="headerlink" title="TLB - Translation Lookaside Buffer"></a>TLB - Translation Lookaside Buffer</h1><ul>
+<li><strong>Memory Management Units (Hardware)</strong> managing the cache for address translation</li>
+<li>Stores translations, and will be first queried whenever a memory request happens.</li>
+<li>If <strong>HIT</strong>, will return immediately. If <strong>Miss</strong>, will raise a fault: then OS will look for the targeting memory by going through page table, and place the resulting translation into this cache. Finally, will redo the memory fetch operation (PC will return to the place before the last operation)</li>
+</ul>
+<h1 id="Inverted-Page-Table"><a href="#Inverted-Page-Table" class="headerlink" title="Inverted Page Table"></a>Inverted Page Table</h1><ul>
+<li>Use <strong>pid</strong> and <strong>p</strong> to index (index will match to Physical Frame)</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot4.png" class="[screenshot]">
+<ul>
+<li>Linear search is required - use hash function to narrow down search space</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot5.png" class="[screenshot]">
+<h1 id="Page-Size"><a href="#Page-Size" class="headerlink" title="Page Size"></a>Page Size</h1><ul>
+<li>Large Page Size could result in fewer page entires and smaller page table <strong>+</strong></li>
+<li>Large Page Size could lead to <strong>Internal Fragmentation</strong> <strong>-</strong></li>
+</ul>
+<h1 id="Memory-Allocation"><a href="#Memory-Allocation" class="headerlink" title="Memory Allocation"></a>Memory Allocation</h1><h2 id="Memory-Allocator"><a href="#Memory-Allocator" class="headerlink" title="Memory Allocator"></a>Memory Allocator</h2><ul>
+<li>Determines from VA to PA</li>
+<li>Address translation, page table, etc… </li>
+<li>Check validity/permissions</li>
+</ul>
+<h2 id="Kernal-Level-Allocator"><a href="#Kernal-Level-Allocator" class="headerlink" title="Kernal Level Allocator"></a>Kernal Level Allocator</h2><ul>
+<li>Allocate kernal state and <strong>static</strong> process states</li>
+</ul>
+<h2 id="User-Level-Allocator"><a href="#User-Level-Allocator" class="headerlink" title="User Level Allocator"></a>User Level Allocator</h2><ul>
+<li>Allocate <strong>dynamic</strong> process state (heap)</li>
+</ul>
+<h2 id="Mechanisms"><a href="#Mechanisms" class="headerlink" title="Mechanisms"></a>Mechanisms</h2><ul>
+<li>Buddy Allocator<ol>
+<li>Always subdividing available memory space halfly till the smallest fit one is found, and use that one. Then whenever that piece is freed, check recursively check its buddy; if both are freed, we could merge (aggregate) them.</li>
+<li>Aggregates well</li>
+<li>Internal Fragmentation</li>
+</ol>
+</li>
+<li>Slab Allocator<ol>
+<li>Caches common object type/sizes, on top of continuous memory</li>
+<li>Avoid Internal Fragmentation</li>
+</ol>
+</li>
+</ul>
+<h1 id="Demanding-Pages"><a href="#Demanding-Pages" class="headerlink" title="Demanding Pages"></a>Demanding Pages</h1><img src="/imgs/OMSCS/OS/OS_8/OS_8_Screenshot6.png" class="[screenshot]">
+<ul>
+<li>We could also pin the page if we want the page to be always presented in memory - this will disable swap for that page</li>
+</ul>
+<h1 id="Freeing-up-Memory-Pages"><a href="#Freeing-up-Memory-Pages" class="headerlink" title="Freeing up Memory Pages"></a>Freeing up Memory Pages</h1><h2 id="When-should-we-swap"><a href="#When-should-we-swap" class="headerlink" title="When should we swap?"></a>When should we swap?</h2><ul>
+<li>When memory usage is above threshold</li>
+<li>When CPU usage is below some threshold</li>
+</ul>
+<h2 id="Which-Page-should-we-swap"><a href="#Which-Page-should-we-swap" class="headerlink" title="Which Page should we swap?"></a>Which Page should we swap?</h2><ul>
+<li><strong>Least Recently Used</strong> - need <strong>Access Bit</strong> to track if a page is used recently</li>
+<li>Pages that dont need to be written out. (For those needed, it will cost more cycle to access secondary storage)</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/26/vue-doc-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/26/vue-doc-notes/" itemprop="url">
+                  Notes for Vue Documentation
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-26T15:03:42-08:00">
+                2017-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><h1 id="The-Vue-Instance"><a href="#The-Vue-Instance" class="headerlink" title="The Vue Instance"></a>The Vue Instance</h1><h2 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h2><ul>
+<li><p>Every Vue vm is bootstrapped by creating a root Vue instance with the <strong>Vue</strong> constructor function:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="comment">// options</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>Could pass in an <strong>option object</strong> to configure. <a href="https://vuejs.org/v2/api" target="_blank" rel="external">API ref</a></p>
+</li>
+</ul>
+<h2 id="Properties-and-Methods"><a href="#Properties-and-Methods" class="headerlink" title="Properties and Methods"></a>Properties and Methods</h2><ul>
+<li>Each Vue instance <strong>proxies</strong> all the properties found in its data object<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;</div><div class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">data</span>: data</div><div class="line">&#125;)</div><div class="line">vm.a === data.a <span class="comment">// -&gt; true</span></div><div class="line"><span class="comment">// setting the property also affects original data</span></div><div class="line">vm.a = <span class="number">2</span></div><div class="line">data.a <span class="comment">// -&gt; 2</span></div><div class="line"><span class="comment">// ... and vice-versa</span></div><div class="line">data.a = <span class="number">3</span></div><div class="line">vm.a <span class="comment">// -&gt; 3</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Life-Cycle-Hooks"><a href="#Life-Cycle-Hooks" class="headerlink" title="Life Cycle Hooks"></a>Life Cycle Hooks</h2><ul>
+<li><a href="https://vuejs.org/v2/api/#created" target="_blank" rel="external">created</a></li>
+<li><a href="https://vuejs.org/v2/api/#mounted" target="_blank" rel="external">mounted</a></li>
+<li><a href="https://vuejs.org/v2/api/#updated" target="_blank" rel="external">updated</a></li>
+<li><a href="https://vuejs.org/v2/api/#destroyed" target="_blank" rel="external">destroy</a><img src="/imgs/vue_doc/lifecycle.png" class="[screenshot]"></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/25/omscs-os-7-scheduling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/25/omscs-os-7-scheduling/" itemprop="url">
+                  Operating System - Scheduling
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-25T19:20:13-08:00">
+                2017-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li><strong>Scheduling</strong> Mechanisms, Algorithmn and data structures</li>
+<li>Linux O(1) scheduler</li>
+<li>Scheduling on **Multi-CPUs</li>
+</ul>
+<h1 id="Visual-Methaphor"><a href="#Visual-Methaphor" class="headerlink" title="Visual Methaphor"></a>Visual Methaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">OS Scheduler</th>
+<th style="text-align:center">Toy shop manager</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Dispatch/Assign orders/tasks immediately</td>
+<td style="text-align:center">Scheduling is simple (FCFS)</td>
+<td style="text-align:center">Scheduling is simple (FiFO)</td>
+</tr>
+<tr>
+<td style="text-align:center">Dispatch/Assign simpler orders/tasks first</td>
+<td style="text-align:center">Maximize throughput (Shortest Job First)</td>
+<td style="text-align:center">Maximize # of orders processed over time (Need more time to process time to decide and pick order)</td>
+</tr>
+<tr>
+<td style="text-align:center">Dispatch/Assign complex orders/tasks first</td>
+<td style="text-align:center">Maximize utilization of CPU, devices, memory, …</td>
+<td style="text-align:center">Keep workbenches busy</td>
+</tr>
+</tbody>
+</table>
+<h1 id="CPU-Scheduling"><a href="#CPU-Scheduling" class="headerlink" title="CPU Scheduling"></a>CPU Scheduling</h1><h2 id="CPU-scheduler"><a href="#CPU-scheduler" class="headerlink" title="CPU scheduler"></a>CPU scheduler</h2><ul>
+<li>Decides how and when <strong>tasks (processes and threads)</strong> access shared CPUs</li>
+<li>Schedules <strong>tasks</strong> running both <strong>user-level proccesses/threads</strong> and <strong>kernel level threads</strong></li>
+<li>Chooses <strong>one</strong> of ready <strong>tasks</strong> to run on CPU</li>
+<li>Runs when <ol>
+<li><strong>CPU</strong> becomes <strong>idle</strong></li>
+<li><strong>New tasks</strong> become ready (will interupt CPU)</li>
+<li><strong>Timeslice</strong> expired timeout</li>
+</ol>
+</li>
+<li>When <strong>Tasks</strong> are <strong>dispatched</strong> on CPU -&gt; context switch, set PC, etc…</li>
+<li>The purose is to choose <strong>tasks from ready queue</strong></li>
+<li>Immediate Questions:<ol>
+<li><strong>Which</strong> task should be selected? -&gt; Scheduling policy/Algorithmn</li>
+<li><strong>How</strong> is this done? -&gt; Depends on <strong>runqueue</strong> data structure (used to implement <strong>ready queue</strong>)</li>
+</ol>
+</li>
+</ul>
+<h2 id="“Run-to-Completion”-Scheduling"><a href="#“Run-to-Completion”-Scheduling" class="headerlink" title="“Run-to-Completion” Scheduling"></a>“Run-to-Completion” Scheduling</h2><h3 id="Initial-Assumptions"><a href="#Initial-Assumptions" class="headerlink" title="Initial Assumptions"></a>Initial Assumptions</h3><ol>
+<li>Group of tasks/jobs</li>
+<li>Known execution times</li>
+<li>No preemption</li>
+<li>Single CPU</li>
+</ol>
+<h3 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h3><ol>
+<li>Throughput</li>
+<li>Avg Completion time</li>
+<li>Avg Wait Time</li>
+<li></li>
+</ol>
+<h3 id="Algorithmn"><a href="#Algorithmn" class="headerlink" title="Algorithmn"></a>Algorithmn</h3><ul>
+<li>First Come First Serve (FCFS)<ul>
+<li>runqueue == <strong>queue(FIFO)</strong></li>
+</ul>
+</li>
+<li>Shortest Job First (SJF)<ul>
+<li>Schedules tasks in order of their <strong>execution time</strong></li>
+<li>Runqueue == <strong>queue(priority queue)</strong> || <strong>tree(also a form of order)</strong> </li>
+</ul>
+</li>
+</ul>
+<h2 id="Preemptive-Scheduling"><a href="#Preemptive-Scheduling" class="headerlink" title="Preemptive Scheduling"></a>Preemptive Scheduling</h2><h3 id="SJF-Preemption"><a href="#SJF-Preemption" class="headerlink" title="SJF + Preemption"></a>SJF + Preemption</h3><ul>
+<li>T2 arrives first</li>
+<li>T2 should be preempted<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot1.png" class="[screenshot]"></li>
+<li>When execution time is <strong>unknown</strong>, need to use <strong>heuristics</strong> based on history:<ol>
+<li>How long did a task run last time?</li>
+<li>How long did a task run last n times? <strong>(Windowed Average)</strong></li>
+</ol>
+</li>
+</ul>
+<h2 id="Priority-Scheduling"><a href="#Priority-Scheduling" class="headerlink" title="Priority Scheduling"></a>Priority Scheduling</h2><ul>
+<li>Task have different <strong>priority levels</strong></li>
+<li>Run <strong>highest priority</strong> task next (preemption)</li>
+<li>Runqueues:<ol>
+<li>One queue per priority</li>
+<li>Tree ordered based on priority</li>
+</ol>
+</li>
+<li><strong>DANGEROUS: Starvation</strong>: low priority task never gets executed<ul>
+<li>Fix -&gt; <strong>“priority aging”</strong>: priority = f(actual_priority, time spent in run queue)</li>
+<li>The longer the task in run queue, the higher its priority is</li>
+<li>Tasks will eventually run</li>
+</ul>
+</li>
+</ul>
+<h2 id="Priority-Inversion"><a href="#Priority-Inversion" class="headerlink" title="Priority Inversion"></a>Priority Inversion</h2><img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot2.png" class="[screenshot]">
+<h2 id="Round-Robin-Scheduling"><a href="#Round-Robin-Scheduling" class="headerlink" title="Round Robin Scheduling"></a>Round Robin Scheduling</h2><ul>
+<li>Pick up first task from queue (like FCFS)</li>
+<li><strong>Task may yield, to wait on I/O (unlike FCFS)</strong></li>
+<li>Round Robin with <strong>Priorities</strong>: include preemption</li>
+<li>Round Robin with <strong>Interleaving</strong>: introduce <strong>timeslicing</strong></li>
+</ul>
+<h2 id="Timesharing-and-Timeslices"><a href="#Timesharing-and-Timeslices" class="headerlink" title="Timesharing and Timeslices"></a>Timesharing and Timeslices</h2><h3 id="Timeslice"><a href="#Timeslice" class="headerlink" title="Timeslice"></a>Timeslice</h3><ul>
+<li>Maximum amount of uninterrupted time given to a task =&gt; <strong>time quantum</strong></li>
+<li>Task may run <strong>less than</strong> timeslice time. Due to:<ol>
+<li>Has to wait on I/O, synchronization… =&gt; will be placed on a queue</li>
+<li>Higher priority task becomes runnable</li>
+</ol>
+</li>
+<li>Using timeslices tasks are <strong>interleaved</strong>: timesharing the CPU<ul>
+<li>Preempted after <strong>timeslice</strong></li>
+</ul>
+</li>
+<li><strong>Note: FSFC == Round Robin without timeslices</strong></li>
+<li>Benefits:<ol>
+<li>Keeps the simplicity, just as FCFS Has</li>
+<li>Achieved good metrics as SJF algorithmn, but doesn’t need to worry about the finding out the “shortest” task</li>
+<li>Short tasks finish sooner</li>
+<li>More responsive (User will see the task is running)</li>
+<li>Lengthy I/O operations initiated sooner</li>
+</ol>
+</li>
+<li>Downside:<ul>
+<li>Overheads: interrupt, schedule, context switch =&gt; <strong>keep timeslice &gt;&gt;&gt; context_switch_time</strong></li>
+</ul>
+</li>
+<li>Example:<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot3.png" class="[screenshot]">
+</li>
+</ul>
+<h3 id="How-long-should-a-timeslice-be"><a href="#How-long-should-a-timeslice-be" class="headerlink" title="How long should a timeslice be?"></a>How long should a timeslice be?</h3><ul>
+<li>Balance <strong>benefits</strong> and <strong>overheads</strong></li>
+</ul>
+<h4 id="For-IO-bound-tasks"><a href="#For-IO-bound-tasks" class="headerlink" title="For IO-bound tasks"></a>For <strong>IO-bound</strong> tasks</h4><ul>
+<li>Example<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot5.png" class="[screenshot]"></li>
+<li>Pick smaller timeslice, because:<ul>
+<li>It will run more quickly to issue I/O requests</li>
+<li>Keeps both the CPU and the I/O devices busy</li>
+<li>Better user-perceived performance (i.e. Responsive)</li>
+</ul>
+</li>
+</ul>
+<h3 id="For-CPU-bound-tasks"><a href="#For-CPU-bound-tasks" class="headerlink" title="For CPU-bound tasks"></a>For <strong>CPU-bound</strong> tasks</h3><ul>
+<li>Example<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot4.png" class="[screenshot]"></li>
+<li>Pick larger timeslice, because:<ul>
+<li>users will care more about <strong>completion time</strong> and <strong>throughput</strong> instead of <strong>wait time</strong></li>
+<li>Limits context switching overheads</li>
+<li>Keeps CPU utilization and throughput high</li>
+</ul>
+</li>
+</ul>
+<h2 id="Runqueue-Data-structures"><a href="#Runqueue-Data-structures" class="headerlink" title="Runqueue Data structures"></a>Runqueue Data structures</h2><ul>
+<li>The philosophy is to allow scheduler easily finding the next and best task to schedule</li>
+<li>If we want <strong>I/O and CPU bound tasks</strong> to have different timeslices, then<ol>
+<li>Same runqueue, check type</li>
+<li>Two different structures</li>
+</ol>
+</li>
+<li>Example:<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot6.png" class="[screenshot]"></li>
+<li>How do we know if a task is I/O or CPU bound? How intensive it is? -&gt; Use <strong>history heuristic</strong></li>
+<li>How about new tasks and dynamically changing tasks?<ul>
+<li>Multi-Level Feedback Queue (MLFQ)</li>
+<li>Not Priority Queues<img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot7.png" class="[screenshot]">
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Linux-O-1-Scheduler"><a href="#Linux-O-1-Scheduler" class="headerlink" title="Linux O(1) Scheduler"></a>Linux O(1) Scheduler</h1><img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot8.png" class="[screenshot]">
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><ul>
+<li>Constant time to select/add task, regardless of task count</li>
+<li><strong>Preemptive, priority-based</strong><ul>
+<li>real time (0-99)</li>
+<li>timesharing (100-139)</li>
+</ul>
+</li>
+<li>User processes<ul>
+<li>Default 120</li>
+<li>nicevalue(-20 to 19)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Timeslice-Value"><a href="#Timeslice-Value" class="headerlink" title="Timeslice Value"></a>Timeslice Value</h2><ul>
+<li>Depends on priority</li>
+<li>Smallest for low priority</li>
+<li>Highest for hight priority</li>
+</ul>
+<h2 id="Feedback"><a href="#Feedback" class="headerlink" title="Feedback"></a>Feedback</h2><ul>
+<li>Sleep time: waiting/idling</li>
+<li>Longer sleep =&gt; interactive =&gt; priority - 5 =&gt; <strong>boost</strong></li>
+<li>Smaller Sleep (compute intensive) =&gt; priority + 5 =&gt; <strong>lower priority</strong></li>
+</ul>
+<h2 id="Runqueue"><a href="#Runqueue" class="headerlink" title="Runqueue"></a>Runqueue</h2><img src="/imgs/OMSCS/OS/OS_7/OS_7_Screenshot9.png" class="[screenshot]">
+<ul>
+<li>2 arrays of tasks</li>
+<li><strong>Active</strong><ul>
+<li>Used to pick next task to run</li>
+<li>Constant time to <strong>add/select</strong></li>
+<li>Tasks remain in queue in active until timeslice expires</li>
+</ul>
+</li>
+<li><strong>Expired</strong><ul>
+<li>Inactive list</li>
+<li>When no more tasks in active array =&gt; <strong>swap active and expired arrays</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Pros-and-Cons"><a href="#Pros-and-Cons" class="headerlink" title="Pros and Cons"></a>Pros and Cons</h2><ul>
+<li>Pros: O(1)</li>
+<li>Cons:<ul>
+<li>Performance of interactive tasks (tasks in expired queue is not scheduled)</li>
+<li>Fairness</li>
+</ul>
+</li>
+</ul>
+<h1 id="Completely-Fair-Scheduler-CFS"><a href="#Completely-Fair-Scheduler-CFS" class="headerlink" title="Completely Fair Scheduler (CFS)"></a>Completely Fair Scheduler (CFS)</h1><h2 id="Runqueue-1"><a href="#Runqueue-1" class="headerlink" title="Runqueue"></a>Runqueue</h2><ul>
+<li>Red-Black Tree</li>
+<li>Ordered by “virtural runtime”</li>
+<li>“Virtual time” == time spent on CPU</li>
+</ul>
+<h2 id="CFS-Scheduling"><a href="#CFS-Scheduling" class="headerlink" title="CFS Scheduling"></a>CFS Scheduling</h2><ul>
+<li>Always pick left-most node (always schedule task with least amount of time on CPU)</li>
+<li>Periodically adjust <strong>virtual runtime</strong></li>
+<li>Compare to <strong>left most virtual runtime</strong><ul>
+<li>If smaller, continue running</li>
+<li>If larger, preempt and place appropriately in the tree</li>
+</ul>
+</li>
+</ul>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><ul>
+<li>Select task =&gt; O(1)</li>
+<li>Add Task =&gt; O(logN)</li>
+</ul>
+<h1 id="Scheduling-on-Multi-CPU-Systems"><a href="#Scheduling-on-Multi-CPU-Systems" class="headerlink" title="Scheduling on Multi-CPU Systems"></a>Scheduling on Multi-CPU Systems</h1><h2 id="Shared-Memory-Multiprocessor-SMP-v-s-Multi-Cores"><a href="#Shared-Memory-Multiprocessor-SMP-v-s-Multi-Cores" class="headerlink" title="Shared Memory Multiprocessor (SMP) v.s. Multi-Cores"></a>Shared Memory Multiprocessor (SMP) v.s. Multi-Cores</h2><ul>
+<li>SMP has multiple CPUs sharing the same memory, and each of them will have their own caches, and may or maynot share Last Level Cache (LLC)</li>
+<li>Multi-Cores are CPUs that have multi cores inside it, each core has its private caches, and they share a LLC and memory</li>
+<li>As far as OS concerns, both CPUs and Cores in a CPU are entities that they could schedule a thread/proccess on</li>
+</ul>
+<h2 id="Scheduling-on-Multi-CPU-Systems-1"><a href="#Scheduling-on-Multi-CPU-Systems-1" class="headerlink" title="Scheduling on Multi-CPU Systems"></a>Scheduling on Multi-CPU Systems</h2><ul>
+<li>Cache-affinity <strong>IMPORTANT</strong><ul>
+<li>Keep tasks on the same CPU as much as possible</li>
+<li>Hiearchieal scheduler architecture</li>
+<li><strong>Per-CPU</strong> runqueue and <strong>scheduler</strong><ol>
+<li>Load balane across CPUs based on<br> a. Queue length<br> b. When CPU is idle</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Non-Uniform-Memory-Access-Platform-NUMA-Platform"><a href="#Non-Uniform-Memory-Access-Platform-NUMA-Platform" class="headerlink" title="Non-Uniform Memory Access Platform (NUMA Platform)"></a>Non-Uniform Memory Access Platform (NUMA Platform)</h2><ul>
+<li>Multiple <strong>memory nodes</strong></li>
+<li><strong>Memory Node</strong> closer to a “”soket” of multiple processor<ul>
+<li>Access to local main memory node is faster than access to remote main memory node</li>
+</ul>
+</li>
+<li>Keep tasks on CPU closer to Main Memory where their state is -&gt; <strong>NUMA-aware scheduling</strong></li>
+</ul>
+<h1 id="Hyperthreading-SMT-Simultaneous-Multithreading"><a href="#Hyperthreading-SMT-Simultaneous-Multithreading" class="headerlink" title="Hyperthreading (SMT - Simultaneous Multithreading)"></a>Hyperthreading (SMT - Simultaneous Multithreading)</h1><ul>
+<li>Multiple hardware-supported execution contexts (i.e. multiple sets of registers for different threads)</li>
+<li>Still 1 CPU but with <strong>very fast</strong> context switch</li>
+<li>From OS’s perspective, each set of regs will be seen as a virtual CPU</li>
+<li>Can hide <strong>memory latency</strong> because now context switch is 0 cycle, but memory access is much greater</li>
+<li>Reference: <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-fedorova-paper.pdf" target="_blank" rel="external">“Chip Multithreading Systems Need a New Operating System Scheduler”.</a></li>
+</ul>
+<h1 id="Threads-and-SMT"><a href="#Threads-and-SMT" class="headerlink" title="Threads and SMT"></a>Threads and SMT</h1><h2 id="Assumptions"><a href="#Assumptions" class="headerlink" title="Assumptions"></a>Assumptions</h2><ol>
+<li>Thread issues instruction on each cycle, max <strong>instruction per cycle (IPC)</strong> is 1</li>
+<li>Memory access = 4 cycles</li>
+<li>Hardware switching instaneously</li>
+<li>SMT with 2 hardware threads</li>
+</ol>
+<h2 id="Co-schedule-compute-bound-threads"><a href="#Co-schedule-compute-bound-threads" class="headerlink" title="Co-schedule compute-bound threads"></a>Co-schedule <strong>compute-bound</strong> threads</h2><ul>
+<li>Threads <strong>“interfere”</strong></li>
+<li><strong>“contend”</strong> for CPU pipline resource</li>
+<li><strong>Performance degrades</strong> by 2x</li>
+<li>Memory Idle</li>
+</ul>
+<h2 id="Co-schedule-memory-bound-threads"><a href="#Co-schedule-memory-bound-threads" class="headerlink" title="Co-schedule memory-bound threads"></a>Co-schedule <strong>memory-bound</strong> threads</h2><ul>
+<li>CPU idle</li>
+<li>Waste CPU cycles</li>
+</ul>
+<h2 id="Co-schedule-compute-and-memory-bound-threads"><a href="#Co-schedule-compute-and-memory-bound-threads" class="headerlink" title="Co-schedule compute- and memory-bound threads"></a>Co-schedule <strong>compute- and memory-bound</strong> threads</h2><ul>
+<li>Mix of CPU- and Memory-intensive threads</li>
+<li>BINGO!</li>
+<li>Avoid/limit contention on processor pipeline</li>
+<li>All components (CPU and memory) are well utilized</li>
+<li>Still leads to interference and degration, but minimal</li>
+</ul>
+<h2 id="CPU-bound-or-Memory-Boud"><a href="#CPU-bound-or-Memory-Boud" class="headerlink" title="CPU bound or Memory Boud?"></a>CPU bound or Memory Boud?</h2><ul>
+<li>Use historic information<ul>
+<li>“sleep time” wont work: the thread is not sleeping when waiting on Mm</li>
+<li>Software takse too much time to compute this</li>
+</ul>
+</li>
+<li>Use Hardware Counters</li>
+</ul>
+<h2 id="Is-Cycle-per-Instruction-useful"><a href="#Is-Cycle-per-Instruction-useful" class="headerlink" title="Is Cycle-per-Instruction useful?"></a>Is Cycle-per-Instruction useful?</h2><ul>
+<li>Simulation based evaluation</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/22/omscs-os-6-thread-performance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1759,384 +2901,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/omscs-os-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhexuan Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eric' Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/20/omscs-os-1/" itemprop="url">
-                  Operating System Note1 - Introduction
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T00:35:15-08:00">
-                2017-02-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Main-Topics"><a href="#Main-Topics" class="headerlink" title="Main Topics"></a>Main Topics</h1><ul>
-<li>OS Abstractions</li>
-<li>Mechanisms</li>
-<li>Policies</li>
-</ul>
-<h1 id="Simple-OS-Definition"><a href="#Simple-OS-Definition" class="headerlink" title="Simple OS Definition:"></a>Simple OS Definition:</h1><ul>
-<li>A special piece of software that <strong>abstracts</strong> and <strong>arbitrates</strong> the underlying hardware<ul>
-<li>Abstract: simplify</li>
-<li>Arbitrate: manage, oversee and control</li>
-</ul>
-</li>
-</ul>
-<h1 id="Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager"><a href="#Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager" class="headerlink" title="Visual Metaphor: Operating System v.s. Toy shop Manager"></a>Visual Metaphor: Operating System v.s. Toy shop Manager</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">Features/Functionalities</th>
-<th style="text-align:center">Operating System</th>
-<th style="text-align:center">Toy shop Manager</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Direct operational resources</td>
-<td style="text-align:center">Control use of CPU, Memory</td>
-<td style="text-align:center">control use of employee time, parts &amp; tools</td>
-</tr>
-<tr>
-<td style="text-align:center">Enforce working policies</td>
-<td style="text-align:center">Fair resource access, limits to resource usage</td>
-<td style="text-align:center">Fairness, safety, cleanup</td>
-</tr>
-<tr>
-<td style="text-align:center">Migrates difficulty of computer tasks</td>
-<td style="text-align:center">Abstract hardware details (system call)</td>
-<td style="text-align:center">Simplifies operation &amp; optimize performance</td>
-</tr>
-</tbody>
-</table>
-<h1 id="What-is-an-Operating-System"><a href="#What-is-an-Operating-System" class="headerlink" title="What is an Operating System"></a>What is an Operating System</h1><ul>
-<li>Hide hardware complexity.</li>
-<li>Resource Management</li>
-<li>Provide isolation &amp; protection</li>
-<li>Directly has priviledged access to underlying hardware</li>
-</ul>
-<h1 id="Operating-System-Elements"><a href="#Operating-System-Elements" class="headerlink" title="Operating System Elements"></a>Operating System Elements</h1><ol>
-<li>Abstractions<ul>
-<li>software<ul>
-<li>process, thread</li>
-</ul>
-</li>
-<li>hardware<ul>
-<li>file</li>
-<li>socket</li>
-<li>memory page</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Mechanisms</p>
-<ul>
-<li>create, schedule</li>
-<li>open, write, allocate</li>
-</ul>
-</li>
-<li><p>Policies</p>
-<ul>
-<li>Least-recently used (LRU)</li>
-<li>Earliest deadline first (EDF)<br>…</li>
-</ul>
-</li>
-</ol>
-<h1 id="Design-Principles"><a href="#Design-Principles" class="headerlink" title="Design Principles"></a>Design Principles</h1><ul>
-<li>Separation of mechanisms &amp; policies</li>
-<li>Optimize for common case</li>
-</ul>
-<h1 id="Basic-Operating-System-Services"><a href="#Basic-Operating-System-Services" class="headerlink" title="Basic Operating System Services"></a>Basic Operating System Services</h1><ul>
-<li>Scheduler -&gt; CPU</li>
-<li>Main Memory (Mm) Manager -&gt; Main Memory</li>
-<li>Block Device Driver</li>
-<li>File System</li>
-</ul>
-<h1 id="Different-Types-of-Operating-Systems"><a href="#Different-Types-of-Operating-Systems" class="headerlink" title="Different Types of Operating Systems"></a>Different Types of Operating Systems</h1><ol>
-<li><p>Monolithic Operating System</p>
-<ul>
-<li>Pros:<ul>
-<li>Compile time optimizations</li>
-</ul>
-</li>
-<li>Cons:<ul>
-<li>All services and abstractions are already in an Operating System</li>
-<li>Really large</li>
-<li>Hard to maintain</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Modular Operating System</p>
-<ul>
-<li>Everything can be added as modules</li>
-<li>Operating System contains interfaces to allow alternatives</li>
-<li>Pros:<ul>
-<li>Smaller code basis</li>
-<li>Less resource needed</li>
-<li>Easier to maintain</li>
-</ul>
-</li>
-<li>Cons:<ul>
-<li>Indirection impact on performance</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Microkernel:</p>
-<ul>
-<li>Only require the most basic services. e.g. Address Space, threads</li>
-<li>All others reside in user level</li>
-<li>Requires lots of inter process communication</li>
-<li>Pros:<ul>
-<li>Very small</li>
-</ul>
-</li>
-<li>Cons:<ul>
-<li>Portability will be bad.</li>
-<li>Complexity of Software Development</li>
-<li>Cost of user/kernel crossing</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhexuan Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eric' Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/19/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-19T23:40:55-08:00">
-                2017-02-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2181,7 +2950,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2192,7 +2961,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

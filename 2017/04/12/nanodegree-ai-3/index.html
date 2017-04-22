@@ -1,0 +1,735 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AI,Nanodegree," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Definition of a problem Initial State -&amp;gt; S0 Actions (s) -&amp;gt; {a1, a2, a3, …} Result (s, a) -&amp;gt; s’ (a new state) GoalTest(s) -&amp;gt; True|False PathCost (sequence of state, actions and transtions)">
+<meta name="keywords" content="AI,Nanodegree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NanoDegree AI - Intro to Search">
+<meta property="og:url" content="http://yoursite.com/2017/04/12/nanodegree-ai-3/index.html">
+<meta property="og:site_name" content="Eric' Notes">
+<meta property="og:description" content="Definition of a problem Initial State -&amp;gt; S0 Actions (s) -&amp;gt; {a1, a2, a3, …} Result (s, a) -&amp;gt; s’ (a new state) GoalTest(s) -&amp;gt; True|False PathCost (sequence of state, actions and transtions)">
+<meta property="og:updated_time" content="2017-04-14T08:06:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NanoDegree AI - Intro to Search">
+<meta name="twitter:description" content="Definition of a problem Initial State -&amp;gt; S0 Actions (s) -&amp;gt; {a1, a2, a3, …} Result (s, a) -&amp;gt; s’ (a new state) GoalTest(s) -&amp;gt; True|False PathCost (sequence of state, actions and transtions)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/12/nanodegree-ai-3/"/>
+
+
+
+
+
+  <title> NanoDegree AI - Intro to Search | Eric' Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Eric' Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/12/nanodegree-ai-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NanoDegree AI - Intro to Search
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-12T16:17:21-07:00">
+                2017-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Definition-of-a-problem"><a href="#Definition-of-a-problem" class="headerlink" title="Definition of a problem"></a>Definition of a problem</h1><ul>
+<li>Initial State -&gt; S0</li>
+<li>Actions (s) -&gt; {a1, a2, a3, …}</li>
+<li>Result (s, a) -&gt; s’ (a new state)</li>
+<li>GoalTest(s) -&gt; True|False</li>
+<li>PathCost (sequence of state, actions and transtions) -&gt; cost value(n)</li>
+<li></li>
+</ul>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><ul>
+<li>Three areas:<ul>
+<li>Frontier</li>
+<li>Explored</li>
+<li>Unexplored</li>
+</ul>
+</li>
+</ul>
+<h2 id="General-tree-search"><a href="#General-tree-search" class="headerlink" title="General tree search"></a>General tree search</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function Tree.Search(problem):</div><div class="line">frontier = &#123; [initial] &#125;</div><div class="line">loop:</div><div class="line">    if frontier is empty: return fail</div><div class="line">    path = remove.choice(frontier) /* determined by specific algorithm */</div><div class="line">    s = path.end</div><div class="line">    if s is a goal: return path</div><div class="line">    for a in actions:</div><div class="line">        add [path + a -&gt; Result(s, a)] to frontier</div></pre></td></tr></table></figure>
+<h2 id="General-Graph-Search"><a href="#General-Graph-Search" class="headerlink" title="General Graph Search:"></a>General Graph Search:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function Graph.Search(problem):</div><div class="line">frontier = &#123; [initial] &#125;</div><div class="line">loop:</div><div class="line">    if frontier is empty: return fail</div><div class="line">    path = remove.choice(frontier) /* determined by specific algorithm */</div><div class="line">    s = path.end</div><div class="line">    add s to explored</div><div class="line">    if s is a goal: return path</div><div class="line">    for a in actions:</div><div class="line">        add [path + a -&gt; Result(s, a)] to frontier, unless Result(s, a) in frontier or explored</div></pre></td></tr></table></figure>
+<h3 id="Breadth-First-Search"><a href="#Breadth-First-Search" class="headerlink" title="Breadth-First Search"></a>Breadth-First Search</h3><ul>
+<li>Shortest First Search</li>
+<li>When doing <strong>remove.choice(frontier)</strong>, it will always pick the one nearest to current state first</li>
+<li>The goal test is passed when <strong>we remove a state from frontier</strong></li>
+<li>Guarantee to find shortest path if there is no/equal path cost</li>
+</ul>
+<h3 id="Depth-First-Serch"><a href="#Depth-First-Serch" class="headerlink" title="Depth-First Serch"></a>Depth-First Serch</h3><ul>
+<li>Longest First search</li>
+<li>When doing <strong>remove.choice(frontier)</strong>, it will always pick the one furthest to current state first</li>
+</ul>
+<h3 id="Uniform-Cost-Search"><a href="#Uniform-Cost-Search" class="headerlink" title="Uniform Cost Search:"></a>Uniform Cost Search:</h3><ul>
+<li>Cheapest First Search</li>
+<li>When doing <strong>remove.choice(frontier)</strong>, it will always pick the one with lowest total path cost so far first</li>
+<li>Time wasted in searching every direction in order to locate the goal -&gt; If we have an estimate of the distance from S to G, we could find the goal faster</li>
+</ul>
+<h3 id="Greedy-Best-First-Search"><a href="#Greedy-Best-First-Search" class="headerlink" title="Greedy Best-First Search:"></a>Greedy Best-First Search:</h3><ul>
+<li>Expand the one has least estimate of distance first</li>
+<li>It will stick to the correct direction, but will cause problem <strong>if there are obstacles.</strong> (normally will end up longer path)</li>
+</ul>
+<h3 id="A-search"><a href="#A-search" class="headerlink" title="A* search"></a>A* search</h3><ul>
+<li>Combine with <strong>Uniform Cost Search and Greedy Best-First Search</strong>: Best estimated total path cost first</li>
+<li>Always expand the node that has <strong>Minimum Value of f = g + h</strong>, where<ul>
+<li><strong>g(path)</strong> = path cost</li>
+<li><strong>h(path)</strong> = estimated distance from that node to goal</li>
+</ul>
+</li>
+<li>Result: Search stratetgy that is the best possible, and <strong>finds the shortest path</strong> while <strong>expanding minimum number of paths</strong> possible</li>
+<li>It is <strong>ot guaranteed</strong> to find the shortest cost path, as it depends on the <strong>heuristic function</strong></li>
+</ul>
+<h3 id="Properties-of-Searches"><a href="#Properties-of-Searches" class="headerlink" title="Properties of Searches"></a>Properties of Searches</h3><ul>
+<li><strong>Optimal</strong>: is it guaranteed to find the shortest path<ul>
+<li>Breath First Search</li>
+<li>Uniform Cost Search</li>
+</ul>
+</li>
+<li><strong>Completeness</strong>: is it guaranteed to find the goal, if there is a goal somewhere (consider infinite tree/graph)<ul>
+<li>Breath First Search</li>
+<li>Uniform Cost Search</li>
+</ul>
+</li>
+</ul>
+<h3 id="Optimistic-Heuristic"><a href="#Optimistic-Heuristic" class="headerlink" title="Optimistic Heuristic"></a>Optimistic Heuristic</h3><ul>
+<li>We say that a heuristic function is <strong>optimistic</strong> or <strong>admissible</strong> if it never overestimates distance to goal: <strong>h(s) &lt; true cost</strong></li>
+<li>How to come up with good heuristic function? - Gracefully relax the problem</li>
+</ul>
+<h1 id="Problems-with-search"><a href="#Problems-with-search" class="headerlink" title="Problems with search"></a>Problems with search</h1><ul>
+<li>Problem must be<ol>
+<li><strong>Fully Observable</strong>: must be able to see what initial we start out with.</li>
+<li><strong>Known</strong>: must know the set of available actions to us</li>
+<li><strong>Discrete</strong>: must be a finite number of actions to choose from</li>
+<li><strong>Deterministic</strong>: must know the result of taking an action</li>
+<li><strong>Static</strong>: must be nothing else that can change thet world other than our own action</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/Nanodegree/" rel="tag"># Nanodegree</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/14/nanodegree-ai-4/" rel="next" title="NanoDegree AI - Simulated Annealing">
+                <i class="fa fa-chevron-left"></i> NanoDegree AI - Simulated Annealing
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/07/omscs-os-13-remote-procedure-calls/" rel="prev" title="Operating System - Remote Procedure Calls">
+                Operating System - Remote Procedure Calls <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Zhexuan Liu" />
+          <p class="site-author-name" itemprop="name">Zhexuan Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Definition-of-a-problem"><span class="nav-number">1.</span> <span class="nav-text">Definition of a problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#State"><span class="nav-number">1.1.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#General-tree-search"><span class="nav-number">1.2.</span> <span class="nav-text">General tree search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#General-Graph-Search"><span class="nav-number">1.3.</span> <span class="nav-text">General Graph Search:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Breadth-First-Search"><span class="nav-number">1.3.1.</span> <span class="nav-text">Breadth-First Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Depth-First-Serch"><span class="nav-number">1.3.2.</span> <span class="nav-text">Depth-First Serch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Uniform-Cost-Search"><span class="nav-number">1.3.3.</span> <span class="nav-text">Uniform Cost Search:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Greedy-Best-First-Search"><span class="nav-number">1.3.4.</span> <span class="nav-text">Greedy Best-First Search:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-search"><span class="nav-number">1.3.5.</span> <span class="nav-text">A* search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Properties-of-Searches"><span class="nav-number">1.3.6.</span> <span class="nav-text">Properties of Searches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimistic-Heuristic"><span class="nav-number">1.3.7.</span> <span class="nav-text">Optimistic Heuristic</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Problems-with-search"><span class="nav-number">2.</span> <span class="nav-text">Problems with search</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhexuan Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
