@@ -247,6 +247,555 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/24/omscs-os-16-datacenter-tech/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/24/omscs-os-16-datacenter-tech/" itemprop="url">
+                  Operating System - Datacenter Technology
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-24T19:54:53-07:00">
+                2017-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>Multi-tier architectures for Internet services</li>
+<li>Cloud computing</li>
+<li><strong>Cloud</strong> and <strong>“big data”</strong> technologies</li>
+</ul>
+<h1 id="Internet-Services"><a href="#Internet-Services" class="headerlink" title="Internet Services"></a>Internet Services</h1><p>Any types of services provided via web interface</p>
+<ul>
+<li><strong>Presentation</strong>: static content (View)</li>
+<li><strong>Business Logic</strong>: dynamic content (View Model)</li>
+<li><strong>Database tier</strong>: data store (Model)</li>
+</ul>
+<h2 id="Architectures"><a href="#Architectures" class="headerlink" title="Architectures"></a>Architectures</h2><p>For scale: <strong>multi-process</strong>, <strong>multi-node</strong></p>
+<ol>
+<li><strong>“Boss-worker”</strong>: front-end distributes requests to nodes</li>
+<li><strong>“All equal”</strong>: all nodes execute any possible steps in request processing, for any requests -&gt; <strong>functionaly homogeneous</strong></li>
+<li><strong>“Specialized Nodes”</strong>: nodes execute some specific step(s) in request processing; for some request types -&gt; <strong>functionaly heterogeneous</strong></li>
+</ol>
+<h3 id="Homogeneous-Architectures"><a href="#Homogeneous-Architectures" class="headerlink" title="Homogeneous Architectures"></a>Homogeneous Architectures</h3><ul>
+<li>Each node can do any processing steps</li>
+<li>Doesn’t mean that each node has all data; just each node can get to all data</li>
+<li><strong>Benefit:</strong> keeps front-end simple</li>
+<li><strong>Downside:</strong> how to benefit from caching?</li>
+</ul>
+<h3 id="Heterogeneous-Architectures"><a href="#Heterogeneous-Architectures" class="headerlink" title="Heterogeneous Architectures"></a>Heterogeneous Architectures</h3><ul>
+<li>Different nodes -&gt; different tasks/requests</li>
+<li>Data doesn’t have to be uniformly accessible everywhere</li>
+<li><strong>Benefits:</strong><ul>
+<li>benefit of locality and caching</li>
+</ul>
+</li>
+<li><strong>Downsides:</strong><ul>
+<li>more complex front-end</li>
+<li>more complex management</li>
+</ul>
+</li>
+</ul>
+<h1 id="Cloud-Computing"><a href="#Cloud-Computing" class="headerlink" title="Cloud Computing"></a>Cloud Computing</h1><h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><h3 id="Traditional-Approach"><a href="#Traditional-Approach" class="headerlink" title="Traditional Approach"></a>Traditional Approach</h3><img src="/imgs/OMSCS/OS/OS_16/OS_16_Screenshot1.png" class="[screenshot]">
+<ul>
+<li>Buy and configure resources =&gt; determine capacity based on expected demand (peak)</li>
+<li>when demand exceeds capacity, it will<ul>
+<li>dropped requests</li>
+<li>lost opportunity</li>
+</ul>
+</li>
+</ul>
+<h3 id="Ideal-cloud"><a href="#Ideal-cloud" class="headerlink" title="Ideal cloud"></a>Ideal cloud</h3><img src="/imgs/OMSCS/OS/OS_16/OS_16_Screenshot2.png" class="[screenshot]">
+<ul>
+<li>Capacity scales <strong>elastically</strong> with demand</li>
+<li>Scaling in <strong>instantaneous</strong>, both up and down</li>
+<li><strong>Cost is proportional</strong> to demand, to revenue opportunity</li>
+<li>All of this happens <strong>automatically</strong> no need for hacking wizardry</li>
+<li>Can access anytime, anywhere</li>
+</ul>
+<h3 id="General-requirements"><a href="#General-requirements" class="headerlink" title="General requirements"></a>General requirements</h3><ul>
+<li>“fungible” resources</li>
+<li>elastic, dynamic resource allocation methods</li>
+<li>scale: management at scale, scalable resource allocations</li>
+<li>dealing with failures</li>
+<li>multi-tenancy: performance &amp; isolation</li>
+<li>security</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>On-demand, elastic resources and services</li>
+<li>Fine-grained pricing based on usage</li>
+<li>Professionally managed and hosted</li>
+<li>API-based access</li>
+</ul>
+<h2 id="Overviews"><a href="#Overviews" class="headerlink" title="Overviews"></a>Overviews</h2><ul>
+<li><strong>shared resources</strong><ul>
+<li><strong>infrastructure</strong> and <strong>software/services</strong></li>
+</ul>
+</li>
+<li><strong>APIs for access &amp; configuration</strong><ul>
+<li>web-based, libraries, command line…</li>
+</ul>
+</li>
+<li><strong>billing/accounting services</strong><ul>
+<li>many models: spot, reservation, … entire marketplace</li>
+<li>typically discrete quantities: tiny, medium, x-large …</li>
+</ul>
+</li>
+<li>managed by (cloud) provider</li>
+</ul>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h2><h3 id="Cloud-Deployment-Models"><a href="#Cloud-Deployment-Models" class="headerlink" title="Cloud Deployment Models"></a>Cloud Deployment Models</h3><ul>
+<li>Public<ul>
+<li>third party customers/tenants</li>
+</ul>
+</li>
+<li>Private<ul>
+<li>leverage technology internally</li>
+</ul>
+</li>
+<li>Hybrid (Public + Private)<ul>
+<li>Failover, dealing with spikes, testing</li>
+</ul>
+</li>
+<li>Community<ul>
+<li>Used by certain type of users (also public)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Cloud-Service-Models"><a href="#Cloud-Service-Models" class="headerlink" title="Cloud Service Models"></a>Cloud Service Models</h3><img src="/imgs/OMSCS/OS/OS_16/OS_16_Screenshot3.png" class="[screenshot]">
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/22/omscs-os-15-distributed-shared-memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhexuan Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric' Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/22/omscs-os-15-distributed-shared-memory/" itemprop="url">
+                  Operating System - Distributed Shared Memory
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-22T14:09:36-07:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">Features/Functionalities</th>
+<th style="text-align:center">Managing distributed Shared Memory</th>
+<th style="text-align:center">Managing tools/parts across all workspaces in a toy shop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Must decide placement - how to place</td>
+<td style="text-align:center">Place memory (pages) close to relevant processes</td>
+<td style="text-align:center">Place resources close to relevant workiers</td>
+</tr>
+<tr>
+<td style="text-align:center">Must decide migration</td>
+<td style="text-align:center">when to copy memory (pages) from remote to local</td>
+<td style="text-align:center">Move resources as soon as possible to relevant workers</td>
+</tr>
+<tr>
+<td style="text-align:center">Must decide sharing rules</td>
+<td style="text-align:center">ensure memory operations are properly ordered</td>
+<td style="text-align:center">How long can resources be kept? when are they ready? how to store?</td>
+</tr>
+</tbody>
+</table>
+<h1 id="DFS-review"><a href="#DFS-review" class="headerlink" title="DFS review"></a>DFS review</h1><ul>
+<li>Clients<ul>
+<li>send requests to file service</li>
+</ul>
+</li>
+<li>Caching<ul>
+<li>improve performance (seen by <strong>clients</strong>) and scalability (supported by <strong>servers</strong>)</li>
+</ul>
+</li>
+<li>Servers<ul>
+<li>own and manage <strong>state (files)</strong></li>
+<li>provide <strong>service (file access)</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="Peer-Distributed-Applications"><a href="#Peer-Distributed-Applications" class="headerlink" title="Peer Distributed Applications"></a>Peer Distributed Applications</h1><ul>
+<li>Commonly used in big data services/systems</li>
+<li>Each node<ul>
+<li>“own” state</li>
+<li>provides service</li>
+<li>all nodes are “peers” - has local accesses, provide accesses to other nodes and could access other nodes</li>
+</ul>
+</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot1.png" class="[screenshot]">
+<ul>
+<li>Some nodes could still be managers that are more centralized</li>
+</ul>
+<h1 id="Distributed-Shared-Memory-DSM"><a href="#Distributed-Shared-Memory-DSM" class="headerlink" title="Distributed Shared Memory (DSM)"></a>Distributed Shared Memory (DSM)</h1><ul>
+<li>Service manages memories across all machines</li>
+<li>Each node<ul>
+<li>“owns” state =&gt; memory</li>
+<li>provides service<br>  a. memory reads/writes from any node<br>  b. consistency protocols</li>
+</ul>
+</li>
+<li><strong>Permits scaling</strong> beyond single machine memory limits</li>
+<li><strong>Benefits:</strong> more “shared” memory at lower cost</li>
+<li><strong>Downside:</strong> slower overall memory access</li>
+</ul>
+<h2 id="Hardware-v-s-Software-DSM"><a href="#Hardware-v-s-Software-DSM" class="headerlink" title="Hardware v.s. Software DSM"></a>Hardware v.s. Software DSM</h2><h3 id="Hardware-Supported-EXPENSIVE"><a href="#Hardware-Supported-EXPENSIVE" class="headerlink" title="Hardware Supported - EXPENSIVE"></a>Hardware Supported - EXPENSIVE</h3><ul>
+<li>relies on <strong>interconnect</strong></li>
+<li>OS manages larger physical memory</li>
+<li><strong>NICs</strong> translate remote Main Memory accesses to messages</li>
+<li><strong>NICs</strong> involved in all aspects of Main Memory management, support atomics …</li>
+</ul>
+<h3 id="Software-Supported"><a href="#Software-Supported" class="headerlink" title="Software Supported"></a>Software Supported</h3><ul>
+<li>Everything done by software</li>
+<li>Can be done by OS, or language runtime</li>
+</ul>
+<h2 id="DSM-design"><a href="#DSM-design" class="headerlink" title="DSM design"></a>DSM design</h2><h3 id="Sharing-Granularity"><a href="#Sharing-Granularity" class="headerlink" title="Sharing Granularity"></a>Sharing Granularity</h3><ul>
+<li>Cache line granularity? - updating on every cache line change?<ul>
+<li>overheads too high for DSM, and slow the performance a lot</li>
+</ul>
+</li>
+<li>Variable granularity? - good for developers, but still high overheads as we have lots of variables</li>
+<li>Page granularity (OS-level)</li>
+<li>Object granularity (Language runtime)</li>
+<li>When using the larger granularity such as <strong>Page</strong> and <strong>Object</strong>, be aware of false sharing: e.g. <strong>x</strong> and <strong>y</strong> are on same page. Programmer should be aware of the layout of variables/objects, or rely on some smart compilers</li>
+</ul>
+<img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot2.png" class="[screenshot]">
+<h3 id="Access-Algorithm"><a href="#Access-Algorithm" class="headerlink" title="Access Algorithm"></a>Access Algorithm</h3><ul>
+<li>Application access algorithm<ul>
+<li>single reader/single writer (SRSW) - DSM simply needs to provide access to remote/shared memories, no consistensy/sharing related challenges</li>
+<li>Multiple readers/single writer (MRSW)</li>
+<li>Multiple readers/multiple writers (MRMW)</li>
+<li>The latter two need to think about how to retrieve latest data for each read on all nodes, and how to ensure consistency among writes across all nodes</li>
+</ul>
+</li>
+</ul>
+<h3 id="Performance-consideration"><a href="#Performance-consideration" class="headerlink" title="Performance consideration"></a>Performance consideration</h3><ul>
+<li>Metrics: access latency</li>
+<li>Achieving low latency through<br>  a. <strong>Migration</strong>: <pre><code>- makes sense for SRSW
+- requires data movement
+- overhead if only single read/write
+</code></pre>  b. <strong>Replication</strong><pre><code>- states are copied to multiple nodes
+- more general
+- requires consistency management
+</code></pre></li>
+</ul>
+<h3 id="Consistency-management"><a href="#Consistency-management" class="headerlink" title="Consistency management"></a>Consistency management</h3><ul>
+<li>Push <strong>invalidations</strong> when data is written to - proactive, eager, pessimistic</li>
+<li>Pull <strong>modification info</strong> periodically - reactive, lazy, optimistic</li>
+<li>When these methods get triggered <strong>depends on the <strong>consistency model</strong> for the shared state</strong></li>
+</ul>
+<h3 id="DSM-Architecture"><a href="#DSM-Architecture" class="headerlink" title="DSM Architecture"></a>DSM Architecture</h3><h4 id="Page-based-DSM-architecture-OS-supported"><a href="#Page-based-DSM-architecture-OS-supported" class="headerlink" title="Page-based DSM architecture, OS supported"></a>Page-based DSM architecture, OS supported</h4><img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot3.png" class="[screenshot]">
+<ul>
+<li>Distributed nodes, <strong>each with own local main memory contribution</strong></li>
+<li>Pool of pages from all nodes</li>
+<li>Each page has <strong>ID</strong>, <strong>page frame number</strong></li>
+<li>If MRMW<ul>
+<li>need <strong>local caches</strong> for performance</li>
+<li><strong>home (or manager) node</strong> drives <strong>coherence operations</strong></li>
+<li>all nodes are responsible for part of <strong>distibuted memory management</strong></li>
+<li>Acting as both server and client</li>
+</ul>
+</li>
+<li><strong>home node</strong><ul>
+<li>Keeps track of states: pages accessed, modifications, caching enabled/disabled, locked, etc</li>
+<li>current “owner”, currently owns the page, that could control all state updates and drive consistency operations (owner may not equal home node)</li>
+</ul>
+</li>
+<li>Explicit replicas <ul>
+<li>for load balancing, performance or reliability</li>
+<li>controlled by <strong>home node</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="Indexing-Distributed-State-memory"><a href="#Indexing-Distributed-State-memory" class="headerlink" title="Indexing Distributed State (memory)"></a>Indexing Distributed State (memory)</h3><ul>
+<li>Maintain some DSM metadata</li>
+<li>Each page (object) has<ul>
+<li>address == node Id + page frame number</li>
+<li>node Id == “home” node</li>
+</ul>
+</li>
+<li>Global map <strong>(replicated across all nodes)</strong><ul>
+<li>object (page) id =&gt; manager node id</li>
+<li>manager map available on each node</li>
+<li>could be implemented through <strong>global mapping table</strong>: object id =&gt; index into <strong>mapping table</strong> =&gt; manager node</li>
+</ul>
+</li>
+<li>Metadata for local pages <strong>(partitioned)</strong><ul>
+<li>Per-page meadata is distributed across managers</li>
+</ul>
+</li>
+</ul>
+<h2 id="Implementing-DSMs"><a href="#Implementing-DSMs" class="headerlink" title="Implementing DSMs"></a>Implementing DSMs</h2><ul>
+<li>DSM must “intercept” accesses to DSM state<ul>
+<li>to send remote messages requesting access</li>
+<li>to trigger coherence messages</li>
+</ul>
+</li>
+<li>Overheads should be avoided for local, non-shared state (pages)<br>=&gt; dynamically “engage” and “disengage” DSM when necessary</li>
+</ul>
+<h3 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h3><ul>
+<li>Use hardware MMU support<ul>
+<li>trap in OS if mapping invalid or access not permitted</li>
+<li>remote address mapping =&gt; <strong>trap and pass to DSM to send message</strong></li>
+<li>cached content =&gt; <strong>trap and pass to DSM to perform necessary coherence operations</strong></li>
+<li>Other MMU information usefule (e.g. dirty page)</li>
+</ul>
+</li>
+</ul>
+<h1 id="Consistency-model"><a href="#Consistency-model" class="headerlink" title="Consistency model"></a>Consistency model</h1><h2 id="What-is-Consistency-model"><a href="#What-is-Consistency-model" class="headerlink" title="What is Consistency model"></a>What is Consistency model</h2><p>Agreement between <strong>memory(state)</strong> and <strong>upper software layers</strong>: memory behaves correctly if and only if software follows specific rules</p>
+<p><strong>Memory (state)</strong> <strong>guaranteees</strong> to behave correctly…</p>
+<pre><code>- access ordering
+- propagation/visibility of updates
+</code></pre><p>This is general and could be apply to multiple threads on one machine</p>
+<p>Notations:</p>
+<img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot4.png" class="[screenshot]">
+<h2 id="Strict-Consistency"><a href="#Strict-Consistency" class="headerlink" title="Strict Consistency"></a>Strict Consistency</h2><img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot5.png" class="[screenshot]">
+<ul>
+<li>updates visible everywhere immediately</li>
+<li>guarantees that every node will see all writes happened in the system in the exact same order</li>
+<li>In practice:<ul>
+<li>even on single SMP no guarantees on order without extra locking and synchronization</li>
+<li>in distributed systems, latency &amp; message reorder/loss make this even harder -&gt; impossible to guarantee</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sequential-Consistency"><a href="#Sequential-Consistency" class="headerlink" title="Sequential Consistency"></a>Sequential Consistency</h2><img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot6.png" class="[screenshot]">
+<ul>
+<li>As long as the order matches some possible ordering of write operations, its ok</li>
+<li>Memory updates <strong>from different processors</strong> may be <strong>arbitrarily interleaved</strong></li>
+<li>But <strong>all processes</strong> should see the <strong>same ordering (interleaving)</strong></li>
+<li>Constraint: operations from <strong>same process always appear in order</strong> they were issued</li>
+</ul>
+<h2 id="Causal-Consistency"><a href="#Causal-Consistency" class="headerlink" title="Causal Consistency"></a>Causal Consistency</h2><img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot7.png" class="[screenshot]">
+<ul>
+<li>Different orders will be <strong>NOT OK</strong> when there are depenencies between orders of operations</li>
+<li>Detect <strong>causally reltated writes</strong> and order them in same orders</li>
+</ul>
+<h2 id="Weak-Consistency"><a href="#Weak-Consistency" class="headerlink" title="Weak Consistency"></a>Weak Consistency</h2><img src="/imgs/OMSCS/OS/OS_15/OS_15_Screenshot8.png" class="[screenshot]">
+<ul>
+<li>Provides <strong>synchronization points</strong> - operations that are available:<ul>
+<li>all updates prior to a sync point will be visible</li>
+<li>no guarantee what happens in between</li>
+<li>has to be performed by both <strong>the process who performs the update</strong> and the <strong>process who wants to see the update</strong></li>
+</ul>
+</li>
+<li>Variation<ul>
+<li>single sync operation (sync)</li>
+<li>separate sync per subset of state (page)</li>
+<li>separate <strong>entry/acquire (polling)</strong> v.s. <strong>exit/release(pushing)</strong> operations</li>
+</ul>
+</li>
+<li><strong>Benefits:</strong> limit data movement &amp; coherence operations</li>
+<li><strong>Downside:</strong> maintain extra state for additional operations</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/omscs-os-14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2230,660 +2779,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/omscs-os-10-sync-construct/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhexuan Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eric' Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/22/omscs-os-10-sync-construct/" itemprop="url">
-                  Operating System - Synchronization Construct
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T10:25:14-07:00">
-                2017-03-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
-<li>More <strong>synchornization</strong> constructs</li>
-<li>Hardware supported <strong>synchronization</strong></li>
-<li>References: <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-anderson-paper.pdf" target="_blank" rel="external">“The Performance of Spin Lock Alternatives for Shared-Memory Multiprocessors”</a></li>
-</ul>
-<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">Features/Functionalities</th>
-<th style="text-align:center">Synchronization</th>
-<th style="text-align:center">Waiting for a coworker to finish so that you can continue working</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">May repeatedly check to continue</td>
-<td style="text-align:center">Sync using <strong>spinlocks</strong></td>
-<td style="text-align:center">Are you done?</td>
-</tr>
-<tr>
-<td style="text-align:center">May wait for a signal to continue</td>
-<td style="text-align:center">Sync using <strong>mutexes</strong> and <strong>conditional var</strong></td>
-<td style="text-align:center">Hey I’m done</td>
-</tr>
-<tr>
-<td style="text-align:center">Waiting hurts performance</td>
-<td style="text-align:center">Waste CPU cycles</td>
-<td style="text-align:center">Waste productive time while waiting</td>
-</tr>
-</tbody>
-</table>
-<h1 id="Why-more-about-synchronization"><a href="#Why-more-about-synchronization" class="headerlink" title="Why more about synchronization?"></a>Why more about synchronization?</h1><h2 id="Limitation-of-mutexes-and-condition-var"><a href="#Limitation-of-mutexes-and-condition-var" class="headerlink" title="Limitation of mutexes and condition var"></a>Limitation of mutexes and condition var</h2><ul>
-<li>Error prone/correctness/ease-of-use: unlock wrong mutex, signal wrong condition variables</li>
-<li>Lack of expressive power: helper variables for access or priority controls</li>
-</ul>
-<h2 id="Requires-lower-lever-support"><a href="#Requires-lower-lever-support" class="headerlink" title="Requires lower lever support"></a>Requires lower lever support</h2><ul>
-<li>Hardware <strong>atomic instructions</strong></li>
-</ul>
-<h2 id="Spinlocks-basic-sync-construct"><a href="#Spinlocks-basic-sync-construct" class="headerlink" title="Spinlocks (basic sync construct)"></a>Spinlocks (basic sync construct)</h2><ul>
-<li>Spinlock is like a mutex:<ul>
-<li>mutual exclusion</li>
-<li>lock and unlock (free): spinlock_lock(s); spinlock_unlock(s);</li>
-</ul>
-</li>
-<li>Different: lock == busy -&gt; will keep spinning and cost cpu cycles (i.e. the locked process will not be blocked but spinning)</li>
-</ul>
-<h2 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><ul>
-<li>Common sync construct in OS kernels</li>
-<li>Like a traffic light <strong>STOP</strong> and <strong>GO</strong></li>
-<li>Similar to a mutex, but more general</li>
-</ul>
-<h3 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h3><ul>
-<li>Semaphore == integer values =&gt; <strong>count-based sync</strong></li>
-<li>on init: <ul>
-<li>assigned a max value(positive int) =&gt; <strong>maximum count</strong></li>
-</ul>
-</li>
-<li>on try (wait) - P(Proberen):<ul>
-<li>if none-zero =&gt; decrement and proceed =&gt; <strong>counting semaphores</strong></li>
-</ul>
-</li>
-<li>if initialized with 1:<ul>
-<li>equivalent to  mutex (binary semaphore)</li>
-</ul>
-</li>
-<li>on exit (post) - V(verhogen): increment</li>
-</ul>
-<h3 id="POSIX-Semaphore-APIs"><a href="#POSIX-Semaphore-APIs" class="headerlink" title="POSIX Semaphore APIs"></a>POSIX Semaphore APIs</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">sem_t</span> sem;</div><div class="line">sem_init(<span class="keyword">sem_t</span> *sem, <span class="keyword">int</span> pshared, <span class="keyword">int</span> count);</div><div class="line">sem_wait(<span class="keyword">sem_t</span> *sem);</div><div class="line">sem_post(<span class="keyword">sem_t</span> *sem);</div></pre></td></tr></table></figure>
-<h2 id="Reader-Writer-Locks"><a href="#Reader-Writer-Locks" class="headerlink" title="Reader/Writer Locks"></a>Reader/Writer Locks</h2><h3 id="Syncing-different-types-of-accesses"><a href="#Syncing-different-types-of-accesses" class="headerlink" title="Syncing different types of accesses"></a>Syncing different types of accesses</h3><ul>
-<li>Read (never modify): shared access</li>
-<li>Write (always modify): exclusive access</li>
-</ul>
-<h3 id="How-it-works-1"><a href="#How-it-works-1" class="headerlink" title="How it works"></a>How it works</h3><ul>
-<li>Specify the type of access</li>
-<li>Then lock behaves accordingly</li>
-</ul>
-<h3 id="Using-RW-Locks-in-Linux"><a href="#Using-RW-Locks-in-Linux" class="headerlink" title="Using RW Locks in Linux"></a>Using RW Locks in Linux</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/spinlock.h&gt;</span></span></div><div class="line"><span class="keyword">rwlock_t</span> m;</div><div class="line">read_lock(m);</div><div class="line">    <span class="comment">// critical section</span></div><div class="line">read_unlock(m);</div><div class="line"></div><div class="line">write_lock(m);</div><div class="line">    <span class="comment">// critical section</span></div><div class="line">write_unlock(m);</div></pre></td></tr></table></figure>
-<h3 id="Semeantic-differences"><a href="#Semeantic-differences" class="headerlink" title="Semeantic differences"></a>Semeantic differences</h3><ul>
-<li>Recursive read lock</li>
-<li>Upgrade/downgrade <strong>priority</strong></li>
-<li>Interaction with scheduling policy - block if higher <strong>priority writers</strong> waiting</li>
-</ul>
-<h2 id="Monitors"><a href="#Monitors" class="headerlink" title="Monitors"></a>Monitors</h2><ul>
-<li>Higher level sync process</li>
-<li>OR a programming style</li>
-<li>It specifies:<ul>
-<li>Shared resource</li>
-<li>Entry procedure</li>
-<li>Possible condition variables</li>
-</ul>
-</li>
-<li>On entry: lock, check, etc…</li>
-<li>On exit: unlock, check, signal, etc…</li>
-</ul>
-<h2 id="More-other-structs"><a href="#More-other-structs" class="headerlink" title="More other structs"></a>More other structs</h2><ul>
-<li>serializers</li>
-<li>path expressions</li>
-<li>barriers</li>
-<li>rendezvous points</li>
-<li>optimistic wait-free sync (RCU)</li>
-<li><strong>All of them need hardware support</strong></li>
-</ul>
-<h1 id="Spinlock"><a href="#Spinlock" class="headerlink" title="Spinlock"></a>Spinlock</h1><h2 id="Overview-1"><a href="#Overview-1" class="headerlink" title="Overview"></a>Overview</h2><ul>
-<li>References: <a href="https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-anderson-paper.pdf" target="_blank" rel="external">“The Performance of Spin Lock Alternatives for Shared-Memory Multiprocessors”</a></li>
-<li>Alternative <strong>implementations</strong> of spinlocks</li>
-<li>Generalize techiques to other constructs</li>
-</ul>
-<h2 id="Some-INCORRECT-IMPLEMENTATION"><a href="#Some-INCORRECT-IMPLEMENTATION" class="headerlink" title="Some INCORRECT IMPLEMENTATION"></a>Some INCORRECT IMPLEMENTATION</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">spinlock_init(lock):</div><div class="line">    lock = <span class="built_in">free</span>;    <span class="comment">// 0 = free; 1 = busy</span></div><div class="line"></div><div class="line">spinlock_lock(lock):</div><div class="line">    spin:</div><div class="line">        <span class="keyword">if</span>(lock == <span class="built_in">free</span>) &#123; lock = busy; &#125;</div><div class="line">        <span class="keyword">else</span> &#123; <span class="keyword">goto</span> spin &#125;</div><div class="line"></div><div class="line">spinlock_unlock(lock):</div><div class="line">    lock = <span class="built_in">free</span></div></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">spinlock_init(lock):</div><div class="line">    lock = <span class="built_in">free</span>;    <span class="comment">// 0 = free; 1 = busy</span></div><div class="line"></div><div class="line">spinlock_lock(lock):</div><div class="line">    <span class="keyword">while</span> (lock == busy)</div><div class="line">    lock = busy;</div><div class="line"></div><div class="line">spinlock_unlock(lock):</div><div class="line">    lock = <span class="built_in">free</span></div></pre></td></tr></table></figure>
-<ul>
-<li>Both implementations are <strong>Inefficient</strong> and <strong>Incorrect</strong> because of the loop, and the fact that the condition could be met concurrently</li>
-</ul>
-<h2 id="Need-Hardware-Support"><a href="#Need-Hardware-Support" class="headerlink" title="Need Hardware Support"></a>Need Hardware Support</h2><ul>
-<li>The checking of the lock and setting of the lock need to be <strong>atomic</strong></li>
-<li>Need hardware to support <strong>atomic instructions</strong></li>
-</ul>
-<h3 id="Atomic-Instructions"><a href="#Atomic-Instructions" class="headerlink" title="Atomic Instructions"></a>Atomic Instructions</h3><ul>
-<li>Popular instructions<ol>
-<li>test_and_set</li>
-<li>read_and_increment</li>
-<li>compare_and_swap</li>
-</ol>
-</li>
-<li>Would be different from hardwares to hardwares</li>
-<li>Guarantees:<ul>
-<li>Atomicity</li>
-<li>Mutual exclusion</li>
-<li>Queue all concurrent instructions but one</li>
-</ul>
-</li>
-<li>Atomic instructions == critical section with hardware-supported synchronization</li>
-<li><p>Example:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">spinlock_lock(lock):</div><div class="line">    <span class="keyword">while</span>(test_and_set(lock) == busy)</div></pre></td></tr></table></figure>
-</li>
-<li><p><strong>test_and_set(lock)</strong></p>
-<ul>
-<li><strong>Atomically</strong> returns original value and <strong>sets</strong> new value</li>
-<li>First thread: test_and_set(lock) =&gt; free</li>
-<li>Next ones: test_and_set(lock) =&gt; busy</li>
-<li>Next ones all reset lock to 1, but thats ok</li>
-</ul>
-</li>
-</ul>
-<h2 id="Shared-Memory-Multiprocessors-Recap"><a href="#Shared-Memory-Multiprocessors-Recap" class="headerlink" title="Shared Memory Multiprocessors - Recap"></a>Shared Memory Multiprocessors - Recap</h2><h3 id="Caches"><a href="#Caches" class="headerlink" title="Caches"></a>Caches</h3><ul>
-<li>Hide memory latency, but also memory will be <strong>further away</strong> due to this contention</li>
-<li>Certain mechanisms for writing:<ol>
-<li>no-write: CPU cannot write in cache, and will write in physical memory, and the corresponding entry in cache will become <strong>invalid</strong></li>
-<li>write-through: CPU will update both cache and physical memory</li>
-<li>write-back: CPU will update cache, and then delay the update to physical memory till sometime later</li>
-</ol>
-</li>
-</ul>
-<h3 id="Cache-Coherence"><a href="#Cache-Coherence" class="headerlink" title="Cache Coherence"></a>Cache Coherence</h3><ul>
-<li>What if a CPU is accessing some data that existing in memory, and also in caches of other CPUs?</li>
-<li><strong>Non-Cache-Coherent (NCC)</strong> - Fix in software</li>
-<li><strong>Cache-Coherent (CC)</strong> - Hardware will handle and make sure that caches are coherent</li>
-<li>Methods:<ol>
-<li>Write-invalidate (WI): whenever one CPU updates some data, same memory locations in caches of other CPUs will be invalid, and hence next access to it from other CPU will be a <strong>miss</strong></li>
-<li>Write-update (WR): whenever one CPU updates some data, hardware will try to also update the same memory location in caches of other CPUs</li>
-</ol>
-</li>
-</ul>
-<img src="/imgs/OMSCS/OS/OS_10/OS_10_Screenshot1.png" class="[screenshot]">
-<h3 id="Cache-Coherence-and-Atomics"><a href="#Cache-Coherence-and-Atomics" class="headerlink" title="Cache Coherence and Atomics"></a>Cache Coherence and Atomics</h3><p>Problems arise because when a CPU is trying to update some memory with <strong>atomic instructions</strong>, it does not know/guarantee that other CPUs cannot perform the same <strong>atomic instructions</strong> against the same shared memory location (in its own cache)</p>
-<h4 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h4><ul>
-<li>Atomics always issue to the memory controller<ul>
-<li>Pros: can be ordered and synchronizaed</li>
-<li>Cons: take <strong>TOO MUCH TIME</strong> and generates conherence traffic</li>
-</ul>
-</li>
-</ul>
-<h3 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h3><p>Atomics is expensive because of </p>
-<ul>
-<li>bus or I/C contention</li>
-<li>cache bypass &amp; coherence traffic</li>
-</ul>
-<h2 id="Spinlock-Performance-Metrics"><a href="#Spinlock-Performance-Metrics" class="headerlink" title="Spinlock Performance Metrics"></a>Spinlock Performance Metrics</h2><h2 id="Objectives"><a href="#Objectives" class="headerlink" title="Objectives"></a>Objectives</h2><ul>
-<li>Reduce <strong>latency</strong><ul>
-<li>“time to acquire a free lock”</li>
-<li>Ideally immediately execute atomic</li>
-</ul>
-</li>
-<li>Reduce <strong>waiting time (deley)</strong><ul>
-<li>“time to stop spinning and acquire a lock that has been freed”</li>
-<li>Ideally immediately</li>
-</ul>
-</li>
-<li>Reduce <strong>contention</strong><ul>
-<li>“bus/network I/C traffic”</li>
-<li>Ideally zero</li>
-</ul>
-</li>
-</ul>
-<h2 id="Test-and-Set-Spinlock"><a href="#Test-and-Set-Spinlock" class="headerlink" title="Test-and-Set-Spinlock"></a>Test-and-Set-Spinlock</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">spinlock_init(lock):</div><div class="line">    lock = <span class="built_in">free</span>;</div><div class="line"></div><div class="line">spinlock_lock(lock):</div><div class="line">    <span class="keyword">while</span>(test_and_set(lock) == busy)</div><div class="line"></div><div class="line">spinlock_unlock(lock):</div><div class="line">    lock = <span class="built_in">free</span></div></pre></td></tr></table></figure>
-<ul>
-<li><strong>Latency</strong> is minimal (just atomic)</li>
-<li><strong>Delay</strong> is potentially min</li>
-<li><strong>Contention</strong> processors go to memory on each spin</li>
-</ul>
-<p>One improvement is to perform the <strong>test</strong> in <strong>cache</strong>:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">spinlock_lock(lock):</div><div class="line">    <span class="keyword">while</span>((lock == busy <span class="comment">/* perform in cache */</span>) OR test_and_set(lock) == busy)</div></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>Latency</strong> ok</li>
-<li><strong>Delay</strong> ok</li>
-<li><strong>Contention</strong><ul>
-<li>NCC - no difference</li>
-<li>CC - WU - ok</li>
-<li>CC - WI - <strong>horrible!</strong> (it will invalidate a busy lock in cache, and result in extra memory access)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Spinlock-“Delay”-Alternatives"><a href="#Spinlock-“Delay”-Alternatives" class="headerlink" title="Spinlock “Delay” Alternatives"></a>Spinlock “Delay” Alternatives</h2><h3 id="Delay-after-each-release"><a href="#Delay-after-each-release" class="headerlink" title="Delay after each release"></a>Delay after each release</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">spinlock_lock(lock):</div><div class="line">    <span class="keyword">while</span>((lock == busy) OR (test_and_set(lock) == busy)) &#123;</div><div class="line">        <span class="keyword">while</span>(lock == busy);</div><div class="line">        delay();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>Everyone sees lock is free</li>
-<li>Not everyone attempts to acquire it</li>
-<li><strong>Latency</strong> ok</li>
-<li><strong>Delay</strong> worse</li>
-<li><strong>Contention</strong> improved</li>
-</ul>
-<h3 id="Delay-after-each-lock-ref"><a href="#Delay-after-each-lock-ref" class="headerlink" title="Delay after each lock ref"></a>Delay after each lock ref</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">spinlock_lock(lock):</div><div class="line">    <span class="keyword">while</span>((lock == busy) OR (test_and_set(lock) == busy)) &#123;</div><div class="line">        delay();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>Doesn’t spin constantly</li>
-<li>Works in NCC</li>
-<li><strong>Latency</strong> ok</li>
-<li><strong>Delay</strong> much worse</li>
-<li><strong>Contention</strong> improved</li>
-</ul>
-<h4 id="Picking-a-Delay"><a href="#Picking-a-Delay" class="headerlink" title="Picking a Delay"></a>Picking a Delay</h4><h5 id="Static-Delay-based-on-fixed-value-e-g-CPU-ID"><a href="#Static-Delay-based-on-fixed-value-e-g-CPU-ID" class="headerlink" title="Static Delay (based on fixed value, e.g. CPU ID)"></a>Static Delay (based on fixed value, e.g. CPU ID)</h5><ul>
-<li>Pros: simple approach</li>
-<li>Cons: unecessary delay under low contention</li>
-</ul>
-<h5 id="Dynamic-Delay-backoff-based"><a href="#Dynamic-Delay-backoff-based" class="headerlink" title="Dynamic Delay (backoff-based)"></a>Dynamic Delay (backoff-based)</h5><ul>
-<li>Random delay in a range that increases with “perceived” contentions</li>
-<li><strong>perceived == failed test_and_set()</strong></li>
-<li>Delay after each ref will keep growing</li>
-</ul>
-<h1 id="Queuing-Lock"><a href="#Queuing-Lock" class="headerlink" title="Queuing Lock"></a>Queuing Lock</h1><h2 id="Overview-2"><a href="#Overview-2" class="headerlink" title="Overview"></a>Overview</h2><img src="/imgs/OMSCS/OS/OS_10/OS_10_Screenshot2.png" class="[screenshot]">
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">init:</div><div class="line">    flags[<span class="number">0</span>] = has-lock;</div><div class="line">    flags[<span class="number">1.</span>.p<span class="number">-1</span>] = must-wait;</div><div class="line">    queuelast = <span class="number">0</span>; <span class="comment">// global variable</span></div><div class="line"></div><div class="line">lock:</div><div class="line">    <span class="comment">//get ticket</span></div><div class="line">    myplace = read_and_increment(queuelast);</div><div class="line">    <span class="comment">// spin</span></div><div class="line">    <span class="keyword">while</span> (flags[myplace mod p] == must-wait)</div><div class="line">    <span class="comment">// now in C.S</span></div><div class="line">    flags[myplace mod p] == must-wait</div><div class="line"></div><div class="line">unlock:</div><div class="line">    flags[myplace+<span class="number">1</span> mod p] = has-lock;</div></pre></td></tr></table></figure>
-<ul>
-<li><strong>Latency</strong> more costly with read_and_increment</li>
-<li><strong>Delay</strong> good, everyone sees immediately</li>
-<li><strong>Contention</strong> better!</li>
-</ul>
-<h1 id="Spinlock-Performance-Comparison"><a href="#Spinlock-Performance-Comparison" class="headerlink" title="Spinlock Performance Comparison"></a>Spinlock Performance Comparison</h1><ul>
-<li>Under high loads<ul>
-<li>Queue best (most scalable), test_and_test_and_set worst</li>
-<li>Static better than dynamic, ref. better than release (avoids extra invalidations)</li>
-</ul>
-</li>
-<li>Under light loads<ul>
-<li>test_and_test_and_set good (low latency)</li>
-<li>Dynamic better than static (low delay)</li>
-<li>Queueing lock worst (high latency due to read_and_increment)</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/omscs-os-9-inner-process-communication/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhexuan Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eric' Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/22/omscs-os-9-inner-process-communication/" itemprop="url">
-                  Operating System - Inner Process Communication
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T00:27:27-07:00">
-                2017-03-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
-<li>Shared Memory IPC</li>
-</ul>
-<h1 id="Visual-Metaphor"><a href="#Visual-Metaphor" class="headerlink" title="Visual Metaphor"></a>Visual Metaphor</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">Features/Functionalities</th>
-<th style="text-align:center">Working together in toy shop</th>
-<th style="text-align:center">IPC</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Sharing space</td>
-<td style="text-align:center">Workers share work area</td>
-<td style="text-align:center">Process share memory</td>
-</tr>
-<tr>
-<td style="text-align:center">Communication</td>
-<td style="text-align:center">Workers call each other</td>
-<td style="text-align:center">Process exchanges Memory</td>
-</tr>
-<tr>
-<td style="text-align:center">Requires Synchronization</td>
-<td style="text-align:center">I’ll start when you finish</td>
-<td style="text-align:center">Mutexes, waiting</td>
-</tr>
-</tbody>
-</table>
-<h1 id="Inter-Process-Communication-IPC"><a href="#Inter-Process-Communication-IPC" class="headerlink" title="Inter Process Communication (IPC)"></a>Inter Process Communication (IPC)</h1><ul>
-<li>OS Supported mechanisms for interactions among processes (corrdination and communication)</li>
-<li>Key Concepts:<ol>
-<li>Message-based: socket, pipes, message queues</li>
-<li>Memory-based: shared memory</li>
-<li>Higher Level Semantic: files, Remote Process Call (RPC)</li>
-<li>Synchronization Primitives</li>
-</ol>
-</li>
-</ul>
-<h2 id="Message-Based-IPC"><a href="#Message-Based-IPC" class="headerlink" title="Message Based IPC"></a>Message Based IPC</h2><h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><ul>
-<li>OS maintains a channel (i.e. shared buffer), and processes basically read/recv and write/send from/to that channel</li>
-<li>OS provides interfaces to processes - <strong>a port</strong>, processes access channel via the port</li>
-<li><strong>Kernal</strong> is required to:<ol>
-<li>Establisht communication</li>
-<li>Perform IPC actions:<br> a. send: system call + copy <strong>from address space to channel</strong><br> b. recv: system call + copy <strong>from channel to address space</strong></li>
-</ol>
-</li>
-<li>Cons: Each request-response will result in <strong>4 user-kernal crossing</strong> and <strong>4 data copies</strong></li>
-<li>Pros: Simple, and kernal handles most of the content</li>
-</ul>
-<img src="/imgs/OMSCS/OS/OS_9/OS_9_Screenshot1.png" class="[screenshot]">
-<h3 id="Forms-of-Message-Based-IPC"><a href="#Forms-of-Message-Based-IPC" class="headerlink" title="Forms of Message Based IPC"></a>Forms of Message Based IPC</h3><h4 id="Pipe"><a href="#Pipe" class="headerlink" title="Pipe"></a>Pipe</h4><ul>
-<li>Carry byte stream between <strong>2 processes</strong> (e.g. connect one process’s output to the other’s input)</li>
-</ul>
-<h4 id="Message-Queue"><a href="#Message-Queue" class="headerlink" title="Message Queue"></a>Message Queue</h4><ul>
-<li>Carry “messages” among processes</li>
-<li>OS should manage priority, scheduling, etc.</li>
-<li>API: <strong>SysV</strong> and <strong>POSIX</strong></li>
-</ul>
-<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><ul>
-<li><strong>send() and recv()</strong> calls allow processes place messages in and out the kernal level buffer</li>
-<li><strong>socket()</strong> creates kernal level buffer, and associate necessary kernal level processing (TCP/IP, etc.)</li>
-<li>Could also communicate between different machines via network</li>
-<li>If same machine, will just bypass protocal stack.</li>
-</ul>
-<h2 id="Shared-Memory-IPC"><a href="#Shared-Memory-IPC" class="headerlink" title="Shared Memory IPC"></a>Shared Memory IPC</h2><ul>
-<li>Proccess <strong>read</strong> and <strong>write</strong> to some shared memory region</li>
-<li>OS will establish that region<ol>
-<li>Creates VA - PA Map</li>
-<li>VA(P1) and VA(P2) point to the same PA</li>
-<li>VA(P1) != VA(P2)</li>
-<li>PA could be incontinuous</li>
-</ol>
-</li>
-<li>Pros: system calls are only used to <strong>setup</strong>, data copies are avoided</li>
-<li>Cons:<ol>
-<li>Need explict synchronization</li>
-<li>Programmer’s responsibility for shared buffer management and communication protocal - complex</li>
-</ol>
-</li>
-<li>APIs<ol>
-<li>SysV API</li>
-<li>POSIX API</li>
-<li>Memory Wrapped Files</li>
-<li>Android ashmem</li>
-</ol>
-</li>
-</ul>
-<h1 id="Copy-Message-v-s-Map-Shared-Memory"><a href="#Copy-Message-v-s-Map-Shared-Memory" class="headerlink" title="Copy (Message) v.s. Map (Shared Memory)"></a>Copy (Message) v.s. Map (Shared Memory)</h1><p>Goal: Transfer data from one address space to target address space</p>
-<h2 id="Copy"><a href="#Copy" class="headerlink" title="Copy"></a>Copy</h2><ul>
-<li>Cost CPU cycles to copy data to/from port</li>
-<li>Context switch</li>
-</ul>
-<h2 id="Shared-Memory"><a href="#Shared-Memory" class="headerlink" title="Shared Memory"></a>Shared Memory</h2><ul>
-<li>CPU to map physical memory to address space</li>
-<li>CPU to copy data (no context switch)</li>
-<li>Setup time will be longer, but good tradeoff for many times or 1-time usage</li>
-<li>For large data <strong>t(copy) &gt;&gt; t(map)</strong></li>
-</ul>
-<h1 id="SysV-Shared-Memory"><a href="#SysV-Shared-Memory" class="headerlink" title="SysV Shared Memory"></a>SysV Shared Memory</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><ul>
-<li>Segmented shared memory - not necessarily continuous</li>
-<li>System wide - system limits number of segments and sizes</li>
-</ul>
-<h2 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h2><ol>
-<li><strong>Create</strong>: OS assigns key to segment of shared memory</li>
-<li><strong>Attach</strong>: Map <strong>VA</strong> to <strong>PA</strong> (PA of the segment)</li>
-<li><strong>Dettach</strong>: Invalidate the mapping (not destroyed)</li>
-<li><strong>Destroy</strong>: Only when explicitly call or reboot</li>
-</ol>
-<img src="/imgs/OMSCS/OS/OS_9/OS_9_Screenshot2.png" class="[screenshot]">
-<h2 id="APIs-SysV"><a href="#APIs-SysV" class="headerlink" title="APIs - SysV"></a>APIs - SysV</h2><ol>
-<li><strong>Create</strong>: shmget(shmid, sizes, flags)<ul>
-<li>flag - options</li>
-<li>shmid - generated by ftok(pathname, proj_id)</li>
-</ul>
-</li>
-<li><strong>Attach</strong>: shmat(shmid, address, flags)<ul>
-<li>if addr == NULL, will assign arbitrarily</li>
-<li>programmer need to cast the returned address properly</li>
-</ul>
-</li>
-<li><strong>Dettach</strong>: shmdt(shmid)</li>
-<li><strong>Destroy</strong>: shmctl(shmid, cmd, buf) - use IPC_RHID</li>
-</ol>
-<h2 id="APIs-POSIX"><a href="#APIs-POSIX" class="headerlink" title="APIs - POSIX"></a>APIs - POSIX</h2><ul>
-<li>Use files instead of segments (but not real files), essentially still memory manipulations</li>
-<li>key = file descriptor</li>
-</ul>
-<ol>
-<li><strong>Create</strong>: shm_open() - return file descriptor</li>
-<li><strong>Attach</strong> and <strong>Dettach</strong>: mmap() and unmmap() - map VA to PA</li>
-<li><strong>Destroy</strong>:<ul>
-<li>shm_close(): remove the file descriptor from address space</li>
-<li>shm_unlink(): delete all related data structures and free the segment</li>
-</ul>
-</li>
-</ol>
-<h1 id="Shared-Memory-and-Synchronization"><a href="#Shared-Memory-and-Synchronization" class="headerlink" title="Shared Memory and Synchronization"></a>Shared Memory and Synchronization</h1><ul>
-<li>Much like threads accessing shared resources in the same address space</li>
-</ul>
-<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods:"></a>Methods:</h2><ol>
-<li>Mechanisms supported by process threading library (PThread)</li>
-<li>OS supported IPC for synchronization</li>
-</ol>
-<ul>
-<li>Either method should coordinate:<ol>
-<li>Number of concurrent accesses (mutex)</li>
-<li>When is data available (signal, conditional var)</li>
-</ol>
-</li>
-<li>Synchronization data structures must be shared!</li>
-</ul>
-<h2 id="OS-Supported-IPC-for-synchronization"><a href="#OS-Supported-IPC-for-synchronization" class="headerlink" title="OS Supported IPC for synchronization:"></a>OS Supported IPC for synchronization:</h2><ul>
-<li>Message queue: implement mutual exclusion via send/recv</li>
-<li>Semaphores: Binary semaphore = mutex</li>
-</ul>
-<h1 id="Design-Consideration"><a href="#Design-Consideration" class="headerlink" title="Design Consideration"></a>Design Consideration</h1><p>Shared memory is out there, but need to consider and design protocal/sync properly</p>
-<h2 id="How-many-segments"><a href="#How-many-segments" class="headerlink" title="How many segments?"></a>How many segments?</h2><ul>
-<li>1 large segment: might then need a manager to free/allocate memory for the shared segment</li>
-<li>many segments: might then need a segment queue, and certain mechanisms to allow communications between processes</li>
-</ul>
-<h2 id="How-large-should-the-segment-be"><a href="#How-large-should-the-segment-be" class="headerlink" title="How large should the segment be?"></a>How large should the segment be?</h2><ul>
-<li>segment data == data size - works well for static sizes, but limits data size</li>
-<li>segment data &lt; message size - transfer data in round, and need protocal to track the progress</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2933,7 +2828,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

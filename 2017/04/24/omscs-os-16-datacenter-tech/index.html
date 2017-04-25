@@ -87,17 +87,21 @@
 
 
 
-<meta name="description" content="Main Topics OS Abstractions Mechanisms Policies  Simple OS Definition: A special piece of software that abstracts and arbitrates the underlying hardware Abstract: simplify Arbitrate: manage, oversee a">
+<meta name="description" content="Preview Multi-tier architectures for Internet services Cloud computing Cloud and “big data” technologies  Internet ServicesAny types of services provided via web interface  Presentation: static conten">
 <meta name="keywords" content="OS,OMSCS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Operating System Note1 - Introduction">
-<meta property="og:url" content="http://yoursite.com/2017/02/20/omscs-os-1/index.html">
+<meta property="og:title" content="Operating System - Datacenter Technology">
+<meta property="og:url" content="http://yoursite.com/2017/04/24/omscs-os-16-datacenter-tech/index.html">
 <meta property="og:site_name" content="Eric' Notes">
-<meta property="og:description" content="Main Topics OS Abstractions Mechanisms Policies  Simple OS Definition: A special piece of software that abstracts and arbitrates the underlying hardware Abstract: simplify Arbitrate: manage, oversee a">
-<meta property="og:updated_time" content="2017-02-20T20:49:34.000Z">
+<meta property="og:description" content="Preview Multi-tier architectures for Internet services Cloud computing Cloud and “big data” technologies  Internet ServicesAny types of services provided via web interface  Presentation: static conten">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_16/OS_16_Screenshot1.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_16/OS_16_Screenshot2.png">
+<meta property="og:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_16/OS_16_Screenshot3.png">
+<meta property="og:updated_time" content="2017-04-25T04:21:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Operating System Note1 - Introduction">
-<meta name="twitter:description" content="Main Topics OS Abstractions Mechanisms Policies  Simple OS Definition: A special piece of software that abstracts and arbitrates the underlying hardware Abstract: simplify Arbitrate: manage, oversee a">
+<meta name="twitter:title" content="Operating System - Datacenter Technology">
+<meta name="twitter:description" content="Preview Multi-tier architectures for Internet services Cloud computing Cloud and “big data” technologies  Internet ServicesAny types of services provided via web interface  Presentation: static conten">
+<meta name="twitter:image" content="http://yoursite.com/imgs/OMSCS/OS/OS_16/OS_16_Screenshot1.png">
 
 
 
@@ -125,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/20/omscs-os-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/24/omscs-os-16-datacenter-tech/"/>
 
 
 
 
 
-  <title> Operating System Note1 - Introduction | Eric' Notes </title>
+  <title> Operating System - Datacenter Technology | Eric' Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -250,7 +254,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/omscs-os-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/24/omscs-os-16-datacenter-tech/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhexuan Liu">
@@ -271,7 +275,7 @@
             
             
               
-                Operating System Note1 - Introduction
+                Operating System - Datacenter Technology
               
             
           </h1>
@@ -286,8 +290,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T00:35:15-08:00">
-                2017-02-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-24T19:54:53-07:00">
+                2017-04-24
               </time>
             
 
@@ -322,137 +326,108 @@
       
 
       
-        <h1 id="Main-Topics"><a href="#Main-Topics" class="headerlink" title="Main Topics"></a>Main Topics</h1><ul>
-<li>OS Abstractions</li>
-<li>Mechanisms</li>
-<li>Policies</li>
+        <h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><ul>
+<li>Multi-tier architectures for Internet services</li>
+<li>Cloud computing</li>
+<li><strong>Cloud</strong> and <strong>“big data”</strong> technologies</li>
 </ul>
-<h1 id="Simple-OS-Definition"><a href="#Simple-OS-Definition" class="headerlink" title="Simple OS Definition:"></a>Simple OS Definition:</h1><ul>
-<li>A special piece of software that <strong>abstracts</strong> and <strong>arbitrates</strong> the underlying hardware<ul>
-<li>Abstract: simplify</li>
-<li>Arbitrate: manage, oversee and control</li>
-</ul>
-</li>
-</ul>
-<h1 id="Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager"><a href="#Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager" class="headerlink" title="Visual Metaphor: Operating System v.s. Toy shop Manager"></a>Visual Metaphor: Operating System v.s. Toy shop Manager</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">Features/Functionalities</th>
-<th style="text-align:center">Operating System</th>
-<th style="text-align:center">Toy shop Manager</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Direct operational resources</td>
-<td style="text-align:center">Control use of CPU, Memory</td>
-<td style="text-align:center">control use of employee time, parts &amp; tools</td>
-</tr>
-<tr>
-<td style="text-align:center">Enforce working policies</td>
-<td style="text-align:center">Fair resource access, limits to resource usage</td>
-<td style="text-align:center">Fairness, safety, cleanup</td>
-</tr>
-<tr>
-<td style="text-align:center">Migrates difficulty of computer tasks</td>
-<td style="text-align:center">Abstract hardware details (system call)</td>
-<td style="text-align:center">Simplifies operation &amp; optimize performance</td>
-</tr>
-</tbody>
-</table>
-<h1 id="What-is-an-Operating-System"><a href="#What-is-an-Operating-System" class="headerlink" title="What is an Operating System"></a>What is an Operating System</h1><ul>
-<li>Hide hardware complexity.</li>
-<li>Resource Management</li>
-<li>Provide isolation &amp; protection</li>
-<li>Directly has priviledged access to underlying hardware</li>
-</ul>
-<h1 id="Operating-System-Elements"><a href="#Operating-System-Elements" class="headerlink" title="Operating System Elements"></a>Operating System Elements</h1><ol>
-<li>Abstractions<ul>
-<li>software<ul>
-<li>process, thread</li>
-</ul>
-</li>
-<li>hardware<ul>
-<li>file</li>
-<li>socket</li>
-<li>memory page</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Mechanisms</p>
+<h1 id="Internet-Services"><a href="#Internet-Services" class="headerlink" title="Internet Services"></a>Internet Services</h1><p>Any types of services provided via web interface</p>
 <ul>
-<li>create, schedule</li>
-<li>open, write, allocate</li>
+<li><strong>Presentation</strong>: static content (View)</li>
+<li><strong>Business Logic</strong>: dynamic content (View Model)</li>
+<li><strong>Database tier</strong>: data store (Model)</li>
 </ul>
-</li>
-<li><p>Policies</p>
-<ul>
-<li>Least-recently used (LRU)</li>
-<li>Earliest deadline first (EDF)<br>…</li>
-</ul>
-</li>
+<h2 id="Architectures"><a href="#Architectures" class="headerlink" title="Architectures"></a>Architectures</h2><p>For scale: <strong>multi-process</strong>, <strong>multi-node</strong></p>
+<ol>
+<li><strong>“Boss-worker”</strong>: front-end distributes requests to nodes</li>
+<li><strong>“All equal”</strong>: all nodes execute any possible steps in request processing, for any requests -&gt; <strong>functionaly homogeneous</strong></li>
+<li><strong>“Specialized Nodes”</strong>: nodes execute some specific step(s) in request processing; for some request types -&gt; <strong>functionaly heterogeneous</strong></li>
 </ol>
-<h1 id="Design-Principles"><a href="#Design-Principles" class="headerlink" title="Design Principles"></a>Design Principles</h1><ul>
-<li>Separation of mechanisms &amp; policies</li>
-<li>Optimize for common case</li>
+<h3 id="Homogeneous-Architectures"><a href="#Homogeneous-Architectures" class="headerlink" title="Homogeneous Architectures"></a>Homogeneous Architectures</h3><ul>
+<li>Each node can do any processing steps</li>
+<li>Doesn’t mean that each node has all data; just each node can get to all data</li>
+<li><strong>Benefit:</strong> keeps front-end simple</li>
+<li><strong>Downside:</strong> how to benefit from caching?</li>
 </ul>
-<h1 id="Basic-Operating-System-Services"><a href="#Basic-Operating-System-Services" class="headerlink" title="Basic Operating System Services"></a>Basic Operating System Services</h1><ul>
-<li>Scheduler -&gt; CPU</li>
-<li>Main Memory (Mm) Manager -&gt; Main Memory</li>
-<li>Block Device Driver</li>
-<li>File System</li>
+<h3 id="Heterogeneous-Architectures"><a href="#Heterogeneous-Architectures" class="headerlink" title="Heterogeneous Architectures"></a>Heterogeneous Architectures</h3><ul>
+<li>Different nodes -&gt; different tasks/requests</li>
+<li>Data doesn’t have to be uniformly accessible everywhere</li>
+<li><strong>Benefits:</strong><ul>
+<li>benefit of locality and caching</li>
 </ul>
-<h1 id="Different-Types-of-Operating-Systems"><a href="#Different-Types-of-Operating-Systems" class="headerlink" title="Different Types of Operating Systems"></a>Different Types of Operating Systems</h1><ol>
-<li><p>Monolithic Operating System</p>
+</li>
+<li><strong>Downsides:</strong><ul>
+<li>more complex front-end</li>
+<li>more complex management</li>
+</ul>
+</li>
+</ul>
+<h1 id="Cloud-Computing"><a href="#Cloud-Computing" class="headerlink" title="Cloud Computing"></a>Cloud Computing</h1><h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><h3 id="Traditional-Approach"><a href="#Traditional-Approach" class="headerlink" title="Traditional Approach"></a>Traditional Approach</h3><img src="/imgs/OMSCS/OS/OS_16/OS_16_Screenshot1.png" class="[screenshot]">
 <ul>
-<li>Pros:<ul>
-<li>Compile time optimizations</li>
-</ul>
-</li>
-<li>Cons:<ul>
-<li>All services and abstractions are already in an Operating System</li>
-<li>Really large</li>
-<li>Hard to maintain</li>
+<li>Buy and configure resources =&gt; determine capacity based on expected demand (peak)</li>
+<li>when demand exceeds capacity, it will<ul>
+<li>dropped requests</li>
+<li>lost opportunity</li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>Modular Operating System</p>
+<h3 id="Ideal-cloud"><a href="#Ideal-cloud" class="headerlink" title="Ideal cloud"></a>Ideal cloud</h3><img src="/imgs/OMSCS/OS/OS_16/OS_16_Screenshot2.png" class="[screenshot]">
 <ul>
-<li>Everything can be added as modules</li>
-<li>Operating System contains interfaces to allow alternatives</li>
-<li>Pros:<ul>
-<li>Smaller code basis</li>
-<li>Less resource needed</li>
-<li>Easier to maintain</li>
+<li>Capacity scales <strong>elastically</strong> with demand</li>
+<li>Scaling in <strong>instantaneous</strong>, both up and down</li>
+<li><strong>Cost is proportional</strong> to demand, to revenue opportunity</li>
+<li>All of this happens <strong>automatically</strong> no need for hacking wizardry</li>
+<li>Can access anytime, anywhere</li>
+</ul>
+<h3 id="General-requirements"><a href="#General-requirements" class="headerlink" title="General requirements"></a>General requirements</h3><ul>
+<li>“fungible” resources</li>
+<li>elastic, dynamic resource allocation methods</li>
+<li>scale: management at scale, scalable resource allocations</li>
+<li>dealing with failures</li>
+<li>multi-tenancy: performance &amp; isolation</li>
+<li>security</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>On-demand, elastic resources and services</li>
+<li>Fine-grained pricing based on usage</li>
+<li>Professionally managed and hosted</li>
+<li>API-based access</li>
+</ul>
+<h2 id="Overviews"><a href="#Overviews" class="headerlink" title="Overviews"></a>Overviews</h2><ul>
+<li><strong>shared resources</strong><ul>
+<li><strong>infrastructure</strong> and <strong>software/services</strong></li>
 </ul>
 </li>
-<li>Cons:<ul>
-<li>Indirection impact on performance</li>
+<li><strong>APIs for access &amp; configuration</strong><ul>
+<li>web-based, libraries, command line…</li>
+</ul>
+</li>
+<li><strong>billing/accounting services</strong><ul>
+<li>many models: spot, reservation, … entire marketplace</li>
+<li>typically discrete quantities: tiny, medium, x-large …</li>
+</ul>
+</li>
+<li>managed by (cloud) provider</li>
+</ul>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h2><h3 id="Cloud-Deployment-Models"><a href="#Cloud-Deployment-Models" class="headerlink" title="Cloud Deployment Models"></a>Cloud Deployment Models</h3><ul>
+<li>Public<ul>
+<li>third party customers/tenants</li>
+</ul>
+</li>
+<li>Private<ul>
+<li>leverage technology internally</li>
+</ul>
+</li>
+<li>Hybrid (Public + Private)<ul>
+<li>Failover, dealing with spikes, testing</li>
+</ul>
+</li>
+<li>Community<ul>
+<li>Used by certain type of users (also public)</li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>Microkernel:</p>
-<ul>
-<li>Only require the most basic services. e.g. Address Space, threads</li>
-<li>All others reside in user level</li>
-<li>Requires lots of inter process communication</li>
-<li>Pros:<ul>
-<li>Very small</li>
-</ul>
-</li>
-<li>Cons:<ul>
-<li>Portability will be bad.</li>
-<li>Complexity of Software Development</li>
-<li>Cost of user/kernel crossing</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-
+<h3 id="Cloud-Service-Models"><a href="#Cloud-Service-Models" class="headerlink" title="Cloud Service Models"></a>Cloud Service Models</h3><img src="/imgs/OMSCS/OS/OS_16/OS_16_Screenshot3.png" class="[screenshot]">
       
     </div>
 
@@ -490,18 +465,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/20/omscs-os-2-process/" rel="next" title="Operating System - Process">
-                <i class="fa fa-chevron-left"></i> Operating System - Process
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/19/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/22/omscs-os-15-distributed-shared-memory/" rel="prev" title="Operating System - Distributed Shared Memory">
+                Operating System - Distributed Shared Memory <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -620,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Main-Topics"><span class="nav-number">1.</span> <span class="nav-text">Main Topics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Simple-OS-Definition"><span class="nav-number">2.</span> <span class="nav-text">Simple OS Definition:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Metaphor-Operating-System-v-s-Toy-shop-Manager"><span class="nav-number">3.</span> <span class="nav-text">Visual Metaphor: Operating System v.s. Toy shop Manager</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-an-Operating-System"><span class="nav-number">4.</span> <span class="nav-text">What is an Operating System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Operating-System-Elements"><span class="nav-number">5.</span> <span class="nav-text">Operating System Elements</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Design-Principles"><span class="nav-number">6.</span> <span class="nav-text">Design Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Operating-System-Services"><span class="nav-number">7.</span> <span class="nav-text">Basic Operating System Services</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Different-Types-of-Operating-Systems"><span class="nav-number">8.</span> <span class="nav-text">Different Types of Operating Systems</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preview"><span class="nav-number">1.</span> <span class="nav-text">Preview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Internet-Services"><span class="nav-number">2.</span> <span class="nav-text">Internet Services</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Architectures"><span class="nav-number">2.1.</span> <span class="nav-text">Architectures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Homogeneous-Architectures"><span class="nav-number">2.1.1.</span> <span class="nav-text">Homogeneous Architectures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heterogeneous-Architectures"><span class="nav-number">2.1.2.</span> <span class="nav-text">Heterogeneous Architectures</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cloud-Computing"><span class="nav-number">3.</span> <span class="nav-text">Cloud Computing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Requirements"><span class="nav-number">3.1.</span> <span class="nav-text">Requirements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Traditional-Approach"><span class="nav-number">3.1.1.</span> <span class="nav-text">Traditional Approach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ideal-cloud"><span class="nav-number">3.1.2.</span> <span class="nav-text">Ideal cloud</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#General-requirements"><span class="nav-number">3.1.3.</span> <span class="nav-text">General requirements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">3.1.4.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overviews"><span class="nav-number">3.2.</span> <span class="nav-text">Overviews</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Models"><span class="nav-number">3.3.</span> <span class="nav-text">Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloud-Deployment-Models"><span class="nav-number">3.3.1.</span> <span class="nav-text">Cloud Deployment Models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloud-Service-Models"><span class="nav-number">3.3.2.</span> <span class="nav-text">Cloud Service Models</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
